@@ -1,301 +1,41 @@
 Running Jupyter-Book v0.10.2
-Traceback (most recent call last):
-  File "/opt/conda/bin/jupyter-book", line 8, in <module>
-    sys.exit(main())
-  File "/opt/conda/lib/python3.7/site-packages/click/core.py", line 829, in __call__
-    return self.main(*args, **kwargs)
-  File "/opt/conda/lib/python3.7/site-packages/click/core.py", line 782, in main
-    rv = self.invoke(ctx)
-  File "/opt/conda/lib/python3.7/site-packages/click/core.py", line 1259, in invoke
-    return _process_result(sub_ctx.command.invoke(sub_ctx))
-  File "/opt/conda/lib/python3.7/site-packages/click/core.py", line 1066, in invoke
-    return ctx.invoke(self.callback, **ctx.params)
-  File "/opt/conda/lib/python3.7/site-packages/click/core.py", line 610, in invoke
-    return callback(*args, **kwargs)
-  File "/opt/conda/lib/python3.7/site-packages/jupyter_book/commands/__init__.py", line 226, in build
-    "Couldn't find a Table of Contents file. To auto-generate "
-  File "/opt/conda/lib/python3.7/site-packages/jupyter_book/utils.py", line 65, in _error
-    raise kind(box)
-RuntimeError: 
-[91m===============================================================================[0m
-
-Couldn't find a Table of Contents file. To auto-generate one, run
-
-	jupyter-book toc .
-
-[91m===============================================================================[0m
-
-Running Jupyter-Book v0.10.2
-Source Folder: /home/luke/GCN_Stuff
+Source Folder: /home/luke/thesisUpdate_04_12_21
 Config Path: None
-Output Path: /home/luke/GCN_Stuff/_build/html
+Output Path: /home/luke/thesisUpdate_04_12_21/_build/html
 [01mRunning Sphinx v3.5.4[39;49;00m
 [01mmaking output directory... [39;49;00mdone
 [01mmyst v0.13.6:[39;49;00m MdParserConfig(renderer='sphinx', commonmark_only=False, dmath_allow_labels=True, dmath_allow_space=True, dmath_allow_digits=True, update_mathjax=True, enable_extensions=['colon_fence', 'dollarmath', 'linkify', 'substitution'], disable_syntax=[], url_schemes=['mailto', 'http', 'https'], heading_anchors=None, html_meta=[], footnote_transition=True, substitutions=[], sub_delimiters=['{', '}'])
 [01mbuilding [mo]: [39;49;00mtargets for 0 po files that are out of date
 [01mbuilding [html]: [39;49;00mtargets for 7 source files that are out of date
 [01mupdating environment: [39;49;00m[new config] 7 added, 0 changed, 0 removed
-[01mreading sources... [39;49;00m[ 14%] [35mDeeperGCNs[39;49;00m                                                                                         Executing: DeeperGCNs in: /home/luke/GCN_Stuff
-[01mreading sources... [39;49;00m[ 28%] [35mDegreeCentrality[39;49;00m                                                                                   Executing: DegreeCentrality in: /home/luke/GCN_Stuff
-[31mWARNING: Execution Failed with traceback saved in /home/luke/GCN_Stuff/_build/html/reports/DeeperGCNs.log[39;49;00m
-[91m/home/luke/GCN_Stuff/DeeperGCNs.ipynb:20002: WARNING: Non-consecutive header level increase; 0 to 2 [myst.header][39;49;00m
+[01mreading sources... [39;49;00m[ 14%] [35mDeeperGCNs[39;49;00m                                           Executing: DeeperGCNs in: /home/luke/thesisUpdate_04_12_21
+[01mreading sources... [39;49;00m[ 28%] [35mDegreeCentrality[39;49;00m                                     Executing: DegreeCentrality in: /home/luke/thesisUpdate_04_12_21
+[01mreading sources... [39;49;00m[ 42%] [35mFutureWorkandBibliography[39;49;00m                            Executing: FutureWorkandBibliography in: /home/luke/thesisUpdate_04_12_21
+[01mreading sources... [39;49;00m[ 57%] [35mHigherMatrixPowers[39;49;00m                                   Executing: HigherMatrixPowers in: /home/luke/thesisUpdate_04_12_21
+[01mreading sources... [39;49;00m[ 71%] [35mIntroduction[39;49;00m                                         Executing: Introduction in: /home/luke/thesisUpdate_04_12_21
+[01mreading sources... [39;49;00m[ 85%] [35mKatzCentrality[39;49;00m                                       Executing: KatzCentrality in: /home/luke/thesisUpdate_04_12_21
+[01mreading sources... [39;49;00m[100%] [35mNormalization[39;49;00m                                        Executing: Normalization in: /home/luke/thesisUpdate_04_12_21
 
-[91mException occurred:[39;49;00m
-  File "/opt/conda/lib/python3.7/site-packages/nbclient/client.py", line 376, in _async_cleanup_kernel
-    await ensure_async(self.km.cleanup_resources())
-AttributeError: 'NoneType' object has no attribute 'cleanup_resources'
-[91mThe full traceback has been saved in /tmp/sphinx-err-4mh05n_j.log, if you want to report the issue to the developers.[39;49;00m
-Please also report this if it was a user error, so that a better error message can be provided next time.
-A bug report can be filed in the tracker at <https://github.com/sphinx-doc/sphinx/issues>. Thanks!
-Traceback (most recent call last):
-  File "/opt/conda/lib/python3.7/site-packages/nbclient/client.py", line 498, in async_setup_kernel
-    yield
-  File "/opt/conda/lib/python3.7/site-packages/nbclient/client.py", line 554, in async_execute
-    cell, index, execution_count=self.code_cells_executed + 1
-  File "/opt/conda/lib/python3.7/site-packages/nbclient/client.py", line 857, in async_execute_cell
-    self._check_raise_for_error(cell, exec_reply)
-  File "/opt/conda/lib/python3.7/site-packages/nbclient/client.py", line 760, in _check_raise_for_error
-    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
-nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
-------------------
-num_samples = 100
-p_range = torch.logspace(-2,1,100)
-density = []
-eig_ratio = []
-
-for p in tqdm(p_range,position=0):
-    for _ in range(num_samples):
-        n = torch.randint(50,100,(5,))
-        if p<1:
-            P = 1/n + ((p-1)/n) * torch.rand((5,5))
-        else:
-            P = p/n + ((1-p)/n) * torch.rand((5,5))
-        P = .5 * (P + P.T) 
-        x,edges = torch.randn((n.sum(),1)),torch_geometric.utils.remove_isolated_nodes(torch_geometric.utils.stochastic_blockmodel_graph(n,P))[0]
-        adj = torch_sparse.SparseTensor(row=edges[0],col=edges[1])
-
-        density.append(torch_sparse.sum(adj)/(adj.size(0)*adj.size(1)))
-        
-        vals = torch.sort(torch.norm(torch.eig(adj.to_dense())[0],dim=1))
-        eig_ratio.append(vals[0][-2]/vals[0][-1])
-------------------
-
-[0;31m---------------------------------------------------------------------------[0m
-[0;31mKeyboardInterrupt[0m                         Traceback (most recent call last)
-[0;32m<ipython-input-3-02c0c0e33eb7>[0m in [0;36m<module>[0;34m[0m
-[1;32m     17[0m         [0mdensity[0m[0;34m.[0m[0mappend[0m[0;34m([0m[0mtorch_sparse[0m[0;34m.[0m[0msum[0m[0;34m([0m[0madj[0m[0;34m)[0m[0;34m/[0m[0;34m([0m[0madj[0m[0;34m.[0m[0msize[0m[0;34m([0m[0;36m0[0m[0;34m)[0m[0;34m*[0m[0madj[0m[0;34m.[0m[0msize[0m[0;34m([0m[0;36m1[0m[0;34m)[0m[0;34m)[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
-[1;32m     18[0m [0;34m[0m[0m
-[0;32m---> 19[0;31m         [0mvals[0m [0;34m=[0m [0mtorch[0m[0;34m.[0m[0msort[0m[0;34m([0m[0mtorch[0m[0;34m.[0m[0mnorm[0m[0;34m([0m[0mtorch[0m[0;34m.[0m[0meig[0m[0;34m([0m[0madj[0m[0;34m.[0m[0mto_dense[0m[0;34m([0m[0;34m)[0m[0;34m)[0m[0;34m[[0m[0;36m0[0m[0;34m][0m[0;34m,[0m[0mdim[0m[0;34m=[0m[0;36m1[0m[0;34m)[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
-[0m[1;32m     20[0m         [0meig_ratio[0m[0;34m.[0m[0mappend[0m[0;34m([0m[0mvals[0m[0;34m[[0m[0;36m0[0m[0;34m][0m[0;34m[[0m[0;34m-[0m[0;36m2[0m[0;34m][0m[0;34m/[0m[0mvals[0m[0;34m[[0m[0;36m0[0m[0;34m][0m[0;34m[[0m[0;34m-[0m[0;36m1[0m[0;34m][0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
-
-[0;31mKeyboardInterrupt[0m: 
-KeyboardInterrupt: 
-
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "/opt/conda/lib/python3.7/site-packages/jupyter_book/sphinx.py", line 150, in build_sphinx
-    app.build(force_all, filenames)
-  File "/opt/conda/lib/python3.7/site-packages/sphinx/application.py", line 352, in build
-    self.builder.build_update()
-  File "/opt/conda/lib/python3.7/site-packages/sphinx/builders/__init__.py", line 298, in build_update
-    len(to_build))
-  File "/opt/conda/lib/python3.7/site-packages/sphinx/builders/__init__.py", line 310, in build
-    updated_docnames = set(self.read())
-  File "/opt/conda/lib/python3.7/site-packages/sphinx/builders/__init__.py", line 417, in read
-    self._read_serial(docnames)
-  File "/opt/conda/lib/python3.7/site-packages/sphinx/builders/__init__.py", line 438, in _read_serial
-    self.read_doc(docname)
-  File "/opt/conda/lib/python3.7/site-packages/sphinx/builders/__init__.py", line 478, in read_doc
-    doctree = read_doc(self.app, self.env, self.env.doc2path(docname))
-  File "/opt/conda/lib/python3.7/site-packages/sphinx/io.py", line 221, in read_doc
-    pub.publish()
-  File "/opt/conda/lib/python3.7/site-packages/docutils/core.py", line 218, in publish
-    self.settings)
-  File "/opt/conda/lib/python3.7/site-packages/sphinx/io.py", line 126, in read
-    self.parse()
-  File "/opt/conda/lib/python3.7/site-packages/docutils/readers/__init__.py", line 77, in parse
-    self.parser.parse(self.input, document)
-  File "/opt/conda/lib/python3.7/site-packages/myst_nb/parser.py", line 76, in parse
-    self.env, ntbk, show_traceback=self.env.config["execution_show_tb"]
-  File "/opt/conda/lib/python3.7/site-packages/myst_nb/execution.py", line 142, in generate_notebook_outputs
-    allow_errors=env.config["execution_allow_errors"],
-  File "/opt/conda/lib/python3.7/site-packages/jupyter_cache/executors/utils.py", line 56, in single_nb_execution
-    record_timing=False,
-  File "/opt/conda/lib/python3.7/site-packages/nbclient/client.py", line 1112, in execute
-    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
-  File "/opt/conda/lib/python3.7/site-packages/nbclient/util.py", line 74, in wrapped
-    return just_run(coro(*args, **kwargs))
-  File "/opt/conda/lib/python3.7/site-packages/nbclient/util.py", line 53, in just_run
-    return loop.run_until_complete(coro)
-  File "/opt/conda/lib/python3.7/asyncio/base_events.py", line 587, in run_until_complete
-    return future.result()
-  File "/opt/conda/lib/python3.7/site-packages/nbclient/client.py", line 556, in async_execute
-    self.set_widgets_metadata()
-  File "/opt/conda/lib/python3.7/site-packages/async_generator/_util.py", line 53, in __aexit__
-    await self._agen.athrow(type, value, traceback)
-  File "/opt/conda/lib/python3.7/site-packages/nbclient/client.py", line 501, in async_setup_kernel
-    await self._async_cleanup_kernel()
-  File "/opt/conda/lib/python3.7/site-packages/nbclient/client.py", line 376, in _async_cleanup_kernel
-    await ensure_async(self.km.cleanup_resources())
-AttributeError: 'NoneType' object has no attribute 'cleanup_resources'
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "/opt/conda/bin/jupyter-book", line 8, in <module>
-    sys.exit(main())
-  File "/opt/conda/lib/python3.7/site-packages/click/core.py", line 829, in __call__
-    return self.main(*args, **kwargs)
-  File "/opt/conda/lib/python3.7/site-packages/click/core.py", line 782, in main
-    rv = self.invoke(ctx)
-  File "/opt/conda/lib/python3.7/site-packages/click/core.py", line 1259, in invoke
-    return _process_result(sub_ctx.command.invoke(sub_ctx))
-  File "/opt/conda/lib/python3.7/site-packages/click/core.py", line 1066, in invoke
-    return ctx.invoke(self.callback, **ctx.params)
-  File "/opt/conda/lib/python3.7/site-packages/click/core.py", line 610, in invoke
-    return callback(*args, **kwargs)
-  File "/opt/conda/lib/python3.7/site-packages/jupyter_book/commands/__init__.py", line 305, in build
-    result, builder, OUTPUT_PATH, build_type, PAGE_NAME, click.echo
-  File "/opt/conda/lib/python3.7/site-packages/jupyter_book/commands/__init__.py", line 546, in builder_specific_actions
-    raise RuntimeError(_message_box(msg, color="red", doprint=False)) from result
-RuntimeError: 
-[91m===============================================================================[0m
-
-There was an error in building your book. Look above for the cause.
-
-[91m===============================================================================[0m
-
-Running Jupyter-Book v0.10.2
-Source Folder: /home/luke/GCN_Stuff
-Config Path: None
-Output Path: /home/luke/GCN_Stuff/_build/html
-[01mRunning Sphinx v3.5.4[39;49;00m
-[01mmaking output directory... [39;49;00mdone
-
-[91mExtension error (jupyter_book.toc):[39;49;00m
-Handler <function add_toc_to_sphinx at 0x7f334c486440> for event 'config-inited' threw an exception (exception: while parsing a block collection
-  in "<unicode string>", line 2, column 1:
-    - file: Introduction
-    ^
-expected <block end>, but found '?'
-  in "<unicode string>", line 3, column 1:
-    numbered: true
-    ^)
-Traceback (most recent call last):
-  File "/opt/conda/lib/python3.7/site-packages/sphinx/events.py", line 111, in emit
-    results.append(listener.handler(self.app, *args))
-  File "/opt/conda/lib/python3.7/site-packages/jupyter_book/toc.py", line 171, in add_toc_to_sphinx
-    toc = yaml.safe_load(Path(app.config["globaltoc_path"]).read_text(encoding="utf8"))
-  File "/opt/conda/lib/python3.7/site-packages/yaml/__init__.py", line 162, in safe_load
-    return load(stream, SafeLoader)
-  File "/opt/conda/lib/python3.7/site-packages/yaml/__init__.py", line 114, in load
-    return loader.get_single_data()
-  File "/opt/conda/lib/python3.7/site-packages/yaml/constructor.py", line 49, in get_single_data
-    node = self.get_single_node()
-  File "/opt/conda/lib/python3.7/site-packages/yaml/composer.py", line 36, in get_single_node
-    document = self.compose_document()
-  File "/opt/conda/lib/python3.7/site-packages/yaml/composer.py", line 55, in compose_document
-    node = self.compose_node(None, None)
-  File "/opt/conda/lib/python3.7/site-packages/yaml/composer.py", line 82, in compose_node
-    node = self.compose_sequence_node(anchor)
-  File "/opt/conda/lib/python3.7/site-packages/yaml/composer.py", line 110, in compose_sequence_node
-    while not self.check_event(SequenceEndEvent):
-  File "/opt/conda/lib/python3.7/site-packages/yaml/parser.py", line 98, in check_event
-    self.current_event = self.state()
-  File "/opt/conda/lib/python3.7/site-packages/yaml/parser.py", line 393, in parse_block_sequence_entry
-    "expected <block end>, but found %r" % token.id, token.start_mark)
-yaml.parser.ParserError: while parsing a block collection
-  in "<unicode string>", line 2, column 1:
-    - file: Introduction
-    ^
-expected <block end>, but found '?'
-  in "<unicode string>", line 3, column 1:
-    numbered: true
-    ^
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "/opt/conda/lib/python3.7/site-packages/jupyter_book/sphinx.py", line 126, in build_sphinx
-    keep_going=keep_going,
-  File "/opt/conda/lib/python3.7/site-packages/sphinx/application.py", line 269, in __init__
-    self.events.emit('config-inited', self.config)
-  File "/opt/conda/lib/python3.7/site-packages/sphinx/events.py", line 120, in emit
-    (listener.handler, name), exc, modname=modname) from exc
-sphinx.errors.ExtensionError: Handler <function add_toc_to_sphinx at 0x7f334c486440> for event 'config-inited' threw an exception (exception: while parsing a block collection
-  in "<unicode string>", line 2, column 1:
-    - file: Introduction
-    ^
-expected <block end>, but found '?'
-  in "<unicode string>", line 3, column 1:
-    numbered: true
-    ^)
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "/opt/conda/bin/jupyter-book", line 8, in <module>
-    sys.exit(main())
-  File "/opt/conda/lib/python3.7/site-packages/click/core.py", line 829, in __call__
-    return self.main(*args, **kwargs)
-  File "/opt/conda/lib/python3.7/site-packages/click/core.py", line 782, in main
-    rv = self.invoke(ctx)
-  File "/opt/conda/lib/python3.7/site-packages/click/core.py", line 1259, in invoke
-    return _process_result(sub_ctx.command.invoke(sub_ctx))
-  File "/opt/conda/lib/python3.7/site-packages/click/core.py", line 1066, in invoke
-    return ctx.invoke(self.callback, **ctx.params)
-  File "/opt/conda/lib/python3.7/site-packages/click/core.py", line 610, in invoke
-    return callback(*args, **kwargs)
-  File "/opt/conda/lib/python3.7/site-packages/jupyter_book/commands/__init__.py", line 305, in build
-    result, builder, OUTPUT_PATH, build_type, PAGE_NAME, click.echo
-  File "/opt/conda/lib/python3.7/site-packages/jupyter_book/commands/__init__.py", line 546, in builder_specific_actions
-    raise RuntimeError(_message_box(msg, color="red", doprint=False)) from result
-RuntimeError: 
-[91m===============================================================================[0m
-
-There was an error in building your book. Look above for the cause.
-
-[91m===============================================================================[0m
-
-Running Jupyter-Book v0.10.2
-Source Folder: /home/luke/GCN_Stuff
-Config Path: None
-Output Path: /home/luke/GCN_Stuff/_build/html
-[01mRunning Sphinx v3.5.4[39;49;00m
-[01mmyst v0.13.6:[39;49;00m MdParserConfig(renderer='sphinx', commonmark_only=False, dmath_allow_labels=True, dmath_allow_space=True, dmath_allow_digits=True, update_mathjax=True, enable_extensions=['colon_fence', 'dollarmath', 'linkify', 'substitution'], disable_syntax=[], url_schemes=['mailto', 'http', 'https'], heading_anchors=None, html_meta=[], footnote_transition=True, substitutions=[], sub_delimiters=['{', '}'])
-[01mbuilding [mo]: [39;49;00mtargets for 0 po files that are out of date
-[01mbuilding [html]: [39;49;00mtargets for 7 source files that are out of date
-[01mupdating environment: [39;49;00m[new config] 7 added, 0 changed, 0 removed
-[01mreading sources... [39;49;00m[ 14%] [35mDeeperGCNs[39;49;00m                                                                                         Executing: DeeperGCNs in: /home/luke/GCN_Stuff
-[01mreading sources... [39;49;00m[ 28%] [35mDegreeCentrality[39;49;00m                                                                                   Executing: DegreeCentrality in: /home/luke/GCN_Stuff
-[01mreading sources... [39;49;00m[ 42%] [35mFutureWorkandBibliography[39;49;00m                                                                          Executing: FutureWorkandBibliography in: /home/luke/GCN_Stuff
-[01mreading sources... [39;49;00m[ 57%] [35mHigherMatrixPowers[39;49;00m                                                                                 Executing: HigherMatrixPowers in: /home/luke/GCN_Stuff
-[01mreading sources... [39;49;00m[ 71%] [35mIntroduction[39;49;00m                                                                                       Executing: Introduction in: /home/luke/GCN_Stuff
-[01mreading sources... [39;49;00m[ 85%] [35mKatzCentrality[39;49;00m                                                                                     Executing: KatzCentrality in: /home/luke/GCN_Stuff
-[01mreading sources... [39;49;00m[100%] [35mNormalization[39;49;00m                                                                                      Executing: Normalization in: /home/luke/GCN_Stuff
-
-[31mWARNING: Execution Failed with traceback saved in /home/luke/GCN_Stuff/_build/html/reports/DeeperGCNs.log[39;49;00m
-[91m/home/luke/GCN_Stuff/DeeperGCNs.ipynb:20002: WARNING: Non-consecutive header level increase; 0 to 2 [myst.header][39;49;00m
-[31mWARNING: Execution Failed with traceback saved in /home/luke/GCN_Stuff/_build/html/reports/DegreeCentrality.log[39;49;00m
-[91m/home/luke/GCN_Stuff/DegreeCentrality.ipynb:20002: WARNING: Non-consecutive header level increase; 0 to 2 [myst.header][39;49;00m
-[91m/home/luke/GCN_Stuff/DegreeCentrality.ipynb:100002: WARNING: Non-consecutive header level increase; 0 to 2 [myst.header][39;49;00m
-[31mWARNING: Execution Failed with traceback saved in /home/luke/GCN_Stuff/_build/html/reports/HigherMatrixPowers.log[39;49;00m
-[91m/home/luke/GCN_Stuff/Introduction.ipynb:10002: WARNING: Non-consecutive header level increase; 0 to 2 [myst.header][39;49;00m
-[91m/home/luke/GCN_Stuff/Introduction.ipynb:30002: WARNING: Non-consecutive header level increase; 0 to 2 [myst.header][39;49;00m
-[91m/home/luke/GCN_Stuff/Introduction.ipynb:60002: WARNING: Non-consecutive header level increase; 0 to 2 [myst.header][39;49;00m
-[31mWARNING: Execution Failed with traceback saved in /home/luke/GCN_Stuff/_build/html/reports/KatzCentrality.log[39;49;00m
-[91m/home/luke/GCN_Stuff/KatzCentrality.ipynb:20002: WARNING: Non-consecutive header level increase; 0 to 2 [myst.header][39;49;00m
-[31mWARNING: Execution Failed with traceback saved in /home/luke/GCN_Stuff/_build/html/reports/Normalization.log[39;49;00m
+[31mWARNING: Execution Failed with traceback saved in /home/luke/thesisUpdate_04_12_21/_build/html/reports/DeeperGCNs.log[39;49;00m
+[91m/home/luke/thesisUpdate_04_12_21/DeeperGCNs.ipynb:20002: WARNING: Non-consecutive header level increase; 0 to 2 [myst.header][39;49;00m
+[31mWARNING: Execution Failed with traceback saved in /home/luke/thesisUpdate_04_12_21/_build/html/reports/DegreeCentrality.log[39;49;00m
+[91m/home/luke/thesisUpdate_04_12_21/DegreeCentrality.ipynb:20002: WARNING: Non-consecutive header level increase; 0 to 2 [myst.header][39;49;00m
+[91m/home/luke/thesisUpdate_04_12_21/DegreeCentrality.ipynb:100002: WARNING: Non-consecutive header level increase; 0 to 2 [myst.header][39;49;00m
+[31mWARNING: Execution Failed with traceback saved in /home/luke/thesisUpdate_04_12_21/_build/html/reports/HigherMatrixPowers.log[39;49;00m
+[91m/home/luke/thesisUpdate_04_12_21/Introduction.ipynb:10002: WARNING: Non-consecutive header level increase; 0 to 2 [myst.header][39;49;00m
+[91m/home/luke/thesisUpdate_04_12_21/Introduction.ipynb:30002: WARNING: Non-consecutive header level increase; 0 to 2 [myst.header][39;49;00m
+[91m/home/luke/thesisUpdate_04_12_21/Introduction.ipynb:60002: WARNING: Non-consecutive header level increase; 0 to 2 [myst.header][39;49;00m
+[31mWARNING: Execution Failed with traceback saved in /home/luke/thesisUpdate_04_12_21/_build/html/reports/KatzCentrality.log[39;49;00m
+[91m/home/luke/thesisUpdate_04_12_21/KatzCentrality.ipynb:20002: WARNING: Non-consecutive header level increase; 0 to 2 [myst.header][39;49;00m
+[31mWARNING: Execution Failed with traceback saved in /home/luke/thesisUpdate_04_12_21/_build/html/reports/Normalization.log[39;49;00m
 [01mlooking for now-outdated files... [39;49;00mnone found
 [01mpickling environment... [39;49;00mdone
 [01mchecking consistency... [39;49;00mdone
 [01mpreparing documents... [39;49;00mdone
-[01mwriting output... [39;49;00m[ 14%] [32mDeeperGCNs[39;49;00m                                                                                          [01mwriting output... [39;49;00m[ 28%] [32mDegreeCentrality[39;49;00m                                                                                    [01mwriting output... [39;49;00m[ 42%] [32mFutureWorkandBibliography[39;49;00m                                                                           [01mwriting output... [39;49;00m[ 57%] [32mHigherMatrixPowers[39;49;00m                                                                                  [01mwriting output... [39;49;00m[ 71%] [32mIntroduction[39;49;00m                                                                                        [01mwriting output... [39;49;00m[ 85%] [32mKatzCentrality[39;49;00m                                                                                      [01mwriting output... [39;49;00m[100%] [32mNormalization[39;49;00m                                                                                       
+[01mwriting output... [39;49;00m[ 14%] [32mDeeperGCNs[39;49;00m                                            [01mwriting output... [39;49;00m[ 28%] [32mDegreeCentrality[39;49;00m                                      [01mwriting output... [39;49;00m[ 42%] [32mFutureWorkandBibliography[39;49;00m                             [01mwriting output... [39;49;00m[ 57%] [32mHigherMatrixPowers[39;49;00m                                    [01mwriting output... [39;49;00m[ 71%] [32mIntroduction[39;49;00m                                          [01mwriting output... [39;49;00m[ 85%] [32mKatzCentrality[39;49;00m                                        [01mwriting output... [39;49;00m[100%] [32mNormalization[39;49;00m                                         
 [01mgenerating indices... [39;49;00mgenindex done
 [01mwriting additional pages... [39;49;00msearch done
-[01mcopying images... [39;49;00m[  3%] [33m_build/jupyter_execute/DeeperGCNs_8_0.png[39;49;00m                                                           [01mcopying images... [39;49;00m[  6%] [33m_build/jupyter_execute/DeeperGCNs_9_0.png[39;49;00m                                                           [01mcopying images... [39;49;00m[ 10%] [33m_build/jupyter_execute/DeeperGCNs_13_0.png[39;49;00m                                                          [01mcopying images... [39;49;00m[ 13%] [33m_build/jupyter_execute/DeeperGCNs_13_1.png[39;49;00m                                                          [01mcopying images... [39;49;00m[ 16%] [33m_build/jupyter_execute/DeeperGCNs_13_2.png[39;49;00m                                                          [01mcopying images... [39;49;00m[ 20%] [33m_build/jupyter_execute/DeeperGCNs_13_3.png[39;49;00m                                                          [01mcopying images... [39;49;00m[ 23%] [33m_build/jupyter_execute/DeeperGCNs_13_4.png[39;49;00m                                                          [01mcopying images... [39;49;00m[ 26%] [33m_build/jupyter_execute/DeeperGCNs_13_5.png[39;49;00m                                                          [01mcopying images... [39;49;00m[ 30%] [33m_build/jupyter_execute/DeeperGCNs_13_6.png[39;49;00m                                                          [01mcopying images... [39;49;00m[ 33%] [33m_build/jupyter_execute/DegreeCentrality_6_0.png[39;49;00m                                                     [01mcopying images... [39;49;00m[ 36%] [33m_build/jupyter_execute/DegreeCentrality_14_0.png[39;49;00m                                                    [01mcopying images... [39;49;00m[ 40%] [33m_build/jupyter_execute/DegreeCentrality_18_0.png[39;49;00m                                                    [01mcopying images... [39;49;00m[ 43%] [33m_build/jupyter_execute/DegreeCentrality_22_0.png[39;49;00m                                                    [01mcopying images... [39;49;00m[ 46%] [33m_build/jupyter_execute/HigherMatrixPowers_8_0.png[39;49;00m                                                   [01mcopying images... [39;49;00m[ 50%] [33m_build/jupyter_execute/HigherMatrixPowers_16_0.png[39;49;00m                                                  [01mcopying images... [39;49;00m[ 53%] [33m_build/jupyter_execute/HigherMatrixPowers_24_0.png[39;49;00m                                                  [01mcopying images... [39;49;00m[ 56%] [33m_build/jupyter_execute/KatzCentrality_11_0.png[39;49;00m                                                      [01mcopying images... [39;49;00m[ 60%] [33m_build/jupyter_execute/KatzCentrality_15_0.png[39;49;00m                                                      [01mcopying images... [39;49;00m[ 63%] [33m_build/jupyter_execute/KatzCentrality_19_0.png[39;49;00m                                                      [01mcopying images... [39;49;00m[ 66%] [33m_build/jupyter_execute/KatzCentrality_23_0.png[39;49;00m                                                      [01mcopying images... [39;49;00m[ 70%] [33m_build/jupyter_execute/KatzCentrality_33_0.png[39;49;00m                                                      [01mcopying images... [39;49;00m[ 73%] [33m_build/jupyter_execute/KatzCentrality_39_0.png[39;49;00m                                                      [01mcopying images... [39;49;00m[ 76%] [33m_build/jupyter_execute/Normalization_12_0.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 80%] [33m_build/jupyter_execute/Normalization_13_0.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 83%] [33m_build/jupyter_execute/Normalization_13_1.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 86%] [33m_build/jupyter_execute/Normalization_13_2.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 90%] [33m_build/jupyter_execute/Normalization_13_3.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 93%] [33m_build/jupyter_execute/Normalization_13_4.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 96%] [33m_build/jupyter_execute/Normalization_13_5.png[39;49;00m                                                       [01mcopying images... [39;49;00m[100%] [33m_build/jupyter_execute/Normalization_13_6.png[39;49;00m                                                       
+[01mcopying images... [39;49;00m[  1%] [33m_build/jupyter_execute/DeeperGCNs_8_0.png[39;49;00m             [01mcopying images... [39;49;00m[  3%] [33m_build/jupyter_execute/DeeperGCNs_9_0.png[39;49;00m             [01mcopying images... [39;49;00m[  5%] [33m_build/jupyter_execute/DeeperGCNs_13_0.png[39;49;00m            [01mcopying images... [39;49;00m[  7%] [33m_build/jupyter_execute/DeeperGCNs_13_1.png[39;49;00m            [01mcopying images... [39;49;00m[  9%] [33m_build/jupyter_execute/DeeperGCNs_13_2.png[39;49;00m            [01mcopying images... [39;49;00m[ 11%] [33m_build/jupyter_execute/DeeperGCNs_13_3.png[39;49;00m            [01mcopying images... [39;49;00m[ 12%] [33m_build/jupyter_execute/DeeperGCNs_13_4.png[39;49;00m            [01mcopying images... [39;49;00m[ 14%] [33m_build/jupyter_execute/DeeperGCNs_13_5.png[39;49;00m            [01mcopying images... [39;49;00m[ 16%] [33m_build/jupyter_execute/DeeperGCNs_13_6.png[39;49;00m            [01mcopying images... [39;49;00m[ 18%] [33m_build/jupyter_execute/DegreeCentrality_6_0.png[39;49;00m       [01mcopying images... [39;49;00m[ 20%] [33m_build/jupyter_execute/DegreeCentrality_14_0.png[39;49;00m      [01mcopying images... [39;49;00m[ 22%] [33m_build/jupyter_execute/DegreeCentrality_18_0.png[39;49;00m      [01mcopying images... [39;49;00m[ 24%] [33m_build/jupyter_execute/DegreeCentrality_22_0.png[39;49;00m      [01mcopying images... [39;49;00m[ 25%] [33m_build/jupyter_execute/HigherMatrixPowers_8_0.png[39;49;00m     [01mcopying images... [39;49;00m[ 27%] [33m_build/jupyter_execute/HigherMatrixPowers_16_0.png[39;49;00m    [01mcopying images... [39;49;00m[ 29%] [33m_build/jupyter_execute/HigherMatrixPowers_24_0.png[39;49;00m    [01mcopying images... [39;49;00m[ 31%] [33m_build/jupyter_execute/KatzCentrality_11_0.png[39;49;00m        [01mcopying images... [39;49;00m[ 33%] [33m_build/jupyter_execute/KatzCentrality_15_0.png[39;49;00m        [01mcopying images... [39;49;00m[ 35%] [33m_build/jupyter_execute/KatzCentrality_19_0.png[39;49;00m        [01mcopying images... [39;49;00m[ 37%] [33m_build/jupyter_execute/KatzCentrality_23_0.png[39;49;00m        [01mcopying images... [39;49;00m[ 38%] [33m_build/jupyter_execute/KatzCentrality_33_0.png[39;49;00m        [01mcopying images... [39;49;00m[ 40%] [33m_build/jupyter_execute/KatzCentrality_39_0.png[39;49;00m        [01mcopying images... [39;49;00m[ 42%] [33m_build/jupyter_execute/Normalization_12_0.png[39;49;00m         [01mcopying images... [39;49;00m[ 44%] [33m_build/jupyter_execute/Normalization_13_0.png[39;49;00m         [01mcopying images... [39;49;00m[ 46%] [33m_build/jupyter_execute/Normalization_13_1.png[39;49;00m         [01mcopying images... [39;49;00m[ 48%] [33m_build/jupyter_execute/Normalization_13_2.png[39;49;00m         [01mcopying images... [39;49;00m[ 50%] [33m_build/jupyter_execute/Normalization_13_3.png[39;49;00m         [01mcopying images... [39;49;00m[ 51%] [33m_build/jupyter_execute/Normalization_13_4.png[39;49;00m         [01mcopying images... [39;49;00m[ 53%] [33m_build/jupyter_execute/Normalization_13_5.png[39;49;00m         [01mcopying images... [39;49;00m[ 55%] [33m_build/jupyter_execute/Normalization_13_6.png[39;49;00m         [01mcopying images... [39;49;00m[ 57%] [33m_build/jupyter_execute/Normalization_17_0.png[39;49;00m         [01mcopying images... [39;49;00m[ 59%] [33m_build/jupyter_execute/Normalization_18_0.png[39;49;00m         [01mcopying images... [39;49;00m[ 61%] [33m_build/jupyter_execute/Normalization_18_1.png[39;49;00m         [01mcopying images... [39;49;00m[ 62%] [33m_build/jupyter_execute/Normalization_18_2.png[39;49;00m         [01mcopying images... [39;49;00m[ 64%] [33m_build/jupyter_execute/Normalization_18_3.png[39;49;00m         [01mcopying images... [39;49;00m[ 66%] [33m_build/jupyter_execute/Normalization_18_4.png[39;49;00m         [01mcopying images... [39;49;00m[ 68%] [33m_build/jupyter_execute/Normalization_18_5.png[39;49;00m         [01mcopying images... [39;49;00m[ 70%] [33m_build/jupyter_execute/Normalization_18_6.png[39;49;00m         [01mcopying images... [39;49;00m[ 72%] [33m_build/jupyter_execute/Normalization_22_0.png[39;49;00m         [01mcopying images... [39;49;00m[ 74%] [33m_build/jupyter_execute/Normalization_23_0.png[39;49;00m         [01mcopying images... [39;49;00m[ 75%] [33m_build/jupyter_execute/Normalization_23_1.png[39;49;00m         [01mcopying images... [39;49;00m[ 77%] [33m_build/jupyter_execute/Normalization_23_2.png[39;49;00m         [01mcopying images... [39;49;00m[ 79%] [33m_build/jupyter_execute/Normalization_23_3.png[39;49;00m         [01mcopying images... [39;49;00m[ 81%] [33m_build/jupyter_execute/Normalization_23_4.png[39;49;00m         [01mcopying images... [39;49;00m[ 83%] [33m_build/jupyter_execute/Normalization_23_5.png[39;49;00m         [01mcopying images... [39;49;00m[ 85%] [33m_build/jupyter_execute/Normalization_23_6.png[39;49;00m         [01mcopying images... [39;49;00m[ 87%] [33m_build/jupyter_execute/Normalization_28_0.png[39;49;00m         [01mcopying images... [39;49;00m[ 88%] [33m_build/jupyter_execute/Normalization_29_0.png[39;49;00m         [01mcopying images... [39;49;00m[ 90%] [33m_build/jupyter_execute/Normalization_29_1.png[39;49;00m         [01mcopying images... [39;49;00m[ 92%] [33m_build/jupyter_execute/Normalization_29_2.png[39;49;00m         [01mcopying images... [39;49;00m[ 94%] [33m_build/jupyter_execute/Normalization_29_3.png[39;49;00m         [01mcopying images... [39;49;00m[ 96%] [33m_build/jupyter_execute/Normalization_29_4.png[39;49;00m         [01mcopying images... [39;49;00m[ 98%] [33m_build/jupyter_execute/Normalization_29_5.png[39;49;00m         [01mcopying images... [39;49;00m[100%] [33m_build/jupyter_execute/Normalization_29_6.png[39;49;00m         
 [01mcopying static files... [39;49;00mdone
 [01mcopying extra files... [39;49;00mdone
 [01mdumping search index in English (code: en)... [39;49;00mdone
@@ -312,65 +52,7 @@ Your book's HTML pages are here:
 You can look at your book by opening this file in a browser:
     _build/html/index.html
 Or paste this line directly into your browser bar:
-    file:///home/luke/GCN_Stuff/_build/html/index.html            
-
-[92m===============================================================================[0m
-
-Running Jupyter-Book v0.10.2
-Source Folder: /home/luke/GCN_Stuff
-Config Path: None
-Output Path: /home/luke/GCN_Stuff/_build/html
-[01mRunning Sphinx v3.5.4[39;49;00m
-[01mmaking output directory... [39;49;00mdone
-[01mmyst v0.13.6:[39;49;00m MdParserConfig(renderer='sphinx', commonmark_only=False, dmath_allow_labels=True, dmath_allow_space=True, dmath_allow_digits=True, update_mathjax=True, enable_extensions=['colon_fence', 'dollarmath', 'linkify', 'substitution'], disable_syntax=[], url_schemes=['mailto', 'http', 'https'], heading_anchors=None, html_meta=[], footnote_transition=True, substitutions=[], sub_delimiters=['{', '}'])
-[01mbuilding [mo]: [39;49;00mtargets for 0 po files that are out of date
-[01mbuilding [html]: [39;49;00mtargets for 7 source files that are out of date
-[01mupdating environment: [39;49;00m[new config] 7 added, 0 changed, 0 removed
-[01mreading sources... [39;49;00m[ 14%] [35mDeeperGCNs[39;49;00m                                                                                         Executing: DeeperGCNs in: /home/luke/GCN_Stuff
-[01mreading sources... [39;49;00m[ 28%] [35mDegreeCentrality[39;49;00m                                                                                   Executing: DegreeCentrality in: /home/luke/GCN_Stuff
-[01mreading sources... [39;49;00m[ 42%] [35mFutureWorkandBibliography[39;49;00m                                                                          Executing: FutureWorkandBibliography in: /home/luke/GCN_Stuff
-[01mreading sources... [39;49;00m[ 57%] [35mHigherMatrixPowers[39;49;00m                                                                                 Executing: HigherMatrixPowers in: /home/luke/GCN_Stuff
-[01mreading sources... [39;49;00m[ 71%] [35mIntroduction[39;49;00m                                                                                       Executing: Introduction in: /home/luke/GCN_Stuff
-[01mreading sources... [39;49;00m[ 85%] [35mKatzCentrality[39;49;00m                                                                                     Executing: KatzCentrality in: /home/luke/GCN_Stuff
-[01mreading sources... [39;49;00m[100%] [35mNormalization[39;49;00m                                                                                      Executing: Normalization in: /home/luke/GCN_Stuff
-
-[31mWARNING: Execution Failed with traceback saved in /home/luke/GCN_Stuff/_build/html/reports/DeeperGCNs.log[39;49;00m
-[91m/home/luke/GCN_Stuff/DeeperGCNs.ipynb:20002: WARNING: Non-consecutive header level increase; 0 to 2 [myst.header][39;49;00m
-[31mWARNING: Execution Failed with traceback saved in /home/luke/GCN_Stuff/_build/html/reports/DegreeCentrality.log[39;49;00m
-[91m/home/luke/GCN_Stuff/DegreeCentrality.ipynb:20002: WARNING: Non-consecutive header level increase; 0 to 2 [myst.header][39;49;00m
-[91m/home/luke/GCN_Stuff/DegreeCentrality.ipynb:100002: WARNING: Non-consecutive header level increase; 0 to 2 [myst.header][39;49;00m
-[31mWARNING: Execution Failed with traceback saved in /home/luke/GCN_Stuff/_build/html/reports/HigherMatrixPowers.log[39;49;00m
-[91m/home/luke/GCN_Stuff/Introduction.ipynb:10002: WARNING: Non-consecutive header level increase; 0 to 2 [myst.header][39;49;00m
-[91m/home/luke/GCN_Stuff/Introduction.ipynb:30002: WARNING: Non-consecutive header level increase; 0 to 2 [myst.header][39;49;00m
-[91m/home/luke/GCN_Stuff/Introduction.ipynb:60002: WARNING: Non-consecutive header level increase; 0 to 2 [myst.header][39;49;00m
-[31mWARNING: Execution Failed with traceback saved in /home/luke/GCN_Stuff/_build/html/reports/KatzCentrality.log[39;49;00m
-[91m/home/luke/GCN_Stuff/KatzCentrality.ipynb:20002: WARNING: Non-consecutive header level increase; 0 to 2 [myst.header][39;49;00m
-[31mWARNING: Execution Failed with traceback saved in /home/luke/GCN_Stuff/_build/html/reports/Normalization.log[39;49;00m
-[01mlooking for now-outdated files... [39;49;00mnone found
-[01mpickling environment... [39;49;00mdone
-[01mchecking consistency... [39;49;00mdone
-[01mpreparing documents... [39;49;00mdone
-[01mwriting output... [39;49;00m[ 14%] [32mDeeperGCNs[39;49;00m                                                                                          [01mwriting output... [39;49;00m[ 28%] [32mDegreeCentrality[39;49;00m                                                                                    [01mwriting output... [39;49;00m[ 42%] [32mFutureWorkandBibliography[39;49;00m                                                                           [01mwriting output... [39;49;00m[ 57%] [32mHigherMatrixPowers[39;49;00m                                                                                  [01mwriting output... [39;49;00m[ 71%] [32mIntroduction[39;49;00m                                                                                        [01mwriting output... [39;49;00m[ 85%] [32mKatzCentrality[39;49;00m                                                                                      [01mwriting output... [39;49;00m[100%] [32mNormalization[39;49;00m                                                                                       
-[01mgenerating indices... [39;49;00mgenindex done
-[01mwriting additional pages... [39;49;00msearch done
-[01mcopying images... [39;49;00m[  1%] [33m_build/jupyter_execute/DeeperGCNs_8_0.png[39;49;00m                                                           [01mcopying images... [39;49;00m[  3%] [33m_build/jupyter_execute/DeeperGCNs_9_0.png[39;49;00m                                                           [01mcopying images... [39;49;00m[  5%] [33m_build/jupyter_execute/DeeperGCNs_13_0.png[39;49;00m                                                          [01mcopying images... [39;49;00m[  7%] [33m_build/jupyter_execute/DeeperGCNs_13_1.png[39;49;00m                                                          [01mcopying images... [39;49;00m[  9%] [33m_build/jupyter_execute/DeeperGCNs_13_2.png[39;49;00m                                                          [01mcopying images... [39;49;00m[ 11%] [33m_build/jupyter_execute/DeeperGCNs_13_3.png[39;49;00m                                                          [01mcopying images... [39;49;00m[ 12%] [33m_build/jupyter_execute/DeeperGCNs_13_4.png[39;49;00m                                                          [01mcopying images... [39;49;00m[ 14%] [33m_build/jupyter_execute/DeeperGCNs_13_5.png[39;49;00m                                                          [01mcopying images... [39;49;00m[ 16%] [33m_build/jupyter_execute/DeeperGCNs_13_6.png[39;49;00m                                                          [01mcopying images... [39;49;00m[ 18%] [33m_build/jupyter_execute/DegreeCentrality_6_0.png[39;49;00m                                                     [01mcopying images... [39;49;00m[ 20%] [33m_build/jupyter_execute/DegreeCentrality_14_0.png[39;49;00m                                                    [01mcopying images... [39;49;00m[ 22%] [33m_build/jupyter_execute/DegreeCentrality_18_0.png[39;49;00m                                                    [01mcopying images... [39;49;00m[ 24%] [33m_build/jupyter_execute/DegreeCentrality_22_0.png[39;49;00m                                                    [01mcopying images... [39;49;00m[ 25%] [33m_build/jupyter_execute/HigherMatrixPowers_8_0.png[39;49;00m                                                   [01mcopying images... [39;49;00m[ 27%] [33m_build/jupyter_execute/HigherMatrixPowers_16_0.png[39;49;00m                                                  [01mcopying images... [39;49;00m[ 29%] [33m_build/jupyter_execute/HigherMatrixPowers_24_0.png[39;49;00m                                                  [01mcopying images... [39;49;00m[ 31%] [33m_build/jupyter_execute/KatzCentrality_11_0.png[39;49;00m                                                      [01mcopying images... [39;49;00m[ 33%] [33m_build/jupyter_execute/KatzCentrality_15_0.png[39;49;00m                                                      [01mcopying images... [39;49;00m[ 35%] [33m_build/jupyter_execute/KatzCentrality_19_0.png[39;49;00m                                                      [01mcopying images... [39;49;00m[ 37%] [33m_build/jupyter_execute/KatzCentrality_23_0.png[39;49;00m                                                      [01mcopying images... [39;49;00m[ 38%] [33m_build/jupyter_execute/KatzCentrality_33_0.png[39;49;00m                                                      [01mcopying images... [39;49;00m[ 40%] [33m_build/jupyter_execute/KatzCentrality_39_0.png[39;49;00m                                                      [01mcopying images... [39;49;00m[ 42%] [33m_build/jupyter_execute/Normalization_12_0.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 44%] [33m_build/jupyter_execute/Normalization_13_0.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 46%] [33m_build/jupyter_execute/Normalization_13_1.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 48%] [33m_build/jupyter_execute/Normalization_13_2.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 50%] [33m_build/jupyter_execute/Normalization_13_3.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 51%] [33m_build/jupyter_execute/Normalization_13_4.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 53%] [33m_build/jupyter_execute/Normalization_13_5.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 55%] [33m_build/jupyter_execute/Normalization_13_6.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 57%] [33m_build/jupyter_execute/Normalization_17_0.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 59%] [33m_build/jupyter_execute/Normalization_18_0.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 61%] [33m_build/jupyter_execute/Normalization_18_1.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 62%] [33m_build/jupyter_execute/Normalization_18_2.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 64%] [33m_build/jupyter_execute/Normalization_18_3.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 66%] [33m_build/jupyter_execute/Normalization_18_4.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 68%] [33m_build/jupyter_execute/Normalization_18_5.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 70%] [33m_build/jupyter_execute/Normalization_18_6.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 72%] [33m_build/jupyter_execute/Normalization_22_0.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 74%] [33m_build/jupyter_execute/Normalization_23_0.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 75%] [33m_build/jupyter_execute/Normalization_23_1.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 77%] [33m_build/jupyter_execute/Normalization_23_2.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 79%] [33m_build/jupyter_execute/Normalization_23_3.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 81%] [33m_build/jupyter_execute/Normalization_23_4.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 83%] [33m_build/jupyter_execute/Normalization_23_5.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 85%] [33m_build/jupyter_execute/Normalization_23_6.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 87%] [33m_build/jupyter_execute/Normalization_28_0.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 88%] [33m_build/jupyter_execute/Normalization_29_0.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 90%] [33m_build/jupyter_execute/Normalization_29_1.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 92%] [33m_build/jupyter_execute/Normalization_29_2.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 94%] [33m_build/jupyter_execute/Normalization_29_3.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 96%] [33m_build/jupyter_execute/Normalization_29_4.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 98%] [33m_build/jupyter_execute/Normalization_29_5.png[39;49;00m                                                       [01mcopying images... [39;49;00m[100%] [33m_build/jupyter_execute/Normalization_29_6.png[39;49;00m                                                       
-[01mcopying static files... [39;49;00mdone
-[01mcopying extra files... [39;49;00mdone
-[01mdumping search index in English (code: en)... [39;49;00mdone
-[01mdumping object inventory... [39;49;00mdone
-[01mbuild succeeded, 12 warnings.[39;49;00m
-
-The HTML pages are in _build/html.
-
-[92m===============================================================================[0m
-
-Finished generating HTML for book.
-Your book's HTML pages are here:
-    _build/html/
-You can look at your book by opening this file in a browser:
-    _build/html/index.html
-Or paste this line directly into your browser bar:
-    file:///home/luke/GCN_Stuff/_build/html/index.html            
+    file:///home/luke/thesisUpdate_04_12_21/_build/html/index.html            
 
 [92m===============================================================================[0m
 
