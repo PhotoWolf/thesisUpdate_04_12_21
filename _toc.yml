@@ -1,0 +1,15 @@
+# In _toc.yml
+- file: Introduction
+  numbered: true
+
+- file: DegreeCentrality
+- file: KatzCentrality
+- file: DeeperGCNs
+- file: Normalization
+- file: HigherMatrixPowers
+- file: FutureWorkandBibliography
+
+
+
+
+
