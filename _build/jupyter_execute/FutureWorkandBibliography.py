@@ -8,7 +8,7 @@
 1. Gilmer, J., Schoenholz, S., Riley, P.F., Vinyals, O., & Dahl, G.E. (2017). Neural Message Passing for Quantum Chemistry. ArXiv, abs/1704.01212.
 2. Hu, Z., Fan, C., Chen, T., Chang, K., & Sun, Y. (2019). Pre-Training Graph Neural Networks for Generic Structural Feature Extraction. ArXiv, abs/1905.13728.
 3. Dwivedi, V.P., Joshi, C.K., Laurent, T., Bengio, Y., & Bresson, X. (2020). Benchmarking Graph Neural Networks. ArXiv, abs/2003.00982.
-4. 
+4. Chen, Hongxu & Yin, Hongzhi & Chen, Tong & Hung, Nguyen & Peng, Wen-Chih & Li, Xue. (2019). Exploiting Centrality Information with Graph Convolutions for Network Representation Learning. 590-601. 10.1109/ICDE.2019.00059. 
 5. Mendonça, M.R., Barreto, A., & Ziviani, A. (2021). Approximating Network Centrality Measures Using Node Embedding and Machine Learning. IEEE Transactions on Network Science and Engineering, 8, 220-230.
 6. Grando, F., Granville, L., & Lamb, L. (2019). Machine Learning in Network Centrality Measures. ACM Computing Surveys (CSUR), 51, 1 - 32.
 7. Morris, C., Ritzert, M., Fey, M., Hamilton, W.L., Lenssen, J.E., Rattan, G., & Grohe, M. (2019). Weisfeiler and Leman Go Neural: Higher-order Graph Neural Networks. AAAI.
@@ -22,4 +22,3 @@
 15. Wu, F., Zhang, T., Souza, A., Fifty, C., Yu, T., & Weinberger, K.Q. (2019). Simplifying Graph Convolutional Networks. ArXiv, abs/1902.07153.
 16. Abu-El-Haija, S., Perozzi, B., Kapoor, A., Harutyunyan, H., Alipourfard, N., Lerman, K., Steeg, G.V., & Galstyan, A. (2019). MixHop: Higher-Order Graph Convolutional Architectures via Sparsified Neighborhood Mixing. ICML.
 17. Brandes, U. (2001). A faster algorithm for betweenness centrality. The Journal of Mathematical Sociology, 25, 163 - 177.
-
