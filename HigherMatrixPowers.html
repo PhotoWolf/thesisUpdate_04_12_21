@@ -288,7 +288,7 @@
 </div>
 <div class="section" id="simplified-graph-convolution-al-networks">
 <h1><span class="section-number">6. </span>Simplified Graph Convolution(al Networks)<a class="headerlink" href="#simplified-graph-convolution-al-networks" title="Permalink to this headline">¶</a></h1>
-<p>Wu et. al. (2019) introduced the Simplified Graph Convolution (SGC)</p>
+<p>Wu et. al. (2019) introduced the Simplified Graph Convolution (SGC) [15]</p>
 <div class="math notranslate nohighlight">
 \[X^{out} = \Theta{}(A^{k}X^{in})\]</div>
 <p>In practice, they found that removing the non-linearities at each GCN layer did not impact classification accuracy whilst greatly reducing the parameter count. Since learning Katz Centrality for low-density networks seemingly requires deeper (and thus more expensive) models, we felt it prudent to do some experiments.</p>
@@ -523,7 +523,7 @@
 </div>
 <div class="section" id="mixhop">
 <h2><span class="section-number">6.4. </span>MixHop<a class="headerlink" href="#mixhop" title="Permalink to this headline">¶</a></h2>
-<p>We also examine a single-layer MixHop model as introduced in El-Haija et. al. (2019). Taking similar inspiration from SGC, MixHop concatenates each level of aggreation into a single feature vector.
+<p>We also examine a single-layer MixHop model as introduced in El-Haija et. al. (2019). Taking similar inspiration from SGC, MixHop concatenates each level of aggreation into a single feature vector [16].
 $<span class="math notranslate nohighlight">\(X^{out} = \Theta{}(A^{k}X^{in} || A^{k-1}X^{in} || ... || X^{in})\)</span>$</p>
 <div class="section" id="id2">
 <h3><span class="section-number">6.4.1. </span>Model<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
