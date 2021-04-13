@@ -1,0 +1,328 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>7. Future Directions &#8212; My Jupyter Book</title>
+    
+  <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.e7340bb3dbd8dde6db86f25597f54a1b.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.7d483ff0a819d6edff12ce0b1ead3928.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="6. Simplified Graph Convolution(al Networks)" href="HigherMatrixPowers.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">My Jupyter Book</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="Introduction.html">
+   Introduction
+  </a>
+ </li>
+</ul>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="DegreeCentrality.html">
+   1. Dataset
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="DegreeCentrality.html#degree-centrality">
+   2. Degree Centrality
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="KatzCentrality.html">
+   3. Katz Centrality
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="DeeperGCNs.html">
+   4. Do Deeper Networks Solve the Problem?
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Normalization.html">
+   5. Normalization Techniques
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="HigherMatrixPowers.html">
+   6. Simplified Graph Convolution(al Networks)
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   7. Future Directions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="#bibliography">
+   8. Bibliography
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/FutureWorkandBibliography.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+            <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                    data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                    title="Fullscreen mode"><i
+                        class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/FutureWorkandBibliography.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i>
+            Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   7. Future Directions
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#bibliography">
+   8. Bibliography
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="future-directions">
+<h1><span class="section-number">7. </span>Future Directions<a class="headerlink" href="#future-directions" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p>Thus far, we have only explored centrality measures that can be easily expressed as the weighted sum of matrix powers. Path-based centrality (i.e betweeness, closeness, etc.) may pose additional problems for standard GCN architectures. Moreover, while even Katz Centrality is fairly quick to compute for small to medium sized networks, path centralities do not scale as well. The fastest algorithm is that of Brandes [17], which is <span class="math notranslate nohighlight">\(O(|N||E|)\)</span>. It is not as trivial to merely precompute these metrics and append them as node features, so a network capable of learning a decent approximation is of value.</p></li>
+<li><p>Regarding our current work, there are a few avenues we’d like to explore further. Overmsoothing and training deeper GCNs is an active area of study in the community, and the theoretical side is not all that well developed. We are vaguely aware of a work linking oversmoothing to a matrix’s spectral gap in the context of expander graphs, but nothing in terms of eigenvalue ratio, dominant eigenvectors, etc. There are also some custom architectures we’d like to try, in so far as they might perform better than GraphConv. The code for these is already finished (I spent Janurary playing around with a few different ideas); it is just a matter of testing them on our synthetic dataset.</p></li>
+</ul>
+</div>
+<div class="section" id="bibliography">
+<h1><span class="section-number">8. </span>Bibliography<a class="headerlink" href="#bibliography" title="Permalink to this headline">¶</a></h1>
+<ol class="simple">
+<li><p>Gilmer, J., Schoenholz, S., Riley, P.F., Vinyals, O., &amp; Dahl, G.E. (2017). Neural Message Passing for Quantum Chemistry. ArXiv, abs/1704.01212.</p></li>
+<li><p>Hu, Z., Fan, C., Chen, T., Chang, K., &amp; Sun, Y. (2019). Pre-Training Graph Neural Networks for Generic Structural Feature Extraction. ArXiv, abs/1905.13728.</p></li>
+<li><p>Dwivedi, V.P., Joshi, C.K., Laurent, T., Bengio, Y., &amp; Bresson, X. (2020). Benchmarking Graph Neural Networks. ArXiv, abs/2003.00982.</p></li>
+<li></li>
+<li><p>Mendonça, M.R., Barreto, A., &amp; Ziviani, A. (2021). Approximating Network Centrality Measures Using Node Embedding and Machine Learning. IEEE Transactions on Network Science and Engineering, 8, 220-230.</p></li>
+<li><p>Grando, F., Granville, L., &amp; Lamb, L. (2019). Machine Learning in Network Centrality Measures. ACM Computing Surveys (CSUR), 51, 1 - 32.</p></li>
+<li><p>Morris, C., Ritzert, M., Fey, M., Hamilton, W.L., Lenssen, J.E., Rattan, G., &amp; Grohe, M. (2019). Weisfeiler and Leman Go Neural: Higher-order Graph Neural Networks. AAAI.</p></li>
+<li><p>Velickovic, P., Cucurull, G., Casanova, A., Romero, A., Liò, P., &amp; Bengio, Y. (2018). Graph Attention Networks. ArXiv, abs/1710.10903.</p></li>
+<li><p>Wang, Y., Sun, Y., Liu, Z., Sarma, S.E., Bronstein, M., &amp; Solomon, J. (2019). Dynamic Graph CNN for Learning on Point Clouds. ACM Transactions on Graphics (TOG), 38, 1 - 12.</p></li>
+<li><p>Ioffe, S., &amp; Szegedy, C. (2015). Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift. ArXiv, abs/1502.03167.</p></li>
+<li><p>Maas, A.L. (2013). Rectifier Nonlinearities Improve Neural Network Acoustic Models.</p></li>
+<li><p>Karrer, B., &amp; Newman, M. (2011). Stochastic blockmodels and community structure in networks. Physical review. E, Statistical, nonlinear, and soft matter physics, 83 1 Pt 2, 016107 .</p></li>
+<li><p>Katz, L. A new status index derived from sociometric analysis. Psychometrika 18, 39–43 (1953).</p></li>
+<li><p>Zhao, L., &amp; Akoglu, L. (2020). PairNorm: Tackling Oversmoothing in GNNs. ArXiv, abs/1909.12223.</p></li>
+<li><p>Wu, F., Zhang, T., Souza, A., Fifty, C., Yu, T., &amp; Weinberger, K.Q. (2019). Simplifying Graph Convolutional Networks. ArXiv, abs/1902.07153.</p></li>
+<li><p>Abu-El-Haija, S., Perozzi, B., Kapoor, A., Harutyunyan, H., Alipourfard, N., Lerman, K., Steeg, G.V., &amp; Galstyan, A. (2019). MixHop: Higher-Order Graph Convolutional Architectures via Sparsified Neighborhood Mixing. ICML.</p></li>
+<li><p>Brandes, U. (2001). A faster algorithm for betweenness centrality. The Journal of Mathematical Sociology, 25, 163 - 177.</p></li>
+</ol>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+        <div class='prev-next-bottom'>
+            
+    <a class='left-prev' id="prev-link" href="HigherMatrixPowers.html" title="previous page"><span class="section-number">6. </span>Simplified Graph Convolution(al Networks)</a>
+
+        </div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By The Jupyter Book community<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>

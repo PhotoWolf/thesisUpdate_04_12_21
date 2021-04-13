@@ -1,0 +1,513 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Introduction &#8212; My Jupyter Book</title>
+    
+  <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.e7340bb3dbd8dde6db86f25597f54a1b.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.7d483ff0a819d6edff12ce0b1ead3928.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="1. Dataset" href="DegreeCentrality.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">My Jupyter Book</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1 current active">
+  <a class="reference internal" href="#">
+   Introduction
+  </a>
+ </li>
+</ul>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="DegreeCentrality.html">
+   1. Dataset
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="DegreeCentrality.html#degree-centrality">
+   2. Degree Centrality
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="KatzCentrality.html">
+   3. Katz Centrality
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="DeeperGCNs.html">
+   4. Do Deeper Networks Solve the Problem?
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Normalization.html">
+   5. Normalization Techniques
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="HigherMatrixPowers.html">
+   6. Simplified Graph Convolution(al Networks)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="FutureWorkandBibliography.html">
+   7. Future Directions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="FutureWorkandBibliography.html#bibliography">
+   8. Bibliography
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/Introduction.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+            <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                    data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                    title="Fullscreen mode"><i
+                        class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/Introduction.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i>
+            Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Introduction
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#model-code">
+   Model Code
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#training-code">
+   Training Code
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<p>Graph Neural Networks (GCNs) are an extension of the familiar Convolutional Neural Network to arbitrary topologies. Given the graph <span class="math notranslate nohighlight">\(G=\{V,E\}\)</span>, Gilmer et al. (2017) define the message-passing framework of GCNs as
+$<span class="math notranslate nohighlight">\(x_{i}^{l+1} = \Theta^{l}(v_{i}^{l},\gamma(x_{i}^{l},\{x_{j}^{l}:j\in{}N^{1}_{i}\},e_{ij}))\)</span><span class="math notranslate nohighlight">\(
+where \)</span>N_{i}^{1}<span class="math notranslate nohighlight">\( is the 1-neightborhood of vertex \)</span>v_{i}<span class="math notranslate nohighlight">\(, and \)</span>l<span class="math notranslate nohighlight">\( indexes the \)</span>l<span class="math notranslate nohighlight">\(-th layer of the model. \)</span>x_{i}\in{}R^{n}<span class="math notranslate nohighlight">\( is the feature vector associated with \)</span>v_{i}<span class="math notranslate nohighlight">\(. We refer to \)</span>\gamma{}<span class="math notranslate nohighlight">\( as our aggregation function; typical choices are the sum or max operators, but some more exotic options do exist(ie: LSTMs). \)</span>\Theta$ is a neural network of some description, most often a single linear layer [1].</p>
+<p>While GCNs are fairly well-studied (they’ve been a “trending topic” the past few years at ICLR ), we have limited understanding of how well they capture the topological information of <span class="math notranslate nohighlight">\(G\)</span>. And this is perhaps a glaring omission. The literature finds clear benefit to incorporating structural features into GCNs; in particular:</p>
+<ul class="simple">
+<li><p>Pretraining a GCN backbone on various centrality tasks improves the accuracy of downstream classifiers [2].</p></li>
+<li><p>Appending Laplacian eigenvectors to vertex features surpasses existing benchmark peroformance, in some cases quite significantly [3].</p></li>
+<li><p>Retaining centrality information produces more discriminative node embeddings [4].</p></li>
+</ul>
+<p>This motivates our desire to assess the structural capacity of GCNs and develop means by which it may be improved. Thus far, [5] is the only work in a similar vein; however, their experimental setting is unclear to the point of being unreproducible. They also include a fixed node ID parameter, which makes it difficult to generalize results outside of a transductive setting. [6] demonstrates the applicability of ML to learning topological graph metrics, but it predates the advent of GCNs.</p>
+</div>
+<div class="section" id="model-code">
+<h1>Model Code<a class="headerlink" href="#model-code" title="Permalink to this headline">¶</a></h1>
+<p>It is convient to classify GCNs into two clades: node-wise convolutions and edge-wise convolutions. The former are isotrophic algorithms i.e: <span class="math notranslate nohighlight">\(\gamma\)</span> is independent of <span class="math notranslate nohighlight">\(x_{i}\)</span> and <span class="math notranslate nohighlight">\(x_{j}\)</span> for edge <span class="math notranslate nohighlight">\(e_{ij}\)</span>. This allows us to generalize to varied topologies without much in the way of computational cost. The prototypical example of a node-wise GCN is the GraphConv architecture [7]:</p>
+<div class="math notranslate nohighlight">
+\[x_{i}^{l+1} = \Theta_{1}^{l}(x_{i}^{l+1}) + \Theta_{2}^{l}(\sum_{j\in{}N_{i}^{1}}w_{ij}x_{j}^{l})\]</div>
+<p><span class="math notranslate nohighlight">\(w_{ij}\)</span> is the scalar weight assocaited with <span class="math notranslate nohighlight">\(e_{ij}\)</span>. The model employs two feedforward networks, <span class="math notranslate nohighlight">\(\Theta_{1}\)</span> and <span class="math notranslate nohighlight">\(\Theta_{2}\)</span>, which can project the features of the target node and those aggregated from <span class="math notranslate nohighlight">\(N_{i}^{l}\)</span> into different subspaces. Assuming both <span class="math notranslate nohighlight">\(\Theta\)</span> are  <span class="math notranslate nohighlight">\(R^{kxn}\)</span> matrices, each GraphConv layer is <span class="math notranslate nohighlight">\(O(|V|kn + |E|n)\)</span> in time and <span class="math notranslate nohighlight">\(O(|V|n + |E|)\)</span> in space.</p>
+<p>Isotropy restricts the overall capacity of a GCN, as aggregations must be symmetric in each direction. In many cases, it is actually beneficial to operate on <em>pairs</em> of node features, and for that we require an anisotrophic model. Enter edge convolutions, of which the most prominent are the Graph Attention Network (GAT) and it’s numerous derivatives. We do not find GATs to be particularily performant (or efficient, for that matter), so we instead choose to focus on EdgeConv [8,9]:</p>
+<div class="math notranslate nohighlight">
+\[x_{i}^{l} = \sum_{j\in{}N_{i}^{1}}w_{ij}\Theta{}^{l}(x_{i}^{l}||x_{j}^{l}-x_{i}^{l})\]</div>
+<p>If <span class="math notranslate nohighlight">\(\Theta\)</span> is restricted to a <span class="math notranslate nohighlight">\(R^{kx2n}\)</span> matrix, EdgeConv possesses a layerwise time complexity of <span class="math notranslate nohighlight">\(\textit{O}(|E|kn)\)</span> and a <span class="math notranslate nohighlight">\(\textit{O}(|V|n + |E|n)\)</span> space complexity.</p>
+<p>Our implementations follow each layer with a 1D BatchNorm and LeakyReLU activation [10,11].</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">torch_geometric</span>
+<span class="kn">import</span> <span class="nn">torch_sparse</span>
+<span class="kn">import</span> <span class="nn">torch_scatter</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+
+<span class="c1"># GraphConv Model</span>
+<span class="k">class</span> <span class="nc">GraphConv</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="c1"># in_channels and out_channels are self-explanatory. int_channels is the number of </span>
+    <span class="c1"># features in the intermediate layers. Depth controls the number of aggregations.</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">in_channels</span><span class="p">,</span><span class="n">int_channels</span><span class="p">,</span><span class="n">out_channels</span><span class="p">,</span><span class="n">depth</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">GraphConv</span><span class="p">,</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">in_channels</span><span class="p">,</span><span class="n">int_channels</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">intermediate</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">ModuleList</span><span class="p">([</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">ModuleList</span><span class="p">([</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">int_channels</span><span class="p">,</span><span class="n">int_channels</span><span class="p">),</span>\
+                                                                      <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">int_channels</span><span class="p">,</span><span class="n">int_channels</span><span class="p">)])</span>\
+                                                 <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">depth</span><span class="p">)])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bn</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">ModuleList</span><span class="p">([</span><span class="n">torch_geometric</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">BatchNorm</span><span class="p">(</span><span class="n">int_channels</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">depth</span><span class="p">)])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">finish</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">int_channels</span><span class="p">,</span><span class="n">out_channels</span><span class="p">)</span>
+        
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">X</span><span class="p">,</span><span class="n">edge_index</span><span class="p">,</span><span class="n">edge_weight</span><span class="p">,</span><span class="n">batch</span><span class="p">):</span>
+        <span class="c1"># Project to int_channels</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        
+        <span class="c1"># Run through GraphConv layers</span>
+        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">m</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">intermediate</span><span class="p">):</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">](</span><span class="n">X</span><span class="p">)</span> <span class="o">+</span> <span class="n">torch_scatter</span><span class="o">.</span><span class="n">scatter_sum</span><span class="p">(</span><span class="n">edge_weight</span><span class="p">[:,</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">](</span><span class="n">X</span><span class="p">)[</span><span class="n">edge_index</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="n">edge_index</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">LeakyReLU</span><span class="p">()(</span><span class="bp">self</span><span class="o">.</span><span class="n">bn</span><span class="p">[</span><span class="n">idx</span><span class="p">](</span><span class="n">X</span><span class="p">))</span>
+            
+        <span class="c1"># Project to out_channels</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">finish</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+<span class="c1"># EdgeConv Model</span>
+<span class="k">class</span> <span class="nc">EdgeConv</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    
+    <span class="c1"># in_channels and out_channels are self-explanatory. int_channels is the number of </span>
+    <span class="c1"># features in the intermediate layers. Depth controls the number of aggregations.</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">in_channels</span><span class="p">,</span><span class="n">int_channels</span><span class="p">,</span><span class="n">out_channels</span><span class="p">,</span><span class="n">depth</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">EdgeConv</span><span class="p">,</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">in_channels</span><span class="p">,</span><span class="n">int_channels</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">intermediate</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">ModuleList</span><span class="p">([</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">int_channels</span><span class="p">,</span><span class="n">int_channels</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">depth</span><span class="p">)])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bn</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">ModuleList</span><span class="p">([</span><span class="n">torch_geometric</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">BatchNorm</span><span class="p">(</span><span class="n">int_channels</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">depth</span><span class="p">)])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">finish</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">int_channels</span><span class="p">,</span><span class="n">out_channels</span><span class="p">)</span>
+        
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">X</span><span class="p">,</span><span class="n">edge_index</span><span class="p">,</span><span class="n">edge_weight</span><span class="p">,</span><span class="n">batch</span><span class="p">):</span>
+        <span class="c1"># Project to int_channels</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        
+        <span class="c1"># Run through EdgeConv layers</span>
+        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">m</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">intermediate</span><span class="p">):</span>
+            <span class="n">Z</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">((</span><span class="n">X</span><span class="p">[</span><span class="n">edge_index</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span><span class="n">X</span><span class="p">[</span><span class="n">edge_index</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">-</span> <span class="n">X</span><span class="p">[</span><span class="n">edge_index</span><span class="p">[</span><span class="mi">1</span><span class="p">]]),</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="n">torch_scatter</span><span class="o">.</span><span class="n">scatter_sum</span><span class="p">(</span><span class="n">edge_weight</span><span class="p">[:,</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">m</span><span class="p">(</span><span class="n">Z</span><span class="p">),</span> <span class="n">edge_index</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">LeakyReLU</span><span class="p">()(</span><span class="bp">self</span><span class="o">.</span><span class="n">bn</span><span class="p">[</span><span class="n">idx</span><span class="p">](</span><span class="n">X</span><span class="p">))</span>
+            
+        <span class="c1"># Project to out_channels</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">finish</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="training-code">
+<h1>Training Code<a class="headerlink" href="#training-code" title="Permalink to this headline">¶</a></h1>
+<p>Graph centrality measures are used to quantify the structural properties of a network. By training GCNs to replicate more and more complex centralities, we hope to gain insight into how well they incorporate topology and what limitations they posses, if any. Depending on our algorithm’s performance, there may also be various practical applications. For example, path-based centralities (betweenness, closeness, etc) are broadly <span class="math notranslate nohighlight">\(\textit{O}(|V|^{3})\)</span> and, at best, <span class="math notranslate nohighlight">\(\textit{O}(|V||E|)\)</span> [12], so an accurate GCN approximation would be of great interest in analyzing larger networks.</p>
+<p>Following the example of [5], we define our loss as the L1 Norm between the normalized model output, <span class="math notranslate nohighlight">\(\vec{x}'\)</span>, and the targeted centrality scores, <span class="math notranslate nohighlight">\(\vec{y}\)</span>. Both quantities are min-max scaled. We have experimented with alternative noramlization schemes, but this one results in the most reliable convergence.
+$<span class="math notranslate nohighlight">\(\vec{x}' = \frac{\vec{x} - min(\vec{x})}{max(\vec{x}) - min(\vec{x})}\)</span>$</p>
+<div class="math notranslate nohighlight">
+\[L = ||\vec{x}' - \vec{y}||_{1}\]</div>
+<p>We also define the rank displacement. Let <span class="math notranslate nohighlight">\(\vec{u}\)</span> and <span class="math notranslate nohighlight">\(\vec{s}\)</span> be vectors in <span class="math notranslate nohighlight">\(R^{k}\)</span>. <span class="math notranslate nohighlight">\(f\)</span> is the <em>argsort</em> function i.e: the mapping <span class="math notranslate nohighlight">\(f(x_{i},\vec{x})\rightarrow{}r\)</span> where <span class="math notranslate nohighlight">\(r=|\{x_{j}:x_{j} &gt; x_{i} \forall{} x_{j}\in{}\vec{x}\}|\)</span>. <span class="math notranslate nohighlight">\(n\)</span> is an arbitary constant. Then the rank displacement is given as follows:
+$<span class="math notranslate nohighlight">\(r_{disp}(\vec{u},\vec{s})=\frac{1}{(1+f(s_{i},\vec{s}))^{n}k(k-1)}\sum_{i=0}^{k-1}|f(u_{i},\vec{u}) - f(s_{i},\vec{s})|\)</span>$</p>
+<p>Centrality is often used to compare individual nodes and ascertain some manner of “relevance”. To reflect this, we wanted to included a ranking measure—which ended up being the displacement—as an added metric.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># L1 Norm w/ Min-Max normalization</span>
+<span class="k">def</span> <span class="nf">scaled_L1</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">batch</span><span class="p">):</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">batch</span><span class="p">)</span>
+    <span class="n">Y</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span><span class="n">batch</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">L1Loss</span><span class="p">()(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">)</span>
+
+<span class="c1"># Computes Min-Max norm</span>
+<span class="k">def</span> <span class="nf">normalize</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">batch</span><span class="p">):</span>
+    <span class="n">Min</span> <span class="o">=</span> <span class="o">-</span><span class="n">torch_scatter</span><span class="o">.</span><span class="n">scatter_max</span><span class="p">(</span><span class="o">-</span><span class="n">X</span><span class="p">,</span><span class="n">batch</span><span class="p">,</span><span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="n">batch</span><span class="p">]</span>
+    <span class="n">Max</span> <span class="o">=</span> <span class="n">torch_scatter</span><span class="o">.</span><span class="n">scatter_max</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">batch</span><span class="p">,</span><span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="n">batch</span><span class="p">]</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">X</span><span class="o">-</span><span class="n">Min</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mf">1e-12</span> <span class="o">+</span> <span class="n">Max</span> <span class="o">-</span> <span class="n">Min</span><span class="p">)</span>
+
+<span class="c1"># Gets rank (descending) of each element in X</span>
+<span class="k">def</span> <span class="nf">get_rank</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
+    <span class="n">val</span><span class="p">,</span><span class="n">inv_val</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">return_inverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">val</span><span class="p">,</span><span class="n">descending</span><span class="o">=</span><span class="kc">True</span><span class="p">))[</span><span class="n">inv_val</span><span class="p">]</span>
+
+<span class="c1"># Compute rank displacement</span>
+<span class="k">def</span> <span class="nf">rank_disp</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">batch</span><span class="p">):</span>
+    <span class="n">L</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">b</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">batch</span><span class="o">.</span><span class="n">unique</span><span class="p">()):</span>
+        <span class="n">X_rank</span><span class="p">,</span><span class="n">Y_rank</span> <span class="o">=</span> <span class="n">get_rank</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">batch</span><span class="o">==</span><span class="n">b</span><span class="p">]),</span><span class="n">get_rank</span><span class="p">(</span><span class="n">Y</span><span class="p">[</span><span class="n">batch</span><span class="o">==</span><span class="n">b</span><span class="p">])</span>
+        <span class="n">l</span> <span class="o">=</span> <span class="p">(</span><span class="n">X_rank</span><span class="o">.</span><span class="n">float</span><span class="p">()</span> <span class="o">-</span> <span class="n">Y_rank</span><span class="o">.</span><span class="n">float</span><span class="p">())</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">Y_rank</span><span class="o">.</span><span class="n">float</span><span class="p">())</span><span class="o">**</span><span class="p">(</span><span class="o">.</span><span class="mi">6</span><span class="p">)</span>
+        <span class="n">L</span> <span class="o">+=</span> <span class="n">l</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">/</span><span class="n">torch</span><span class="o">.</span><span class="n">numel</span><span class="p">(</span><span class="n">X_rank</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">L</span><span class="o">/</span><span class="p">(</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Takes GCN model and data loaders.</span>
+<span class="k">def</span> <span class="nf">train_loop</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="n">train_loader</span><span class="p">,</span><span class="n">test_loader</span><span class="p">,</span><span class="n">epochs</span><span class="p">,</span><span class="n">lr</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">):</span>
+    <span class="n">train_loss</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">test_loss</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">rank</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">try</span><span class="p">:</span> <span class="n">opt</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span><span class="n">lr</span><span class="o">=</span><span class="n">lr</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span> <span class="k">pass</span><span class="p">;</span>
+    <span class="n">model_parameters</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">p</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">requires_grad</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">())</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">size</span><span class="p">())</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">model_parameters</span><span class="p">])</span>
+
+    <span class="c1"># Compute initial test loss and rank displacement</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+    <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+      <span class="n">ts</span><span class="p">,</span><span class="n">r</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span><span class="mi">0</span>
+      <span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">data</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">test_loader</span><span class="p">):</span>
+          <span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">edge_index</span><span class="p">,</span><span class="n">edge_weight</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">cuda</span><span class="p">(),</span><span class="n">data</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">cuda</span><span class="p">(),</span><span class="n">data</span><span class="o">.</span><span class="n">edge_index</span><span class="o">.</span><span class="n">cuda</span><span class="p">(),</span><span class="n">data</span><span class="o">.</span><span class="n">edge_weight</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
+          <span class="n">batch</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">batch</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
+
+          <span class="n">preds</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">edge_index</span><span class="p">,</span><span class="n">edge_weight</span><span class="p">,</span><span class="n">batch</span><span class="p">)</span>
+
+          <span class="n">loss</span> <span class="o">=</span> <span class="n">scaled_L1</span><span class="p">(</span><span class="n">preds</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(),</span><span class="n">Y</span><span class="p">,</span><span class="n">batch</span><span class="p">)</span>
+          <span class="n">ts</span> <span class="o">+=</span> <span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+          <span class="n">r</span> <span class="o">+=</span> <span class="n">rank_disp</span><span class="p">(</span><span class="n">preds</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(),</span><span class="n">Y</span><span class="p">,</span><span class="n">batch</span><span class="p">)</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+
+      <span class="n">rank</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">r</span><span class="o">/</span><span class="p">(</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+      <span class="n">test_loss</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ts</span><span class="o">/</span><span class="p">(</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+
+    <span class="c1"># Iterate over epochs</span>
+    <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">epochs</span><span class="p">):</span>
+        <span class="n">tr</span><span class="p">,</span><span class="n">ts</span><span class="p">,</span><span class="n">r</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span>
+        
+        <span class="c1"># Compute train error and backprop.</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">data</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">train_loader</span><span class="p">):</span>
+            <span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">edge_index</span><span class="p">,</span><span class="n">edge_weight</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">cuda</span><span class="p">(),</span><span class="n">data</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">cuda</span><span class="p">(),</span><span class="n">data</span><span class="o">.</span><span class="n">edge_index</span><span class="o">.</span><span class="n">cuda</span><span class="p">(),</span><span class="n">data</span><span class="o">.</span><span class="n">edge_weight</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
+            <span class="n">batch</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">batch</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
+
+            <span class="n">preds</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">edge_index</span><span class="p">,</span><span class="n">edge_weight</span><span class="p">,</span><span class="n">batch</span><span class="p">)</span>
+            <span class="n">loss</span> <span class="o">=</span> <span class="n">scaled_L1</span><span class="p">(</span><span class="n">preds</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(),</span><span class="n">Y</span><span class="p">,</span><span class="n">batch</span><span class="p">)</span>
+
+            <span class="k">try</span><span class="p">:</span> 
+              <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+              <span class="n">opt</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+              <span class="n">opt</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+            <span class="k">except</span><span class="p">:</span> <span class="k">pass</span><span class="p">;</span>
+
+            <span class="n">tr</span> <span class="o">+=</span> <span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+        <span class="n">train_loss</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tr</span><span class="o">/</span><span class="p">(</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+
+        <span class="c1"># Compute test error and rank displacement</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+        <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">data</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">test_loader</span><span class="p">):</span>
+                <span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">edge_index</span><span class="p">,</span><span class="n">edge_weight</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">cuda</span><span class="p">(),</span><span class="n">data</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">cuda</span><span class="p">(),</span><span class="n">data</span><span class="o">.</span><span class="n">edge_index</span><span class="o">.</span><span class="n">cuda</span><span class="p">(),</span><span class="n">data</span><span class="o">.</span><span class="n">edge_weight</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
+                <span class="n">batch</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">batch</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
+
+                <span class="n">preds</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">edge_index</span><span class="p">,</span><span class="n">edge_weight</span><span class="p">,</span><span class="n">batch</span><span class="p">)</span>
+
+                <span class="n">loss</span> <span class="o">=</span> <span class="n">scaled_L1</span><span class="p">(</span><span class="n">preds</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(),</span><span class="n">Y</span><span class="p">,</span><span class="n">batch</span><span class="p">)</span>
+
+                <span class="n">ts</span> <span class="o">+=</span> <span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+                <span class="n">r</span> <span class="o">+=</span> <span class="n">rank_disp</span><span class="p">(</span><span class="n">preds</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(),</span><span class="n">Y</span><span class="p">,</span><span class="n">batch</span><span class="p">)</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+
+        <span class="n">rank</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">r</span><span class="o">/</span><span class="p">(</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+        <span class="n">test_loss</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ts</span><span class="o">/</span><span class="p">(</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+        
+    <span class="c1"># Return average values per epoch</span>
+    <span class="k">return</span> <span class="n">train_loss</span><span class="p">,</span><span class="n">test_loss</span><span class="p">,</span><span class="n">rank</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+        <div class='prev-next-bottom'>
+            
+    <a class='right-next' id="next-link" href="DegreeCentrality.html" title="next page"><span class="section-number">1. </span>Dataset</a>
+
+        </div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By The Jupyter Book community<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>
