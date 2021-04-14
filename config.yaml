@@ -1,2 +1,3 @@
 title: "Research Update"
-
+execute:
+  execute_notebooks: 'off'

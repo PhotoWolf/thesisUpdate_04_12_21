@@ -4,12 +4,12 @@ import time
 
 # Normalization Techniques
 
-Within the literature, the typical solution to oversmoothing is to apply some type of normalization. To this end, we propose orthogonalizing out $\vec{1}$ from the feature matrix $X^{l}\in{}R^{|V|xf}$ and then renormalizing each column $i$. We incorporate additional scale parameters $0\leq{}s_{1}\leq{}1$ and $s_{2}$.
+Within the literature, the typical solution to oversmoothing is to apply some type of normalization. To this end, we propose orthogonalizing out vector $\vec{q}$ from the feature matrix $X^{l}\in{}R^{|V|xf}$ and then renormalizing each column $i$. We incorporate additional scale parameters $0\leq{}s_{1}\leq{}1$ and $s_{2}$.
 
-$$X_{i}^{l+1} = X_{i}^{l+1} - s_{1}\frac{X_{i}^{l}\vec{1}}{||\vec{1}||_{2}^{2}}$$
+$$X_{i}^{l+1} = X_{i}^{l} - s_{1}\frac{X_{i}^{l}\cdot{}\vec{q}}{||\vec{q}||_{2}^{2}}\vec{q}$$
 $$X_{i}^{l+1} = s_{2}\frac{X_{i}^{l+1}}{||X_{i}^{l+1}||_{2}}$$
 
-This is quite similar in form to PairNorm [14]. Define the smoothness of feature $i$ at GCN layer $l$ as
+If $s_{1}=1$ and $\vec{q}=\vec{1}$, this is equivalent to PairNorm [14]. Define the smoothness of feature $i$ at GCN layer $l$ as
 
 $$S = \frac{1}{E[X_{i}^{l} - E[X_{i}^{l}]]}$$
 
@@ -18,7 +18,7 @@ PairNorm aims to minimize global smoothness by subtracting out the mean feature 
 $$X_{i}^{l+1} = X_{i}^{l} - E[X_{i}^{l}]$$
 $$X_{i}^{l+1} = s \frac{X_{i}^{l+1}}{||X_{i}^{l+1}||_{2}}$$
 
-We evaluate our normalization scheme and compare against both PairNorm and GraphSizeNorm [3].
+We evaluate our normalization scheme with $\vec{q} = \frac{1}{\vec{d}_{degree}}$ and compare against both PairNorm and GraphSizeNorm [3].
 
 ## Dataset
 
@@ -59,11 +59,12 @@ class OrthNormL2(torch.nn.Module):
         self.s2 = torch.nn.Parameter(torch.ones(1))
 
     def forward(self,X,edge_index,edge_weight,batch):
-        n = torch_geometric.utils.degree(batch)
+        n = 1/torch_geometric.utils.degree(edge_index[0])
+        n_norm = torch_scatter.scatter_sum(n**2,batch,dim=0)
         
-        alpha = torch_scatter.scatter_sum(X,batch,dim=0)/(n)[:,None]
+        alpha = torch_scatter.scatter_sum(X * n[:,None],batch,dim=0)/(n_norm)[:,None]
         
-        X = X - torch.sigmoid(self.s1) * (alpha)[batch]
+        X = X - torch.sigmoid(self.s1) * (alpha)[batch] * n[batch][:,None]
         X = self.s2 * X/(torch_scatter.scatter_sum(X**2,batch,dim=0).sqrt())[batch]
         return X
 
@@ -112,7 +113,6 @@ for k in tqdm([2,4,8,16,32,64]):
             X = torch.nn.LeakyReLU()(graph.norm[jdx](X,edge_index,edge_weight,batch))
             MAD[jdx+1] += batched_MAP(X,edge_index,edge_weight).mean().item()
 
-        
     model_mad.append(MAD/(idx+1))
 
 ### Results
