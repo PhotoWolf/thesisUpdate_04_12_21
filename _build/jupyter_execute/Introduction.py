@@ -4,7 +4,7 @@ Graph Neural Networks (GCNs) are an extension of the familiar Convolutional Neur
 
 $$x_{i}^{l+1} = \Theta^{l}(v_{i}^{l},\gamma(x_{i}^{l},\{x_{j}^{l}:j\in{}N^{1}_{i}\},e_{ij}))$$
 
-where $N_{i}^{1}$ is the 1-neightborhood of vertex $v_{i}$, and $l$ indexes the $l$-th layer of the model. $x_{i}\in{}R^{n}$ is the feature vector associated with $v_{i}$. We refer to $\gamma{}$ as our aggregation function; typical choices are the sum or max operators, but some more exotic options do exist(ie: LSTMs). $\Theta$ is a neural network of some description, most often a single linear layer [1].
+where $N_{i}^{1}$ is the 1-neighborhood of vertex $v_{i}$, and $l$ indexes the $l$-th layer of the model. $x_{i}^{l}\in{}R^{n}$ and $x_{i}^{l+1}\in{}R^{k}$ are feature vectors associated with $v_{i}$. We refer to $\gamma{}$ as our aggregation function; typical choices are the sum or max operators, but some more exotic options do exist(ie: LSTMs). $\Theta$ is a neural network of some description, most often a single linear layer [1].
 
 While GCNs are fairly well-studied, we have a limited understanding of how well they capture the topological information of $G$. The literature finds clear benefit to incorporating structural features into GCNs; in particular:
 
@@ -20,7 +20,7 @@ It is convient to classify GCNs into two groups: node-wise convolutions and edge
 
 $$x_{i}^{l+1} = \Theta_{1}^{l}(x_{i}^{l+1}) + \Theta_{2}^{l}(\sum_{j\in{}N_{i}^{1}}w_{ij}x_{j}^{l})$$
 
-for $x_{i}^{l}\in{}R^{n}$ and $x_{i}^{l}\in{}R^{k}$. $w_{ij}$ is the scalar weight assocaited with $e_{ij}$. The model employs two feedforward networks, $\Theta_{1}$ and $\Theta_{2}$, which can project the features of the target node and those aggregated from $N_{i}^{l}$ into different subspaces. Assuming both $\Theta$ are  $R^{kxn}$ matrices, each GraphConv layer is $O(|V|kn + |E|n)$ in time and $O(|V|n + |E|)$ in space.
+$w_{ij}$ is the scalar weight assocaited with $e_{ij}$. The model employs two feedforward networks, $\Theta_{1}$ and $\Theta_{2}$, which can project the features of the target node and those aggregated from $N_{i}^{l}$ into different subspaces. Assuming both $\Theta$ are  $R^{k\times{}n}$ matrices, each GraphConv layer is $O(|V|kn + |E|n)$ in time and $O(|V|n + |E|)$ in space.
 
 In many cases, it is actually beneficial to operate on *pairs* of node features, and for that we require edge-wise convolutions, of which the most prominent are the Graph Attention Network (GAT) and it's numerous derivatives. We do not find GATs to be particularily performant (or efficient, for that matter), so we instead choose to focus on EdgeConv [8,9]:
 
@@ -95,6 +95,7 @@ class EdgeConv(torch.nn.Module):
 Graph centrality measures are used to quantify the structural properties of a network. By training GCNs to predict more and more complex centralities, we hope to gain insight into how well they incorporate topology and what limitations they posses, if any. Depending on our algorithm's performance, there may also be various practical applications. For example, path-based centralities (betweenness, closeness, etc) are broadly $\textit{O}(|V|^{3})$ and, at best, $\textit{O}(|V||E|)$ [12], so an accurate GCN approximation may be of interest in analyzing larger networks. 
 
 Following the example of [5], we define our loss as the L1 Norm between the normalized model output, $\vec{x}'$, and the targeted centrality scores, $\vec{y}$. Both quantities are min-max scaled.  
+
 $$\vec{x}' = \frac{\vec{x} - min(\vec{x})}{max(\vec{x}) - min(\vec{x})}$$
 
 $$L = ||\vec{x}' - \vec{y}||_{1}$$
