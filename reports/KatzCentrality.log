@@ -36,7 +36,7 @@ for idx,G in enumerate(d):
     G.edge_weight = torch.ones(G.edge_index[0].shape)
     adj = torch_sparse.SparseTensor(row=G.edge_index[0],col=G.edge_index[1],value=G.edge_weight)
     v = 1/(1.01*torch.norm(torch.eig(adj.to_dense())[0],dim=1).max())
-    y = torch.sum(torch.inverse(torch.eye(adj.size(0)) - v*adj.to_dense().T) - torch.eye(adj.size(0)),dim=1)
+    y = torch.sum(torch.inverse(torch.eye(adj.size(0)) - v*adj.to_dense().T),dim=1)
     G.y = y
     d[idx] = G
     
