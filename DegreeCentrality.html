@@ -276,7 +276,7 @@
 </div>
 <div class="section" id="dataset">
 <h1><span class="section-number">1. </span>Dataset<a class="headerlink" href="#dataset" title="Permalink to this headline">¶</a></h1>
-<p>We generate random networks via a Stochastic Block Model (SBM). Given probability matrix <span class="math notranslate nohighlight">\(P\in{}R^{kxk}\)</span> and <span class="math notranslate nohighlight">\(k\)</span> clusters, a Stochastic Block Model defines the network wherein <span class="math notranslate nohighlight">\(p(e_{ij})=P_{c_{i},c_{j}}\)</span> for cluster assignments <span class="math notranslate nohighlight">\(c_{i},c_{j}\)</span>. This allows us to model a wide range of topologies [3,12]. As a starting point, we produce a synthetic dataset of 3000 highly-connected SBMs with cluster size <span class="math notranslate nohighlight">\(n\sim{}Unif(50,100)\)</span>, <span class="math notranslate nohighlight">\(k=5\)</span>, and <span class="math notranslate nohighlight">\(P\sim{}Unif(\frac{1}{n},\frac{10}{n})\)</span>. Features are uninformative, being the vector <span class="math notranslate nohighlight">\(\vec{1}\in{}R^{|V|}\)</span>, and are equivalent to a single bias term. <span class="math notranslate nohighlight">\(66\%-33\%\)</span> train-test split.</p>
+<p>We generate random networks via a Stochastic Block Model (SBM). Given probability matrix <span class="math notranslate nohighlight">\(P\in{}R^{kxk}\)</span> and <span class="math notranslate nohighlight">\(k\)</span> clusters, a Stochastic Block Model defines the network wherein <span class="math notranslate nohighlight">\(p(e_{ij})=P_{c_{i},c_{j}}\)</span> for cluster assignments <span class="math notranslate nohighlight">\(c_{i},c_{j}\)</span>. This allows us to model a wide range of topologies [3,12]. As a starting point, we produce a synthetic dataset of 3000 highly-connected SBMs with cluster size <span class="math notranslate nohighlight">\(n\sim{}U(50,100)\)</span>, <span class="math notranslate nohighlight">\(k=5\)</span>, and <span class="math notranslate nohighlight">\(P\sim{}U(\frac{1}{n},\frac{10}{n})\)</span>. Features are uninformative, being the vector <span class="math notranslate nohighlight">\(\vec{1}\in{}R^{|V|}\)</span>. <span class="math notranslate nohighlight">\(66\%-33\%\)</span> train-test split.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">num_graphs</span> <span class="o">=</span> <span class="mi">3000</span>
@@ -294,7 +294,7 @@
 </div>
 </div>
 </div>
-<p>We examine the relationship between the density,<span class="math notranslate nohighlight">\(\frac{|E|}{|V|^{2}}\)</span>, of an SBM and the ratio of its two largest eigenvalues, <span class="math notranslate nohighlight">\(\frac{|\lambda{}_{2}|}{|\lambda{}_{1}|}\)</span>. This latter quantity determines the rate of convergence of <span class="math notranslate nohighlight">\(A\vec{x}\)</span> to the dominant eigenvector <span class="math notranslate nohighlight">\(\vec{v_{1}}\)</span>. If <span class="math notranslate nohighlight">\(||\vec{x}||=1\)</span>, then we have:</p>
+<p>We examine the relationship between the density,<span class="math notranslate nohighlight">\(\frac{2|E|}{|V|(|V|-1)}\)</span>, of an SBM and the ratio of its two largest eigenvalues, <span class="math notranslate nohighlight">\(\frac{|\lambda{}_{2}|}{|\lambda{}_{1}|}\)</span>. This latter quantity determines the rate of convergence of <span class="math notranslate nohighlight">\(A^{k}\vec{x}\)</span> to the dominant eigenvector <span class="math notranslate nohighlight">\(\vec{v_{1}}\)</span>. If <span class="math notranslate nohighlight">\(||\vec{x}||=1\)</span>, then we have:</p>
 <div class="math notranslate nohighlight">
 \[\vec{x} = (x\cdot{}v_{1})v_{1} + (x\cdot{}v_{2})v_{2} + ... + (x\cdot{}v_{n})v_{n}\]</div>
 <div class="math notranslate nohighlight">
@@ -358,27 +358,17 @@
 <img alt="_images/DegreeCentrality_6_0.png" src="_images/DegreeCentrality_6_0.png" />
 </div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Correlation Coefficient: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">corrcoef</span><span class="p">(</span><span class="n">density</span><span class="p">,</span><span class="n">eig_ratio</span><span class="p">)[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]))</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Correlation Coefficient: -0.9289814715753415
-</pre></div>
-</div>
-</div>
-</div>
-<p>For reference, the average density of our dataset is around <span class="math notranslate nohighlight">\(.08\)</span>, so <span class="math notranslate nohighlight">\(E[\frac{|\lambda_{2}|}{|\lambda_{1}|}]\approx{}.4\)</span></p>
+<p>We find a <span class="math notranslate nohighlight">\(\rho{}=.928\)</span> between density and the ratio of leading eigenvalues. In future chapters, we explore the effect of lower graph density (and hence a smaller eigenvalue ratio) on GCN performance. The average density of our current dataset is around <span class="math notranslate nohighlight">\(.08\)</span>, so <span class="math notranslate nohighlight">\(E[\frac{|\lambda_{2}|}{|\lambda_{1}|}]\approx{}.4\)</span></p>
 </div>
 <div class="section" id="degree-centrality">
 <h1><span class="section-number">2. </span>Degree Centrality<a class="headerlink" href="#degree-centrality" title="Permalink to this headline">¶</a></h1>
-<p>As a sanity check, we first trained our GCNs on degree centrality.</p>
+<p>As a sanity check, we first assess the extent to which GCNs can predict indegree centrality for our SBM dataset.</p>
 <div class="math notranslate nohighlight">
 \[d_{degree}(v_{i}) = \sum_{j\in{}N_{i}^{1}}w_{ij}\]</div>
-<p>GraphConv trivially reduces to degree centrality, so this will provide us a good performance benchmark. Optimal weights are given by <span class="math notranslate nohighlight">\(\Theta_{1}^{0}\rightarrow{}0, \Theta^{0}_{2}\rightarrow{}1\)</span> and <span class="math notranslate nohighlight">\(\Theta_{1}^{q}\rightarrow{}x, \Theta^{q}_{2}\rightarrow{}0\)</span> for <span class="math notranslate nohighlight">\(q&gt;0\)</span>. A one-layer EdgeConv model can also learn an exact solution, which occurs for <span class="math notranslate nohighlight">\(\Theta{}^{0}\rightarrow{}1\)</span>. No such solution exists for <span class="math notranslate nohighlight">\(l&gt;0\)</span>  unless all nodes are self-looping, which is not the case for SBMs.</p>
-<p>We present our results for weighted-undirected, weighted-directed, and unweighted-undirected networks. Weights are drawn from a standard normal distribution and mapped onto the existing edges of our dataset; in the directed case, we simply do not symmetricize them.</p>
+<p>In the unweighted case, <span class="math notranslate nohighlight">\(w_{ij}\)</span> takes on binary values.</p>
+<p>GraphConv trivially reduces to <span class="math notranslate nohighlight">\(d_{degree}\)</span> when <span class="math notranslate nohighlight">\(\Theta_{1}^{0}\rightarrow{}0, \Theta^{0}_{2}\rightarrow{}1\)</span> and <span class="math notranslate nohighlight">\(\Theta_{1}^{q}\rightarrow{}x, \Theta^{q}_{2}\rightarrow{}0\)</span> for <span class="math notranslate nohighlight">\(q&gt;0\)</span>. An EdgeConv model can also learn an exact solution, which occurs at <span class="math notranslate nohighlight">\(\Theta{}^{q}\rightarrow{}1\)</span>.</p>
+<p>We analyze weighted-undirected, weighted-directed, and unweighted-undirected cases. Weights are drawn from a standard normal distribution and mapped onto the existing edges of our dataset; in the directed case, we simply do not symmetrize them.</p>
+<p>Losses/rank displacement are plotted below for one-layer GraphConv and EdgeConv models, which are each trained to minimze <span class="math notranslate nohighlight">\(L(\vec{x}^{1},\vec{d}_{degree})\)</span>.</p>
 <div class="section" id="unweighted-undirected">
 <h2><span class="section-number">2.1. </span>Unweighted, Undirected<a class="headerlink" href="#unweighted-undirected" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
@@ -454,7 +444,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/DegreeCentrality_14_0.png" src="_images/DegreeCentrality_14_0.png" />
+<img alt="_images/DegreeCentrality_13_0.png" src="_images/DegreeCentrality_13_0.png" />
 </div>
 </div>
 </div>
@@ -537,7 +527,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/DegreeCentrality_18_0.png" src="_images/DegreeCentrality_18_0.png" />
+<img alt="_images/DegreeCentrality_17_0.png" src="_images/DegreeCentrality_17_0.png" />
 </div>
 </div>
 </div>
@@ -616,7 +606,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/DegreeCentrality_22_0.png" src="_images/DegreeCentrality_22_0.png" />
+<img alt="_images/DegreeCentrality_21_0.png" src="_images/DegreeCentrality_21_0.png" />
 </div>
 </div>
 </div>
