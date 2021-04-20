@@ -302,7 +302,7 @@
 </div>
 <div class="section" id="katz-centrality">
 <h1><span class="section-number">3. </span>Katz Centrality<a class="headerlink" href="#katz-centrality" title="Permalink to this headline">¶</a></h1>
-<p>The Katz Centrality of matrix <span class="math notranslate nohighlight">\(A\in{}R^{n\times{}n}\)</span> is defined as</p>
+<p>Moving on from <span class="math notranslate nohighlight">\(d_{degree}\)</span>, we now analyze the ability of GCNs to learn Katz Centrality. The Katz Centrality of matrix <span class="math notranslate nohighlight">\(A\in{}R^{n\times{}n}\)</span> is defined as</p>
 <div class="math notranslate nohighlight">
 \[d_{Katz} = \sum_{k=0}^{\infty}\alpha^{k}(A^{T})^{k}\vec{1}\]</div>
 <p>where necesarily <span class="math notranslate nohighlight">\(0\leq{}\alpha{}&lt;\frac{1}{\lambda_{1}}\)</span> [13]. Let <span class="math notranslate nohighlight">\(\lambda_{i}\)</span> be the eigenvalues of <span class="math notranslate nohighlight">\(A\)</span> such that <span class="math notranslate nohighlight">\(\lambda_{1}\geq{}\lambda_{2}\geq{}...\geq{}\lambda_{n}\)</span>. If <span class="math notranslate nohighlight">\(\alpha\neq{}\frac{1}{\lambda_{i}}\)</span>, the above expression is equivalent to <span class="math notranslate nohighlight">\((I - \alpha{}A^{T})^{-1} \vec{1}\)</span>, which we show below.</p>
@@ -424,16 +424,21 @@ $<span class="math notranslate nohighlight">\(\approx{} 1 + cv_{1} \approx{} cv_
 <img alt="_images/KatzCentrality_11_0.png" src="_images/KatzCentrality_11_0.png" />
 </div>
 </div>
+<p>It takes around <span class="math notranslate nohighlight">\(100\)</span> Katz iterations to reach a loss of <span class="math notranslate nohighlight">\(1e^{-3}\)</span>; for reference, this would correspond to a GCN with depth <span class="math notranslate nohighlight">\(l=100\)</span>. Below, we train GraphConv and EdgeConv to minimize <span class="math notranslate nohighlight">\(L(\vec{x},\vec{d}_{Katz})\)</span> on unweighted-undirected, weighted-undirected, and weighted-directed networks.</p>
 </div>
 <div class="section" id="unweighted-undirected">
 <h2><span class="section-number">3.3. </span>Unweighted, Undirected<a class="headerlink" href="#unweighted-undirected" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">G</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">G</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>    
     <span class="n">G</span><span class="o">.</span><span class="n">edge_weight</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">edge_index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
     <span class="n">adj</span> <span class="o">=</span> <span class="n">torch_sparse</span><span class="o">.</span><span class="n">SparseTensor</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="n">G</span><span class="o">.</span><span class="n">edge_index</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">col</span><span class="o">=</span><span class="n">G</span><span class="o">.</span><span class="n">edge_index</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">value</span><span class="o">=</span><span class="n">G</span><span class="o">.</span><span class="n">edge_weight</span><span class="p">)</span>
+    
+    <span class="c1"># Compute Katz Centrality</span>
     <span class="n">v</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mf">1.01</span><span class="o">*</span><span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">adj</span><span class="o">.</span><span class="n">to_dense</span><span class="p">())[</span><span class="mi">0</span><span class="p">],</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
     <span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">inverse</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">adj</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span> <span class="o">-</span> <span class="n">v</span><span class="o">*</span><span class="n">adj</span><span class="o">.</span><span class="n">to_dense</span><span class="p">()</span><span class="o">.</span><span class="n">T</span><span class="p">),</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    
+    <span class="c1"># Set target</span>
     <span class="n">G</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
     <span class="n">d</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">G</span>
     
@@ -490,7 +495,7 @@ $<span class="math notranslate nohighlight">\(\approx{} 1 + cv_{1} \approx{} cv_
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/KatzCentrality_15_0.png" src="_images/KatzCentrality_15_0.png" />
+<img alt="_images/KatzCentrality_16_0.png" src="_images/KatzCentrality_16_0.png" />
 </div>
 </div>
 </div>
@@ -499,11 +504,15 @@ $<span class="math notranslate nohighlight">\(\approx{} 1 + cv_{1} \approx{} cv_
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">G</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+    <span class="c1"># Assign weights and symmetrize</span>
     <span class="n">adj</span> <span class="o">=</span> <span class="n">torch_sparse</span><span class="o">.</span><span class="n">SparseTensor</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="n">G</span><span class="o">.</span><span class="n">edge_index</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">col</span><span class="o">=</span><span class="n">G</span><span class="o">.</span><span class="n">edge_index</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">value</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">edge_index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
-    
     <span class="n">adj</span> <span class="o">=</span> <span class="o">.</span><span class="mi">5</span> <span class="o">*</span> <span class="p">(</span><span class="n">adj</span><span class="o">.</span><span class="n">to_dense</span><span class="p">()</span> <span class="o">+</span> <span class="n">adj</span><span class="o">.</span><span class="n">to_dense</span><span class="p">()</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+    
+    <span class="c1"># Compute Katz Centrality</span>
     <span class="n">v</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mf">1.01</span><span class="o">*</span><span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">adj</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
     <span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">inverse</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">adj</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span> <span class="o">-</span> <span class="n">v</span><span class="o">*</span><span class="n">adj</span><span class="p">),</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    
+    <span class="c1"># Set as target</span>
     <span class="n">G</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
     <span class="n">G</span><span class="o">.</span><span class="n">edge_weight</span> <span class="o">=</span> <span class="n">torch_sparse</span><span class="o">.</span><span class="n">SparseTensor</span><span class="o">.</span><span class="n">from_dense</span><span class="p">(</span><span class="n">adj</span><span class="p">)</span><span class="o">.</span><span class="n">coo</span><span class="p">()[</span><span class="mi">2</span><span class="p">]</span>
     <span class="n">d</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">G</span>
@@ -562,7 +571,7 @@ $<span class="math notranslate nohighlight">\(\approx{} 1 + cv_{1} \approx{} cv_
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/KatzCentrality_19_0.png" src="_images/KatzCentrality_19_0.png" />
+<img alt="_images/KatzCentrality_20_0.png" src="_images/KatzCentrality_20_0.png" />
 </div>
 </div>
 </div>
@@ -571,11 +580,15 @@ $<span class="math notranslate nohighlight">\(\approx{} 1 + cv_{1} \approx{} cv_
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">G</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+    <span class="c1"># Assign weights</span>
     <span class="n">adj</span> <span class="o">=</span> <span class="n">torch_sparse</span><span class="o">.</span><span class="n">SparseTensor</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="n">G</span><span class="o">.</span><span class="n">edge_index</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">col</span><span class="o">=</span><span class="n">G</span><span class="o">.</span><span class="n">edge_index</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">value</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">edge_index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
-    
     <span class="n">adj</span> <span class="o">=</span> <span class="n">adj</span><span class="o">.</span><span class="n">to_dense</span><span class="p">()</span>
+    
+    <span class="c1"># Compute Katz Centrality</span>
     <span class="n">v</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mf">1.01</span><span class="o">*</span><span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">adj</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
     <span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">inverse</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">adj</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span> <span class="o">-</span> <span class="n">v</span><span class="o">*</span><span class="n">adj</span><span class="p">)</span> <span class="o">-</span> <span class="n">torch</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">adj</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">)),</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    
+    <span class="c1"># Set as target</span>
     <span class="n">G</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
     <span class="n">G</span><span class="o">.</span><span class="n">edge_weight</span> <span class="o">=</span> <span class="n">torch_sparse</span><span class="o">.</span><span class="n">SparseTensor</span><span class="o">.</span><span class="n">from_dense</span><span class="p">(</span><span class="n">adj</span><span class="p">)</span><span class="o">.</span><span class="n">coo</span><span class="p">()[</span><span class="mi">2</span><span class="p">]</span>
     <span class="n">d</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">G</span>
@@ -634,20 +647,20 @@ $<span class="math notranslate nohighlight">\(\approx{} 1 + cv_{1} \approx{} cv_
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/KatzCentrality_23_0.png" src="_images/KatzCentrality_23_0.png" />
+<img alt="_images/KatzCentrality_24_0.png" src="_images/KatzCentrality_24_0.png" />
 </div>
 </div>
 </div>
 <div class="section" id="overview">
 <h2><span class="section-number">3.6. </span>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
-<p>Since Katz Centrality inherently involves multiple aggreations, we increased the model depth from 1 to 4, which in turn necesitated a larger learning rate and greater epochs. Loss on <span class="math notranslate nohighlight">\(d_{Katz}\)</span> is comparable to that for <span class="math notranslate nohighlight">\(d_{degree}\)</span>, and it is far better than the equivalent number of Katz Iterations. EdgeConv converges much slower (and to worse values) while requiring nearly twice the runtime.</p>
+<p>Since Katz Centrality inherently involves multiple aggreations, we increased the model depth from 1 to 4, which in turn necesitated a larger learning rate and greater epochs. Loss on <span class="math notranslate nohighlight">\(d_{Katz}\)</span> is comparable to that for <span class="math notranslate nohighlight">\(d_{degree}\)</span>, and it is far better than the equivalent number of Katz Iterations. EdgeConv converges much slower while requiring nearly twice the runtime.</p>
 </div>
 <div class="section" id="but-what-if-the-data-is-low-density">
 <h2><span class="section-number">3.7. </span>But What If the Data is Low-Density?<a class="headerlink" href="#but-what-if-the-data-is-low-density" title="Permalink to this headline">¶</a></h2>
 <p>Our results only hold for high-density SBMs wherein the ratio of leading eigenvalues is relatively small. As established, this ratio controls the rate of convergence of <span class="math notranslate nohighlight">\(A^{k}\vec{x}\)</span> to the dominant eigenvector of <span class="math notranslate nohighlight">\(A\)</span>. Graph convolution involves taking succesive powers of the adjancency matrix and passing its span through a differentiable <span class="math notranslate nohighlight">\(\Theta\)</span>; in fact, Linear GCNs can be considered a weighted form of the Power Iteration method i.e:</p>
 <div class="math notranslate nohighlight">
-\[x_{l+1} = Ax_{l}\Theta_{l}\]</div>
-<p>So, with this relation in mind, we are naturally interested in how the spectral properties of a network impact convergence. We generate several new SBM datasets by decreasing the intra and inter-cluster probabilities, which leads to a lower graph density. This also makes these graphs more likely to be disconnected, hence the need for Katz Centrality (as opposed to Eigenvalue). For now, we only consider the unweighted, undirected case, as it’s the simplest.</p>
+\[X^{l+1} = AX^{l}\Theta^{l}\]</div>
+<p>where <span class="math notranslate nohighlight">\(X\in{}R^{|V|\times{}n}\)</span> is the network feature matrix. So, with this relation in mind, we are naturally interested in how the spectral properties of a network impact GCN convergence. We generate several new SBM datasets by decreasing the intra and inter-cluster probabilities, which leads to a lower graph density. This also makes these graphs more likely to be disconnected, hence the need for Katz Centrality (as opposed to Eigenvalue). For now, we only consider the unweighted, undirected case, as it’s the simplest.</p>
 <div class="section" id="p-in-frac-1-n-frac-1-2n">
 <h3><span class="section-number">3.7.1. </span><span class="math notranslate nohighlight">\(p \in{} [\frac{1}{n},\frac{1}{2n}]\)</span><a class="headerlink" href="#p-in-frac-1-n-frac-1-2n" title="Permalink to this headline">¶</a></h3>
 <p>Average density of <span class="math notranslate nohighlight">\(.020\)</span> with <span class="math notranslate nohighlight">\(E[\frac{|\lambda_{1}|}{|\lambda_{2}|}]\approx{}.66\)</span></p>
@@ -657,12 +670,17 @@ $<span class="math notranslate nohighlight">\(\approx{} 1 + cv_{1} \approx{} cv_
 <span class="n">d</span> <span class="o">=</span> <span class="p">[]</span>
 
 <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_graphs</span><span class="p">):</span>
+    
+    <span class="c1"># Set Cluster sizes and connection probilities: [1/n,1/2n]</span>
     <span class="n">n</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span><span class="mi">100</span><span class="p">,(</span><span class="mi">5</span><span class="p">,))</span>
     <span class="n">p</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">n</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">n</span><span class="p">)</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
     <span class="n">p</span> <span class="o">=</span> <span class="o">.</span><span class="mi">5</span> <span class="o">*</span> <span class="p">(</span><span class="n">p</span> <span class="o">+</span> <span class="n">p</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+    
+    <span class="c1"># Generate SBM</span>
     <span class="n">x</span><span class="p">,</span><span class="n">edges</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">n</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span><span class="mi">1</span><span class="p">)),</span><span class="n">torch_geometric</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">remove_isolated_nodes</span><span class="p">(</span><span class="n">torch_geometric</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">stochastic_blockmodel_graph</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">p</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">adj</span> <span class="o">=</span> <span class="n">torch_sparse</span><span class="o">.</span><span class="n">SparseTensor</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="n">edges</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">col</span><span class="o">=</span><span class="n">edges</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 
+    <span class="c1"># Write to Data object</span>
     <span class="n">d</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">torch_geometric</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Data</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">[:</span><span class="n">adj</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">)],</span><span class="n">edge_index</span> <span class="o">=</span> <span class="n">edges</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -673,8 +691,12 @@ $<span class="math notranslate nohighlight">\(\approx{} 1 + cv_{1} \approx{} cv_
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">G</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
     <span class="n">G</span><span class="o">.</span><span class="n">edge_weight</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">edge_index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
     <span class="n">adj</span> <span class="o">=</span> <span class="n">torch_sparse</span><span class="o">.</span><span class="n">SparseTensor</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="n">G</span><span class="o">.</span><span class="n">edge_index</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">col</span><span class="o">=</span><span class="n">G</span><span class="o">.</span><span class="n">edge_index</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">value</span><span class="o">=</span><span class="n">G</span><span class="o">.</span><span class="n">edge_weight</span><span class="p">)</span>
+    
+    <span class="c1"># Compute Katz Centrality</span>
     <span class="n">v</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mf">1.01</span><span class="o">*</span><span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">adj</span><span class="o">.</span><span class="n">to_dense</span><span class="p">())[</span><span class="mi">0</span><span class="p">],</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
     <span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">inverse</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">adj</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span> <span class="o">-</span> <span class="n">v</span><span class="o">*</span><span class="n">adj</span><span class="o">.</span><span class="n">to_dense</span><span class="p">()</span><span class="o">.</span><span class="n">T</span><span class="p">),</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    
+    <span class="c1"># Set as target</span>
     <span class="n">G</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
     <span class="n">d</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">G</span>
     
@@ -693,9 +715,9 @@ $<span class="math notranslate nohighlight">\(\approx{} 1 + cv_{1} \approx{} cv_
 <span class="n">Graph</span> <span class="o">=</span> <span class="n">GraphConv</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
 <span class="n">Edge</span> <span class="o">=</span> <span class="n">EdgeConv</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
 
-<span class="n">graph_metrics</span> <span class="o">=</span> <span class="n">train_loop</span><span class="p">(</span><span class="n">Graph</span><span class="p">,</span><span class="n">train_loader</span><span class="p">,</span><span class="n">test_loader</span><span class="p">,</span><span class="mi">50</span><span class="p">,</span><span class="n">lr</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">)</span>
+<span class="n">graph_metrics</span> <span class="o">=</span> <span class="n">train_loop</span><span class="p">(</span><span class="n">Graph</span><span class="p">,</span><span class="n">train_loader</span><span class="p">,</span><span class="n">test_loader</span><span class="p">,</span><span class="mi">150</span><span class="p">,</span><span class="n">lr</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">)</span>
 <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">empty_cache</span><span class="p">()</span>
-<span class="n">edge_metrics</span> <span class="o">=</span> <span class="n">train_loop</span><span class="p">(</span><span class="n">Edge</span><span class="p">,</span><span class="n">train_loader</span><span class="p">,</span><span class="n">test_loader</span><span class="p">,</span><span class="mi">50</span><span class="p">,</span><span class="n">lr</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">)</span>
+<span class="n">edge_metrics</span> <span class="o">=</span> <span class="n">train_loop</span><span class="p">(</span><span class="n">Edge</span><span class="p">,</span><span class="n">train_loader</span><span class="p">,</span><span class="n">test_loader</span><span class="p">,</span><span class="mi">150</span><span class="p">,</span><span class="n">lr</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">)</span>
 <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">empty_cache</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -731,7 +753,7 @@ $<span class="math notranslate nohighlight">\(\approx{} 1 + cv_{1} \approx{} cv_
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/KatzCentrality_33_0.png" src="_images/KatzCentrality_33_0.png" />
+<img alt="_images/KatzCentrality_34_0.png" src="_images/KatzCentrality_34_0.png" />
 </div>
 </div>
 </div>
@@ -744,12 +766,17 @@ $<span class="math notranslate nohighlight">\(\approx{} 1 + cv_{1} \approx{} cv_
 <span class="n">d</span> <span class="o">=</span> <span class="p">[]</span>
 
 <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_graphs</span><span class="p">):</span>
+    
+    <span class="c1"># Set Cluster sizes and connection probabilties: [1/50n,1/n]</span>
     <span class="n">n</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span><span class="mi">100</span><span class="p">,(</span><span class="mi">5</span><span class="p">,))</span>
     <span class="n">p</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">50</span><span class="o">*</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="mi">49</span><span class="o">/</span><span class="p">(</span><span class="mi">50</span><span class="o">*</span><span class="n">n</span><span class="p">))</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
     <span class="n">p</span> <span class="o">=</span> <span class="o">.</span><span class="mi">5</span> <span class="o">*</span> <span class="p">(</span><span class="n">p</span> <span class="o">+</span> <span class="n">p</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+    
+    <span class="c1"># Generate SBM</span>
     <span class="n">x</span><span class="p">,</span><span class="n">edges</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">n</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span><span class="mi">1</span><span class="p">)),</span><span class="n">torch_geometric</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">remove_isolated_nodes</span><span class="p">(</span><span class="n">torch_geometric</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">stochastic_blockmodel_graph</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">p</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">adj</span> <span class="o">=</span> <span class="n">torch_sparse</span><span class="o">.</span><span class="n">SparseTensor</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="n">edges</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">col</span><span class="o">=</span><span class="n">edges</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 
+    <span class="c1"># Write to Data object</span>
     <span class="n">d</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">torch_geometric</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Data</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">[:</span><span class="n">adj</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">)],</span><span class="n">edge_index</span> <span class="o">=</span> <span class="n">edges</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -760,8 +787,12 @@ $<span class="math notranslate nohighlight">\(\approx{} 1 + cv_{1} \approx{} cv_
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">G</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
     <span class="n">G</span><span class="o">.</span><span class="n">edge_weight</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">edge_index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
     <span class="n">adj</span> <span class="o">=</span> <span class="n">torch_sparse</span><span class="o">.</span><span class="n">SparseTensor</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="n">G</span><span class="o">.</span><span class="n">edge_index</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">col</span><span class="o">=</span><span class="n">G</span><span class="o">.</span><span class="n">edge_index</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">value</span><span class="o">=</span><span class="n">G</span><span class="o">.</span><span class="n">edge_weight</span><span class="p">)</span>
+    
+    <span class="c1"># Compute Katz Centrality</span>
     <span class="n">v</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mf">1.01</span><span class="o">*</span><span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">adj</span><span class="o">.</span><span class="n">to_dense</span><span class="p">())[</span><span class="mi">0</span><span class="p">],</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
     <span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">inverse</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">adj</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span> <span class="o">-</span> <span class="n">v</span><span class="o">*</span><span class="n">adj</span><span class="o">.</span><span class="n">to_dense</span><span class="p">()</span><span class="o">.</span><span class="n">T</span><span class="p">),</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    
+    <span class="c1"># Set as target</span>
     <span class="n">G</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
     <span class="n">d</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">G</span>
     
@@ -780,9 +811,9 @@ $<span class="math notranslate nohighlight">\(\approx{} 1 + cv_{1} \approx{} cv_
 <span class="n">Graph</span> <span class="o">=</span> <span class="n">GraphConv</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
 <span class="n">Edge</span> <span class="o">=</span> <span class="n">EdgeConv</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
 
-<span class="n">graph_metrics</span> <span class="o">=</span> <span class="n">train_loop</span><span class="p">(</span><span class="n">Graph</span><span class="p">,</span><span class="n">train_loader</span><span class="p">,</span><span class="n">test_loader</span><span class="p">,</span><span class="mi">50</span><span class="p">,</span><span class="n">lr</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">)</span>
+<span class="n">graph_metrics</span> <span class="o">=</span> <span class="n">train_loop</span><span class="p">(</span><span class="n">Graph</span><span class="p">,</span><span class="n">train_loader</span><span class="p">,</span><span class="n">test_loader</span><span class="p">,</span><span class="mi">150</span><span class="p">,</span><span class="n">lr</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">)</span>
 <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">empty_cache</span><span class="p">()</span>
-<span class="n">edge_metrics</span> <span class="o">=</span> <span class="n">train_loop</span><span class="p">(</span><span class="n">Edge</span><span class="p">,</span><span class="n">train_loader</span><span class="p">,</span><span class="n">test_loader</span><span class="p">,</span><span class="mi">50</span><span class="p">,</span><span class="n">lr</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">)</span>
+<span class="n">edge_metrics</span> <span class="o">=</span> <span class="n">train_loop</span><span class="p">(</span><span class="n">Edge</span><span class="p">,</span><span class="n">train_loader</span><span class="p">,</span><span class="n">test_loader</span><span class="p">,</span><span class="mi">150</span><span class="p">,</span><span class="n">lr</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">)</span>
 <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">empty_cache</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -818,7 +849,7 @@ $<span class="math notranslate nohighlight">\(\approx{} 1 + cv_{1} \approx{} cv_
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/KatzCentrality_39_0.png" src="_images/KatzCentrality_39_0.png" />
+<img alt="_images/KatzCentrality_40_0.png" src="_images/KatzCentrality_40_0.png" />
 </div>
 </div>
 </div>
