@@ -286,3 +286,45 @@ Or paste this line directly into your browser bar:
 
 [92m===============================================================================[0m
 
+Running Jupyter-Book v0.10.2
+Source Folder: /home/luke/thesisUpdate_04_12_21
+Config Path: None
+Output Path: /home/luke/thesisUpdate_04_12_21/_build/html
+[01mRunning Sphinx v3.5.4[39;49;00m
+[01mloading pickled environment... [39;49;00mdone
+[01mmyst v0.13.6:[39;49;00m MdParserConfig(renderer='sphinx', commonmark_only=False, dmath_allow_labels=True, dmath_allow_space=True, dmath_allow_digits=True, update_mathjax=True, enable_extensions=['colon_fence', 'dollarmath', 'linkify', 'substitution'], disable_syntax=[], url_schemes=['mailto', 'http', 'https'], heading_anchors=None, html_meta=[], footnote_transition=True, substitutions=[], sub_delimiters=['{', '}'])
+[01mbuilding [mo]: [39;49;00mtargets for 0 po files that are out of date
+[01mbuilding [html]: [39;49;00mtargets for 1 source files that are out of date
+[01mupdating environment: [39;49;00m0 added, 1 changed, 0 removed
+[01mreading sources... [39;49;00m[100%] [35mKatzCentrality[39;49;00m                                                                                     Executing: KatzCentrality in: /home/luke/thesisUpdate_04_12_21
+
+[31mWARNING: Execution Failed with traceback saved in /home/luke/thesisUpdate_04_12_21/_build/html/reports/KatzCentrality.log[39;49;00m
+[91m/home/luke/thesisUpdate_04_12_21/KatzCentrality.ipynb:20002: WARNING: Non-consecutive header level increase; 0 to 2 [myst.header][39;49;00m
+[01mlooking for now-outdated files... [39;49;00mnone found
+[01mpickling environment... [39;49;00mdone
+[01mchecking consistency... [39;49;00mdone
+[01mpreparing documents... [39;49;00mdone
+[01mwriting output... [39;49;00m[ 50%] [32mIntroduction[39;49;00m                                                                                        [01mwriting output... [39;49;00m[100%] [32mKatzCentrality[39;49;00m                                                                                      
+[01mgenerating indices... [39;49;00mgenindex done
+[01mwriting additional pages... [39;49;00msearch done
+[01mcopying images... [39;49;00m[ 16%] [33m_build/jupyter_execute/KatzCentrality_11_0.png[39;49;00m                                                      [01mcopying images... [39;49;00m[ 33%] [33m_build/jupyter_execute/KatzCentrality_15_0.png[39;49;00m                                                      [01mcopying images... [39;49;00m[ 50%] [33m_build/jupyter_execute/KatzCentrality_19_0.png[39;49;00m                                                      [01mcopying images... [39;49;00m[ 66%] [33m_build/jupyter_execute/KatzCentrality_23_0.png[39;49;00m                                                      [01mcopying images... [39;49;00m[ 83%] [33m_build/jupyter_execute/KatzCentrality_33_0.png[39;49;00m                                                      [01mcopying images... [39;49;00m[100%] [33m_build/jupyter_execute/KatzCentrality_39_0.png[39;49;00m                                                      
+[01mcopying static files... [39;49;00mdone
+[01mcopying extra files... [39;49;00mdone
+[01mdumping search index in English (code: en)... [39;49;00mdone
+[01mdumping object inventory... [39;49;00mdone
+[01mbuild succeeded, 2 warnings.[39;49;00m
+
+The HTML pages are in _build/html.
+
+[92m===============================================================================[0m
+
+Finished generating HTML for book.
+Your book's HTML pages are here:
+    _build/html/
+You can look at your book by opening this file in a browser:
+    _build/html/index.html
+Or paste this line directly into your browser bar:
+    file:///home/luke/thesisUpdate_04_12_21/_build/html/index.html            
+
+[92m===============================================================================[0m
+

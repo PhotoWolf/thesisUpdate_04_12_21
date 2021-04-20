@@ -4,22 +4,22 @@ import time
 
 ## Katz Centrality
 
-The Katz Centrality of matrix $A\in{}R^{nxn}$ is defined as
+The Katz Centrality of matrix $A\in{}R^{n\times{}n}$ is defined as
 
 $$d_{Katz} = \sum_{k=0}^{\infty}\alpha^{k}(A^{T})^{k}\vec{1}$$
 
-where necesarily $0\leq{}\alpha{}<1$ [13]. Let $\lambda_{i}$ be the eigenvalues of $A$ such that $\lambda_{1}\geq{}\lambda_{2}\geq{}...\geq{}\lambda_{n}$. If $\alpha\neq{}\frac{1}{\lambda_{i}}$, the above expression is equivalent to $((I - \alpha{}A^{T})^{-1} -I) \vec{1}$, which we show below.
+where necesarily $0\leq{}\alpha{}<\frac{1}{\lambda_{1}}$ [13]. Let $\lambda_{i}$ be the eigenvalues of $A$ such that $\lambda_{1}\geq{}\lambda_{2}\geq{}...\geq{}\lambda_{n}$. If $\alpha\neq{}\frac{1}{\lambda_{i}}$, the above expression is equivalent to $(I - \alpha{}A^{T})^{-1} \vec{1}$, which we show below.
 
-$$\sum_{k=0}^{\infty}\alpha^{k}(A^{T})^{k}\vec{1} = ((I - \alpha{}A^{T})^{-1} -I) \vec{1}$$
-$$\vec{1} + \sum_{k=0}^{\infty}\alpha^{k}(A^{T})^{k}\vec{1} = (I - \alpha{}A^{T})^{-1}\vec{1}$$
-$$(I - \alpha{}A^{T})\vec{1} + (\sum_{k=0}^{\infty}\alpha^{k}(A^{T})^{k}\vec{1} - \sum_{k=1}^{\infty}\alpha^{k}(A^{T})^{k}\vec{1})\vec{1} = \vec{1}$$
-$$I - \alpha{}A^{T} + \alpha{}A^{T} = I$$
+$$\sum_{k=0}^{\infty}\alpha^{k}(A^{T})^{k}\vec{1} = (I - \alpha{}A^{T})^{-1}\vec{1}$$
+$$(I - \alpha{}A^{T}) (\sum_{k=0}^{\infty}\alpha^{k}(A^{T})^{k}\vec{1}) = \vec{1}$$
+$$\sum_{k=0}^{\infty}\alpha^{k}(A^{T})^{k}\vec{1} - \sum_{k=1}^{\infty}\alpha^{k}(A^{T})^{k}\vec{1} = \vec{1}$$
+$$I = I$$
 
 Katz Centrality is best understood as a hybridization of Degree Centrality (for small $\alpha{}$) and of Eigenvector Centrality (for large $\alpha$). 
 
 $$d_{eig} = \lim_{k\rightarrow{}\infty}(\frac{1}{|\lambda_{1}|}A^{T})^{k}\vec{1}$$
 
-As a consequence of Perron-Frobenius theorem, Eigenvector Centrality is only well-definied for strongly connected networks. Katz Centrality addresses this by adding a constant term to each vertex i.e: $\vec{1}$. If the network is strongly connected, then the two are equivalent under certain conditions, namely:
+As a consequence of Perron-Frobenius theorem, Eigenvector Centrality is only well-definied for strongly connected networks. Katz Centrality addresses this by adding a constant term to each vertex. If the network is strongly connected, then the two are equivalent under certain conditions, namely:
 
 $$\lim_{\alpha{}\rightarrow{}\frac{1}{|\lambda_{1}|}}d_{Katz} = \sum_{k=0}^{\infty}(\frac{1}{|\lambda_{1}|}A^{T})^{k}\vec{1}$$
 $$=1 + (c_{1}v_{1}(1+1+...) + c_{2}v_{2}(\frac{\lambda_{2}}{|\lambda_{1}|} + (\frac{\lambda_{2}}{|\lambda_{1}|})^{2} + ...) + ...)\vec{1}$$
@@ -30,7 +30,7 @@ Constant $c$ vanishes anyway in the normalization. Choice of $\alpha{}<\frac{1}{
 
 ### Dataset
 
-Initial SBM parameters are same as for $d_{degree}$.
+SBM parameters are the same as before.
 
 num_graphs = 3000
 d = []
@@ -52,7 +52,7 @@ for idx,G in enumerate(d):
     G.edge_weight = torch.ones(G.edge_index[0].shape)
     adj = torch_sparse.SparseTensor(row=G.edge_index[0],col=G.edge_index[1],value=G.edge_weight)
     v = 1/(1.01*torch.norm(torch.eig(adj.to_dense())[0],dim=1).max())
-    y = torch.sum(torch.inverse(torch.eye(adj.size(0)) - v*adj.to_dense().T) - torch.eye(adj.size(0)),dim=1)
+    y = torch.sum(torch.inverse(torch.eye(adj.size(0)) - v*adj.to_dense().T),dim=1)
     G.y = y
     d[idx] = G
     
@@ -88,11 +88,11 @@ plt.xlabel('k');
 
 ### Unweighted, Undirected
 
-for idx,G in enumerate(d,position=0):
+for idx,G in enumerate(d):
     G.edge_weight = torch.ones(G.edge_index[0].shape)
     adj = torch_sparse.SparseTensor(row=G.edge_index[0],col=G.edge_index[1],value=G.edge_weight)
     v = 1/(1.01*torch.norm(torch.eig(adj.to_dense())[0],dim=1).max())
-    y = torch.sum(torch.inverse(torch.eye(adj.size(0)) - v*adj.to_dense().T) - torch.eye(adj.size(0)),dim=1)
+    y = torch.sum(torch.inverse(torch.eye(adj.size(0)) - v*adj.to_dense().T),dim=1)
     G.y = y
     d[idx] = G
     
@@ -143,8 +143,8 @@ for idx,G in enumerate(d):
     
     adj = .5 * (adj.to_dense() + adj.to_dense().T)
     v = 1/(1.01*torch.norm(torch.eig(adj)[0],dim=1).max())
-    y = torch.sum(torch.inverse(torch.eye(adj.size(0)) - v*adj) - torch.eye(adj.size(0)),dim=1)
-    G.y = (y - y.min())/(y.max()-y.min())
+    y = torch.sum(torch.inverse(torch.eye(adj.size(0)) - v*adj),dim=1)
+    G.y = y
     G.edge_weight = torch_sparse.SparseTensor.from_dense(adj).coo()[2]
     d[idx] = G
 
@@ -197,7 +197,7 @@ for idx,G in enumerate(d):
     adj = adj.to_dense()
     v = 1/(1.01*torch.norm(torch.eig(adj)[0],dim=1).max())
     y = torch.sum(torch.inverse(torch.eye(adj.size(0)) - v*adj) - torch.eye(adj.size(0)),dim=1)
-    G.y = (y - y.min())/(y.max()-y.min())
+    G.y = y
     G.edge_weight = torch_sparse.SparseTensor.from_dense(adj).coo()[2]
     d[idx] = G
 
@@ -250,9 +250,9 @@ Since Katz Centrality inherently involves multiple aggreations, we increased the
 
 Our results only hold for high-density SBMs wherein the ratio of leading eigenvalues is relatively small. As established, this ratio controls the rate of convergence of $A^{k}\vec{x}$ to the dominant eigenvector of $A$. Graph convolution involves taking succesive powers of the adjancency matrix and passing its span through a differentiable $\Theta$; in fact, Linear GCNs can be considered a weighted form of the Power Iteration method i.e:
 
-$$x_{l+1} = Ax_{l}W_{l}$$
+$$x_{l+1} = Ax_{l}\Theta_{l}$$
 
-So, with this relation in mind, we are naturally interested in how the spectral properties of a network impact convergence. We generate several new SBM datasets by decreasing the intra and inter-cluster probabilities, which leads to a lower graph density. This also makes these graphs more likely to be disconnected, hence the need for Katz Centrality (as opposed to Eigenvalue).
+So, with this relation in mind, we are naturally interested in how the spectral properties of a network impact convergence. We generate several new SBM datasets by decreasing the intra and inter-cluster probabilities, which leads to a lower graph density. This also makes these graphs more likely to be disconnected, hence the need for Katz Centrality (as opposed to Eigenvalue). For now, we only consider the unweighted, undirected case, as it's the simplest. 
 
 #### $p \in{} [\frac{1}{n},\frac{1}{2n}]$
 
@@ -274,7 +274,7 @@ for idx,G in enumerate(d):
     G.edge_weight = torch.ones(G.edge_index[0].shape)
     adj = torch_sparse.SparseTensor(row=G.edge_index[0],col=G.edge_index[1],value=G.edge_weight)
     v = 1/(1.01*torch.norm(torch.eig(adj.to_dense())[0],dim=1).max())
-    y = torch.sum(torch.inverse(torch.eye(adj.size(0)) - v*adj.to_dense().T) - torch.eye(adj.size(0)),dim=1)
+    y = torch.sum(torch.inverse(torch.eye(adj.size(0)) - v*adj.to_dense().T),dim=1)
     G.y = y
     d[idx] = G
     
@@ -318,7 +318,7 @@ plt.legend()
 
 plt.tight_layout();
 
-#### $p\in{}[\frac{1}{50n},\frac{1}{n}]\$
+#### $p\in{}[\frac{1}{50n},\frac{1}{n}]$
 
 Average density of $.008$ with $E[\frac{|\lambda_{1}|}{|\lambda_{2}|}]\approx{}.925$
 
@@ -338,7 +338,7 @@ for idx,G in enumerate(d):
     G.edge_weight = torch.ones(G.edge_index[0].shape)
     adj = torch_sparse.SparseTensor(row=G.edge_index[0],col=G.edge_index[1],value=G.edge_weight)
     v = 1/(1.01*torch.norm(torch.eig(adj.to_dense())[0],dim=1).max())
-    y = torch.sum(torch.inverse(torch.eye(adj.size(0)) - v*adj.to_dense().T) - torch.eye(adj.size(0)),dim=1)
+    y = torch.sum(torch.inverse(torch.eye(adj.size(0)) - v*adj.to_dense().T),dim=1)
     G.y = y
     d[idx] = G
     
