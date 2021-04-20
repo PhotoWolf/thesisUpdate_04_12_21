@@ -4,7 +4,7 @@ import time
 
 ## Dataset
 
-We generate random networks via a Stochastic Block Model (SBM). Given probability matrix $P\in{}R^{kxk}$ and $k$ clusters, a Stochastic Block Model defines the network wherein $p(e_{ij})=P_{c_{i},c_{j}}$ for cluster assignments $c_{i},c_{j}$. This allows us to model a wide range of topologies [3,12]. As a starting point, we produce a synthetic dataset of 3000 highly-connected SBMs with cluster size $n\sim{}Unif(50,100)$, $k=5$, and $P\sim{}Unif(\frac{1}{n},\frac{10}{n})$. Features are uninformative, being the vector $\vec{1}\in{}R^{|V|}$, and are equivalent to a single bias term. $66\%-33\%$ train-test split.
+We generate random networks via a Stochastic Block Model (SBM). Given probability matrix $P\in{}R^{kxk}$ and $k$ clusters, a Stochastic Block Model defines the network wherein $p(e_{ij})=P_{c_{i},c_{j}}$ for cluster assignments $c_{i},c_{j}$. This allows us to model a wide range of topologies [3,12]. As a starting point, we produce a synthetic dataset of 3000 highly-connected SBMs with cluster size $n\sim{}U(50,100)$, $k=5$, and $P\sim{}U(\frac{1}{n},\frac{10}{n})$. Features are uninformative, being the vector $\vec{1}\in{}R^{|V|}$. $66\%-33\%$ train-test split.
 
 num_graphs = 3000
 d = []
@@ -18,7 +18,7 @@ for _ in range(num_graphs):
 
     d.append(torch_geometric.data.Data(x=x[:adj.size(0)],edge_index = edges))
 
-We examine the relationship between the density,$\frac{|E|}{|V|^{2}}$, of an SBM and the ratio of its two largest eigenvalues, $\frac{|\lambda{}_{2}|}{|\lambda{}_{1}|}$. This latter quantity determines the rate of convergence of $A\vec{x}$ to the dominant eigenvector $\vec{v_{1}}$. If $||\vec{x}||=1$, then we have:
+We examine the relationship between the density,$\frac{2|E|}{|V|(|V|-1)}$, of an SBM and the ratio of its two largest eigenvalues, $\frac{|\lambda{}_{2}|}{|\lambda{}_{1}|}$. This latter quantity determines the rate of convergence of $A^{k}\vec{x}$ to the dominant eigenvector $\vec{v_{1}}$. If $||\vec{x}||=1$, then we have:
 
 $$\vec{x} = (x\cdot{}v_{1})v_{1} + (x\cdot{}v_{2})v_{2} + ... + (x\cdot{}v_{n})v_{n}$$
 
@@ -58,19 +58,21 @@ plt.xlabel('Graph Density')
 plt.ylabel('Eigenvalue Ratio')
 plt.title('SBM Density-Eigenvalue Relation');
 
-print("Correlation Coefficient: {}".format(np.corrcoef(density,eig_ratio)[1,0]))
-
-For reference, the average density of our dataset is around $.08$, so $E[\frac{|\lambda_{2}|}{|\lambda_{1}|}]\approx{}.4$
+We find a $\rho{}=.928$ between density and the ratio of leading eigenvalues. In future chapters, we explore the effect of lower graph density (and hence a smaller eigenvalue ratio) on GCN performance. The average density of our current dataset is around $.08$, so $E[\frac{|\lambda_{2}|}{|\lambda_{1}|}]\approx{}.4$
 
 ## Degree Centrality
 
-As a sanity check, we first trained our GCNs on degree centrality.
+As a sanity check, we first assess the extent to which GCNs can predict indegree centrality for our SBM dataset.
 
 $$d_{degree}(v_{i}) = \sum_{j\in{}N_{i}^{1}}w_{ij}$$
-GraphConv trivially reduces to degree centrality, so this will provide us a good performance benchmark. Optimal weights are given by $\Theta_{1}^{0}\rightarrow{}0, \Theta^{0}_{2}\rightarrow{}1$ and $\Theta_{1}^{q}\rightarrow{}x, \Theta^{q}_{2}\rightarrow{}0$ for $q>0$. A one-layer EdgeConv model can also learn an exact solution, which occurs for $\Theta{}^{0}\rightarrow{}1$. No such solution exists for $l>0$  unless all nodes are self-looping, which is not the case for SBMs. 
 
-We present our results for weighted-undirected, weighted-directed, and unweighted-undirected networks. Weights are drawn from a standard normal distribution and mapped onto the existing edges of our dataset; in the directed case, we simply do not symmetricize them. 
+In the unweighted case, $w_{ij}$ takes on binary values. 
 
+GraphConv trivially reduces to $d_{degree}$ when $\Theta_{1}^{0}\rightarrow{}0, \Theta^{0}_{2}\rightarrow{}1$ and $\Theta_{1}^{q}\rightarrow{}x, \Theta^{q}_{2}\rightarrow{}0$ for $q>0$. An EdgeConv model can also learn an exact solution, which occurs at $\Theta{}^{q}\rightarrow{}1$. 
+
+We analyze weighted-undirected, weighted-directed, and unweighted-undirected cases. Weights are drawn from a standard normal distribution and mapped onto the existing edges of our dataset; in the directed case, we simply do not symmetrize them. 
+
+Losses/rank displacement are plotted below for one-layer GraphConv and EdgeConv models, which are each trained to minimze $L(\vec{x}^{1},\vec{d}_{degree})$.
 
 ### Unweighted, Undirected
 

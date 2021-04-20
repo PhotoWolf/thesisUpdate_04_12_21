@@ -98,7 +98,7 @@ Following the example of [5], we define our loss as the L1 Norm between the norm
 
 $$\vec{x}' = \frac{\vec{x} - min(\vec{x})}{max(\vec{x}) - min(\vec{x})}$$
 
-$$L = ||\vec{x}' - \vec{y}||_{1}$$
+$$L(x,y) = ||\vec{x}' - \vec{y}'||_{1}$$
 
 We also define the rank displacement. Let $\vec{u}$ and $\vec{s}$ be vectors in $R^{k}$. $f$ is the *argsort* function i.e: the mapping $f(x_{i},\vec{x})\rightarrow{}r$ where $r=|\{x_{j}:x_{j} > x_{i} \forall{} x_{j}\in{}\vec{x}\}|$. $n$ is an arbitary constant. Then the rank displacement is given as follows:
 
