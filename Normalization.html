@@ -479,6 +479,9 @@
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="_images/Normalization_12_0.png" src="_images/Normalization_12_0.png" />
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -489,6 +492,14 @@
   <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/Normalization_13_0.png" src="_images/Normalization_13_0.png" />
+<img alt="_images/Normalization_13_1.png" src="_images/Normalization_13_1.png" />
+<img alt="_images/Normalization_13_2.png" src="_images/Normalization_13_2.png" />
+<img alt="_images/Normalization_13_3.png" src="_images/Normalization_13_3.png" />
+<img alt="_images/Normalization_13_4.png" src="_images/Normalization_13_4.png" />
+<img alt="_images/Normalization_13_5.png" src="_images/Normalization_13_5.png" />
 </div>
 </div>
 </div>
@@ -540,6 +551,11 @@
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 6/6 [32:16&lt;00:00, 322.78s/it]
+</pre></div>
+</div>
+</div>
 </div>
 <div class="section" id="id1">
 <h3><span class="section-number">5.4.1. </span>Results<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
@@ -574,6 +590,9 @@
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="_images/Normalization_18_0.png" src="_images/Normalization_18_0.png" />
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -584,6 +603,14 @@
   <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/Normalization_19_0.png" src="_images/Normalization_19_0.png" />
+<img alt="_images/Normalization_19_1.png" src="_images/Normalization_19_1.png" />
+<img alt="_images/Normalization_19_2.png" src="_images/Normalization_19_2.png" />
+<img alt="_images/Normalization_19_3.png" src="_images/Normalization_19_3.png" />
+<img alt="_images/Normalization_19_4.png" src="_images/Normalization_19_4.png" />
+<img alt="_images/Normalization_19_5.png" src="_images/Normalization_19_5.png" />
 </div>
 </div>
 </div>
@@ -668,6 +695,9 @@
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="_images/Normalization_24_0.png" src="_images/Normalization_24_0.png" />
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -679,12 +709,21 @@
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="_images/Normalization_25_0.png" src="_images/Normalization_25_0.png" />
+<img alt="_images/Normalization_25_1.png" src="_images/Normalization_25_1.png" />
+<img alt="_images/Normalization_25_2.png" src="_images/Normalization_25_2.png" />
+<img alt="_images/Normalization_25_3.png" src="_images/Normalization_25_3.png" />
+<img alt="_images/Normalization_25_4.png" src="_images/Normalization_25_4.png" />
+<img alt="_images/Normalization_25_5.png" src="_images/Normalization_25_5.png" />
+<img alt="_images/Normalization_25_6.png" src="_images/Normalization_25_6.png" />
+</div>
 </div>
 </div>
 </div>
 <div class="section" id="overview">
 <h2><span class="section-number">5.6. </span>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
-<p>Our new normalization scheme, which we are calling OrthNorm (i.e Orthagonal Normalization, get it?), improves upon the unnormalized case, even without having fully converged. It surpasses PairNorm by around an order of magnitude given the same depth and number of epochs. We suspect this is because <span class="math notranslate nohighlight">\(d_{Katz}\)</span> is close enough to <span class="math notranslate nohighlight">\(v_{1}\)</span>, and so PairNorm reduces the smoothness <em>too</em> much. Indeed, PairNorm returns uniform MAP values, whereas those of OrthNorm exhibit a great deal of variance. This is due to <span class="math notranslate nohighlight">\(s_{1}\)</span> regulating the magnitude of the orthogonalization; without it, MAP consistently hovers around <span class="math notranslate nohighlight">\(.20\)</span>, and the loss is about <span class="math notranslate nohighlight">\(1e^{-3}\)</span> larger.</p>
+<p>Our new normalization scheme, which we are calling OrthNorm (i.e Orthagonal Normalization, get it?), improves upon the unnormalized case, even without having fully converged. It surpasses PairNorm by around an order of magnitude given the same depth and number of epochs. We suspect this is because <span class="math notranslate nohighlight">\(d_{Katz}\)</span> is close enough to <span class="math notranslate nohighlight">\(v_{1}\)</span>, and so PairNorm reduces the smoothness <em>too</em> much. Indeed, PairNorm returns uniformly large MAP values, whereas those of OrthNorm are generally smaller and more erratic. This is due to <span class="math notranslate nohighlight">\(s_{1}\)</span> regulating the magnitude of the orthogonalization; without it, MAP consistently hovers around <span class="math notranslate nohighlight">\(.20\)</span>, and the loss is about <span class="math notranslate nohighlight">\(1e^{-3}\)</span> larger.</p>
 <p>As for GraphSizeNorm, there is certainly some benefit, but it does still converge to a larger value than OrthNorm (which isn’t even convergent yet). Oddly enough, while the MAP is otherwise quite low, GraphSizeNorm spikes in the last few layers for both the <span class="math notranslate nohighlight">\(l=32\)</span> and <span class="math notranslate nohighlight">\(l=64\)</span> models. We do not have an explanation for why this occurs.</p>
 </div>
 </div>
