@@ -295,19 +295,19 @@
 </div>
 <div class="section" id="normalization-techniques">
 <h1><span class="section-number">5. </span>Normalization Techniques<a class="headerlink" href="#normalization-techniques" title="Permalink to this headline">¶</a></h1>
-<p>Within the literature, the typical solution to oversmoothing is to apply some type of normalization. To this end, we propose orthogonalizing out vector <span class="math notranslate nohighlight">\(\vec{q}\)</span> from the feature matrix <span class="math notranslate nohighlight">\(X^{l}\in{}R^{|V|xf}\)</span> and then renormalizing each column <span class="math notranslate nohighlight">\(i\)</span>. We incorporate additional scale parameters <span class="math notranslate nohighlight">\(0\leq{}s_{1}\leq{}1\)</span> and <span class="math notranslate nohighlight">\(s_{2}\)</span>.</p>
+<p>Within the literature, the typical solution to oversmoothing is to apply some type of normalization. To this end, we propose orthogonalizing out vector <span class="math notranslate nohighlight">\(\vec{q}\)</span> (essentially a “best guess” for <span class="math notranslate nohighlight">\(v_{1}\)</span>) from <span class="math notranslate nohighlight">\(X^{l}\)</span> and then renormalizing each column. We incorporate additional scale parameters <span class="math notranslate nohighlight">\(0\leq{}s_{1}\leq{}1\)</span> and <span class="math notranslate nohighlight">\(s_{2}\)</span>.</p>
 <div class="math notranslate nohighlight">
-\[X_{i}^{l+1} = X_{i}^{l} - s_{1}\frac{X_{i}^{l}\cdot{}\vec{q}}{||\vec{q}||_{2}^{2}}\vec{q}\]</div>
+\[X_{i}^{l} = X_{i}^{l} - s_{1}\frac{X_{i}^{l}\cdot{}\vec{q}}{||\vec{q}||_{2}^{2}}\vec{q}\]</div>
 <div class="math notranslate nohighlight">
-\[X_{i}^{l+1} = s_{2}\frac{X_{i}^{l+1}}{||X_{i}^{l+1}||_{2}}\]</div>
-<p>If <span class="math notranslate nohighlight">\(s_{1}=1\)</span> and <span class="math notranslate nohighlight">\(\vec{q}=\vec{1}\)</span>, this is equivalent to PairNorm [14]. Define the smoothness of feature <span class="math notranslate nohighlight">\(i\)</span> at GCN layer <span class="math notranslate nohighlight">\(l\)</span> as</p>
+\[X_{i}^{l} = s_{2}\frac{X_{i}^{l}}{||X_{i}^{l}||_{2}}\]</div>
+<p>If <span class="math notranslate nohighlight">\(s_{1}=1\)</span> and <span class="math notranslate nohighlight">\(\vec{q}=\vec{1}\)</span>, this is equivalent to PairNorm [16]. Define the smoothness of feature <span class="math notranslate nohighlight">\(i\)</span> at GCN layer <span class="math notranslate nohighlight">\(l\)</span> as</p>
 <div class="math notranslate nohighlight">
-\[S = \frac{1}{E[X_{i}^{l} - E[X_{i}^{l}]]}\]</div>
+\[S = \frac{1}{E[X^{l} - E[X^{l}]]}\]</div>
 <p>PairNorm aims to minimize global smoothness by subtracting out the mean feature vector and renormalizing.</p>
 <div class="math notranslate nohighlight">
-\[X_{i}^{l+1} = X_{i}^{l} - E[X_{i}^{l}]\]</div>
+\[X_{i}^{l} = X_{i}^{l} - E[X_{i}^{l}]\]</div>
 <div class="math notranslate nohighlight">
-\[X_{i}^{l+1} = s \frac{X_{i}^{l+1}}{||X_{i}^{l+1}||_{2}}\]</div>
+\[X_{i}^{l} = s \frac{X_{i}^{l}}{||X_{i}^{l}||_{2}}\]</div>
 <p>We evaluate our normalization scheme with <span class="math notranslate nohighlight">\(\vec{q} = \frac{1}{\vec{d}_{degree}}\)</span> and compare against both PairNorm and GraphSizeNorm [3].</p>
 <div class="section" id="dataset">
 <h2><span class="section-number">5.1. </span>Dataset<a class="headerlink" href="#dataset" title="Permalink to this headline">¶</a></h2>
@@ -419,10 +419,11 @@
 <span class="n">model_mad</span> <span class="o">=</span> <span class="p">[]</span>
 
 <span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">16</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="mi">64</span><span class="p">]):</span>
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">16</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="mi">64</span><span class="p">]:</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
     <span class="n">graph</span> <span class="o">=</span> <span class="n">DummyModel</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">OrthNormL2</span><span class="p">)</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
     
-    <span class="n">graph_results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">train_loop</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span><span class="n">train_loader</span><span class="p">,</span><span class="n">test_loader</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="n">lr</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">))</span>
+    <span class="n">graph_results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">train_loop</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span><span class="n">train_loader</span><span class="p">,</span><span class="n">test_loader</span><span class="p">,</span><span class="mi">150</span><span class="p">,</span><span class="n">lr</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">))</span>
     <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">empty_cache</span><span class="p">()</span>
 
     <span class="n">MAD</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
@@ -441,11 +442,6 @@
             <span class="n">MAD</span><span class="p">[</span><span class="n">jdx</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">batched_MAP</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">edge_index</span><span class="p">,</span><span class="n">edge_weight</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
 
     <span class="n">model_mad</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">MAD</span><span class="o">/</span><span class="p">(</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 6/6 [32:01&lt;00:00, 320.24s/it]
 </pre></div>
 </div>
 </div>
@@ -529,9 +525,11 @@
 
 <span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">16</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="mi">64</span><span class="p">]):</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
     <span class="n">graph</span> <span class="o">=</span> <span class="n">DummyModel</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">GraphSizeNorm</span><span class="p">)</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
     
-    <span class="n">graph_results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">train_loop</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span><span class="n">train_loader</span><span class="p">,</span><span class="n">test_loader</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="n">lr</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">))</span>
+    <span class="n">graph_results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">train_loop</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span><span class="n">train_loader</span><span class="p">,</span><span class="n">test_loader</span><span class="p">,</span><span class="mi">150</span><span class="p">,</span><span class="n">lr</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">))</span>
     <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">empty_cache</span><span class="p">()</span>
 
     <span class="n">MAD</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
@@ -554,7 +552,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 6/6 [21:21&lt;00:00, 213.56s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 6/6 [32:16&lt;00:00, 322.78s/it]
 </pre></div>
 </div>
 </div>
@@ -637,9 +635,10 @@
 <span class="n">model_mad</span> <span class="o">=</span> <span class="p">[]</span>
 
 <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">16</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="mi">64</span><span class="p">]:</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
     <span class="n">graph</span> <span class="o">=</span> <span class="n">DummyModel</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">PairNorm</span><span class="p">)</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
     
-    <span class="n">graph_results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">train_loop</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span><span class="n">train_loader</span><span class="p">,</span><span class="n">test_loader</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="n">lr</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">))</span>
+    <span class="n">graph_results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">train_loop</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span><span class="n">train_loader</span><span class="p">,</span><span class="n">test_loader</span><span class="p">,</span><span class="mi">150</span><span class="p">,</span><span class="n">lr</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">))</span>
     <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">empty_cache</span><span class="p">()</span>
 
     <span class="n">MAD</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
@@ -724,7 +723,7 @@
 </div>
 <div class="section" id="overview">
 <h2><span class="section-number">5.6. </span>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
-<p>Our new normalization scheme, which we are calling OrthNorm (i.e Orthagonal Normalization, get it?), improves upon the unnormalized case, even without having fully converged. It surpasses PairNorm by around an order of magnitude given the same depth and number of epochs. We suspect this is because <span class="math notranslate nohighlight">\(d_{Katz}\)</span> is close enough to <span class="math notranslate nohighlight">\(v_{1}\)</span>, and so PairNorm reduces the smoothness <em>too</em> much. Indeed, PairNorm returns uniform MAP values, whereas those of OrthNorm exhibit a great deal of variance. This is due to <span class="math notranslate nohighlight">\(s_{1}\)</span> regulating the magnitude of the orthogonalization; without it, MAP consistently hovers around <span class="math notranslate nohighlight">\(.20\)</span>, and the loss is about <span class="math notranslate nohighlight">\(1e^{-3}\)</span> larger.</p>
+<p>Our new normalization scheme, which we are calling OrthNorm (i.e Orthagonal Normalization, get it?), improves upon the unnormalized case, even without having fully converged. It surpasses PairNorm by around an order of magnitude given the same depth and number of epochs. We suspect this is because <span class="math notranslate nohighlight">\(d_{Katz}\)</span> is close enough to <span class="math notranslate nohighlight">\(v_{1}\)</span>, and so PairNorm reduces the smoothness <em>too</em> much. Indeed, PairNorm returns uniformly large MAP values, whereas those of OrthNorm are generally smaller and more erratic. This is due to <span class="math notranslate nohighlight">\(s_{1}\)</span> regulating the magnitude of the orthogonalization; without it, MAP consistently hovers around <span class="math notranslate nohighlight">\(.20\)</span>, and the loss is about <span class="math notranslate nohighlight">\(1e^{-3}\)</span> larger.</p>
 <p>As for GraphSizeNorm, there is certainly some benefit, but it does still converge to a larger value than OrthNorm (which isn’t even convergent yet). Oddly enough, while the MAP is otherwise quite low, GraphSizeNorm spikes in the last few layers for both the <span class="math notranslate nohighlight">\(l=32\)</span> and <span class="math notranslate nohighlight">\(l=64\)</span> models. We do not have an explanation for why this occurs.</p>
 </div>
 </div>

@@ -259,27 +259,36 @@
 </div>
 <div class="section" id="do-deeper-networks-solve-the-problem">
 <h1><span class="section-number">4. </span>Do Deeper Networks Solve the Problem?<a class="headerlink" href="#do-deeper-networks-solve-the-problem" title="Permalink to this headline">¶</a></h1>
-<p>If <span class="math notranslate nohighlight">\(\frac{|\lambda_{2}|}{|\lambda_{1}|}\)</span> is large, then <span class="math notranslate nohighlight">\(A^{k}x\)</span> requires <span class="math notranslate nohighlight">\(k&gt;&gt;0\)</span> to converge, and <span class="math notranslate nohighlight">\(d_{Katz}\)</span> likewise approaches <span class="math notranslate nohighlight">\(d_{eig}\)</span> at slower rate. As such, we posit that deeper GCNs are required to learn the structure of low-density, high eigenvalue-ratio networks.</p>
+<p>If <span class="math notranslate nohighlight">\(\frac{|\lambda_{2}|}{|\lambda_{1}|}\)</span> is large, then <span class="math notranslate nohighlight">\(A^{k}x\)</span> requires <span class="math notranslate nohighlight">\(k&gt;&gt;0\)</span> to converge to dominant eigenvector <span class="math notranslate nohighlight">\(v_{1}\)</span>, and <span class="math notranslate nohighlight">\(d_{Katz}\)</span> likewise approaches <span class="math notranslate nohighlight">\(d_{eig}\)</span> at slower rate. As such, we posit that deeper GCNs are required to learn the Katz Centrality of low-density, high eigenvalue-ratio networks.</p>
 <div class="section" id="model-and-dataset-code">
 <h2><span class="section-number">4.1. </span>Model and Dataset Code<a class="headerlink" href="#model-and-dataset-code" title="Permalink to this headline">¶</a></h2>
+<p>Dataset is the same as before, with <span class="math notranslate nohighlight">\(p\in{}[\frac{1}{50n},\frac{1}{n}]\)</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">num_graphs</span> <span class="o">=</span> <span class="mi">3000</span>
 <span class="n">d</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_graphs</span><span class="p">):</span>
+    <span class="c1"># Set Cluster sizes and edge probabilities</span>
     <span class="n">n</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span><span class="mi">100</span><span class="p">,(</span><span class="mi">5</span><span class="p">,))</span>
     <span class="n">p</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">50</span><span class="o">*</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="mi">49</span><span class="o">/</span><span class="p">(</span><span class="mi">50</span><span class="o">*</span><span class="n">n</span><span class="p">))</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
     <span class="n">p</span> <span class="o">=</span> <span class="o">.</span><span class="mi">5</span> <span class="o">*</span> <span class="p">(</span><span class="n">p</span> <span class="o">+</span> <span class="n">p</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+    
+    <span class="c1"># Generate SBM</span>
     <span class="n">x</span><span class="p">,</span><span class="n">edges</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">n</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span><span class="mi">1</span><span class="p">)),</span><span class="n">torch_geometric</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">remove_isolated_nodes</span><span class="p">(</span><span class="n">torch_geometric</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">stochastic_blockmodel_graph</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">p</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">adj</span> <span class="o">=</span> <span class="n">torch_sparse</span><span class="o">.</span><span class="n">SparseTensor</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="n">edges</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">col</span><span class="o">=</span><span class="n">edges</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 
+    <span class="c1"># Write to Data object</span>
     <span class="n">d</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">torch_geometric</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Data</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">[:</span><span class="n">adj</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">)],</span><span class="n">edge_index</span> <span class="o">=</span> <span class="n">edges</span><span class="p">))</span>
 
-<span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">G</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">d</span><span class="p">,</span><span class="n">position</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">G</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
     <span class="n">G</span><span class="o">.</span><span class="n">edge_weight</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">edge_index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
     <span class="n">adj</span> <span class="o">=</span> <span class="n">torch_sparse</span><span class="o">.</span><span class="n">SparseTensor</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="n">G</span><span class="o">.</span><span class="n">edge_index</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">col</span><span class="o">=</span><span class="n">G</span><span class="o">.</span><span class="n">edge_index</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">value</span><span class="o">=</span><span class="n">G</span><span class="o">.</span><span class="n">edge_weight</span><span class="p">)</span>
+    
+    <span class="c1"># Compute Katz Centrality</span>
     <span class="n">v</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mf">1.01</span><span class="o">*</span><span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">adj</span><span class="o">.</span><span class="n">to_dense</span><span class="p">())[</span><span class="mi">0</span><span class="p">],</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
     <span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">inverse</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">adj</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span> <span class="o">-</span> <span class="n">v</span><span class="o">*</span><span class="n">adj</span><span class="o">.</span><span class="n">to_dense</span><span class="p">()</span><span class="o">.</span><span class="n">T</span><span class="p">)</span> <span class="o">-</span> <span class="n">torch</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">adj</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">)),</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    
+    <span class="c1"># Set as target</span>
     <span class="n">G</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
     <span class="n">d</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">G</span>
     
@@ -291,22 +300,23 @@
 </div>
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">2</span><span class="o">-</span><span class="n">a7b83814a1b6</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">     </span><span class="mi">10</span>     <span class="n">d</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">torch_geometric</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Data</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">[:</span><span class="n">adj</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">)],</span><span class="n">edge_index</span> <span class="o">=</span> <span class="n">edges</span><span class="p">))</span>
-<span class="g g-Whitespace">     </span><span class="mi">11</span> 
-<span class="ne">---&gt; </span><span class="mi">12</span> <span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">G</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">d</span><span class="p">,</span><span class="n">position</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-<span class="g g-Whitespace">     </span><span class="mi">13</span>     <span class="n">G</span><span class="o">.</span><span class="n">edge_weight</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">edge_index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">14</span>     <span class="n">adj</span> <span class="o">=</span> <span class="n">torch_sparse</span><span class="o">.</span><span class="n">SparseTensor</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="n">G</span><span class="o">.</span><span class="n">edge_index</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">col</span><span class="o">=</span><span class="n">G</span><span class="o">.</span><span class="n">edge_index</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">value</span><span class="o">=</span><span class="n">G</span><span class="o">.</span><span class="n">edge_weight</span><span class="p">)</span>
+<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">2</span><span class="o">-</span><span class="mi">6</span><span class="n">d981b036a17</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">     </span><span class="mi">19</span> 
+<span class="g g-Whitespace">     </span><span class="mi">20</span>     <span class="c1"># Compute Katz Centrality</span>
+<span class="ne">---&gt; </span><span class="mi">21</span>     <span class="n">v</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mf">1.01</span><span class="o">*</span><span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">adj</span><span class="o">.</span><span class="n">to_dense</span><span class="p">())[</span><span class="mi">0</span><span class="p">],</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+<span class="g g-Whitespace">     </span><span class="mi">22</span>     <span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">inverse</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">adj</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span> <span class="o">-</span> <span class="n">v</span><span class="o">*</span><span class="n">adj</span><span class="o">.</span><span class="n">to_dense</span><span class="p">()</span><span class="o">.</span><span class="n">T</span><span class="p">)</span> <span class="o">-</span> <span class="n">torch</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">adj</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">)),</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">23</span> 
 
-<span class="ne">TypeError</span>: &#39;position&#39; is an invalid keyword argument for enumerate()
+<span class="ne">KeyboardInterrupt</span>: 
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">batched_MAP</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">edge_index</span><span class="p">,</span><span class="n">edge_weights</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compute the Mean Average Distance of inputs</span>
+<span class="k">def</span> <span class="nf">batched_MAD</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">edge_index</span><span class="p">,</span><span class="n">edge_weights</span><span class="p">):</span>
     <span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="o">/</span><span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)[:,</span><span class="kc">None</span><span class="p">]</span>
     <span class="n">cosine</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">edge_index</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">*</span> <span class="n">X</span><span class="p">[</span><span class="n">edge_index</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="k">return</span> <span class="mi">1</span><span class="o">/</span><span class="n">edge_weights</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">*</span> <span class="p">(</span><span class="n">edge_weights</span> <span class="o">*</span> <span class="n">cosine</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
@@ -320,11 +330,13 @@
 <span class="n">model_mad</span> <span class="o">=</span> <span class="p">[]</span>
 
 <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">16</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="mi">64</span><span class="p">]:</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
     <span class="n">graph</span> <span class="o">=</span> <span class="n">GraphConv</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">k</span><span class="p">)</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
     
-    <span class="n">graph_results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">train_loop</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span><span class="n">train_loader</span><span class="p">,</span><span class="n">test_loader</span><span class="p">,</span><span class="mi">50</span><span class="p">,</span><span class="n">lr</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">))</span>
+    <span class="n">graph_results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">train_loop</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span><span class="n">train_loader</span><span class="p">,</span><span class="n">test_loader</span><span class="p">,</span><span class="mi">150</span><span class="p">,</span><span class="n">lr</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">))</span>
     <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">empty_cache</span><span class="p">()</span>
 
+    <span class="c1"># Iterate through network layers and compute the MAD at each</span>
     <span class="n">MAD</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">data</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">test_loader</span><span class="p">):</span>
         <span class="n">X</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
@@ -333,26 +345,15 @@
 
         <span class="n">graph</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
         <span class="n">X</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-        <span class="n">MAD</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+=</span> <span class="n">batched_MAP</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">data</span><span class="o">.</span><span class="n">edge_index</span><span class="o">.</span><span class="n">cuda</span><span class="p">(),</span><span class="n">data</span><span class="o">.</span><span class="n">edge_weight</span><span class="o">.</span><span class="n">cuda</span><span class="p">())</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+        <span class="n">MAD</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+=</span> <span class="n">batched_MAD</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">data</span><span class="o">.</span><span class="n">edge_index</span><span class="o">.</span><span class="n">cuda</span><span class="p">(),</span><span class="n">data</span><span class="o">.</span><span class="n">edge_weight</span><span class="o">.</span><span class="n">cuda</span><span class="p">())</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
 
         <span class="k">for</span> <span class="n">jdx</span><span class="p">,</span><span class="n">m</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">graph</span><span class="o">.</span><span class="n">intermediate</span><span class="p">):</span>
             <span class="n">X</span> <span class="o">=</span> <span class="n">X</span> <span class="o">+</span> <span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">](</span><span class="n">X</span><span class="p">)</span> <span class="o">+</span> <span class="n">torch_scatter</span><span class="o">.</span><span class="n">scatter_sum</span><span class="p">(</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">](</span><span class="n">X</span><span class="p">)[</span><span class="n">col</span><span class="p">],</span> <span class="n">row</span><span class="o">.</span><span class="n">cuda</span><span class="p">(),</span><span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
             <span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">LeakyReLU</span><span class="p">()(</span><span class="n">graph</span><span class="o">.</span><span class="n">bn</span><span class="p">[</span><span class="n">jdx</span><span class="p">](</span><span class="n">X</span><span class="p">))</span>
-            <span class="n">MAD</span><span class="p">[</span><span class="n">jdx</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">batched_MAP</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">data</span><span class="o">.</span><span class="n">edge_index</span><span class="o">.</span><span class="n">cuda</span><span class="p">(),</span><span class="n">data</span><span class="o">.</span><span class="n">edge_weight</span><span class="o">.</span><span class="n">cuda</span><span class="p">())</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+            <span class="n">MAD</span><span class="p">[</span><span class="n">jdx</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">batched_MAD</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">data</span><span class="o">.</span><span class="n">edge_index</span><span class="o">.</span><span class="n">cuda</span><span class="p">(),</span><span class="n">data</span><span class="o">.</span><span class="n">edge_weight</span><span class="o">.</span><span class="n">cuda</span><span class="p">())</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
 
         
     <span class="n">model_mad</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">MAD</span><span class="o">/</span><span class="p">(</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2273: 100%|██████████| 50/50 [00:59&lt;00:00,  1.19s/it]
-4449: 100%|██████████| 50/50 [01:08&lt;00:00,  1.38s/it]
-8801: 100%|██████████| 50/50 [01:29&lt;00:00,  1.79s/it]
-17505: 100%|██████████| 50/50 [02:10&lt;00:00,  2.61s/it]
-34913: 100%|██████████| 50/50 [03:33&lt;00:00,  4.27s/it]
-69729: 100%|██████████| 50/50 [06:18&lt;00:00,  7.57s/it]
-139361: 100%|██████████| 50/50 [11:47&lt;00:00, 14.16s/it]
 </pre></div>
 </div>
 </div>
@@ -392,7 +393,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/DeeperGCNs_8_0.png" src="_images/DeeperGCNs_8_0.png" />
+<img alt="_images/DeeperGCNs_9_0.png" src="_images/DeeperGCNs_9_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -405,23 +406,20 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/DeeperGCNs_9_0.png" src="_images/DeeperGCNs_9_0.png" />
+<img alt="_images/DeeperGCNs_10_0.png" src="_images/DeeperGCNs_10_0.png" />
 </div>
 </div>
-<p>Increasing network depth to <span class="math notranslate nohighlight">\(l=8\)</span> leads to better performance. However, the loss begins to stagnate past this point, and, with the exception of <span class="math notranslate nohighlight">\(l=32\)</span>,  it is still nearly an order of a magnitude worse than for the initial <span class="math notranslate nohighlight">\(p\in{}[\frac{1}{n},\frac{10}{n}]\)</span> dataset. Simply making the model deeper does not result in uniform, sufficient improvement.</p>
+<p>Increasing network depth to <span class="math notranslate nohighlight">\(l=8\)</span> leads to better performance. However, the loss begins to stagnate past this point relative to parameter count, and it is still nearly half an order of a magnitude worse than for the initial <span class="math notranslate nohighlight">\(p\in{}[\frac{1}{n},\frac{10}{n}]\)</span> dataset. Simply making the model deeper does not result in uniform improvement. Side note: the test loss is already quite small for <span class="math notranslate nohighlight">\(l=32\)</span> and <span class="math notranslate nohighlight">\(l=64\)</span> when the model in completely untrained; perhaps some sort of resevoir computing would work well?</p>
 </div>
 <div class="section" id="is-this-oversmoothing">
 <h2><span class="section-number">4.3. </span>Is This Oversmoothing?<a class="headerlink" href="#is-this-oversmoothing" title="Permalink to this headline">¶</a></h2>
-<p>GCNs suffer from a peculiar phenomena known as <em>oversmoothing</em>. In essence,  performance tends to degrade as you add more layers, and the features of each node converge to the same values. We choose to measure smoothing by the layerwise Mean Average Distance [15] i.e:</p>
+<p>GCNs suffer from a peculiar phenomena known as <em>oversmoothing</em>. In essence,  performance tends to degrade as you add more layers, and the features of each node converge to the same values. We choose to measure smoothing by the layerwise Mean Average Distance [14] i.e:</p>
 <div class="math notranslate nohighlight">
 \[\frac{1}{\sum_{i,j\in{}E}w_{ij}}\sum_{i,j\in{}E}w_{ij}(1 - \frac{x_{j}^{T}x_{i}}{||x_{i}||_{2}||x_{j}||_{2}})\]</div>
-<p>where <span class="math notranslate nohighlight">\(X\in{}R^{|V|xn}\)</span> is the graph representation matrix. Current theoretical analysis of oversmoothing has been limited to the GCNConv operator of Kipf and Welling [15].</p>
+<p>Current theoretical analysis of oversmoothing has been focused on the GCNConv operator of Kipf and Welling [15].</p>
 <div class="math notranslate nohighlight">
 \[X^{l+1} = (D^{\frac{-1}{2}}AD^{\frac{1}{2}})X^{l}W\]</div>
-<p>This is a psuedo-spectral convolution, in it that aggregates using a form of the symmetric normalized graph Lapalcian <span class="math notranslate nohighlight">\(L_{sym} = I - D^{\frac{-1}{2}}AD^{\frac{1}{2}}\)</span>. If <span class="math notranslate nohighlight">\(\lambda_{1}\)</span> is the dominant eigenvalue of <span class="math notranslate nohighlight">\((D^{\frac{-1}{2}}AD^{\frac{1}{2}})\)</span>, then we can state:</p>
-<div class="math notranslate nohighlight">
-\[\lim_{k\rightarrow{}\infty} (\frac{1}{|\lambda_{1}|})^{k}|(D^{\frac{-1}{2}}AD^{\frac{1}{2}})^{k}\vec{x}| = \lim_{k\rightarrow{}\infty} (\frac{1}{1 - \lambda_{1}})^{k} L_{sym}^{k}\vec{x}\]</div>
-<p>The graph Laplacian in analogous to the discrete Laplacian operator in a Cartesian space; it diffuses material until it is distributed evenly across the network (or as much as is possible). This is the root of the overmsoothing problem in GCNConv. However, the literatures demonstrates that spatial convolution algorithms, which do not explicitly incorporate <span class="math notranslate nohighlight">\(L_{sym}\)</span>, are no less vulnerable to oversmoothing [16,17].</p>
+<p>This is a psuedo-spectral convolution, in it that aggregates using a form of the symmetric normalized graph Lapalcian <span class="math notranslate nohighlight">\(L_{sym} = I - D^{\frac{-1}{2}}AD^{\frac{1}{2}}\)</span>. The graph Laplacian in analogous to the discrete Laplacian operator in a Cartesian space; it diffuses material until it is distributed evenly across the network (or as much as is possible). This is the root of the overmsoothing problem in GCNConv. However, the literatures demonstrates that spatial convolution algorithms, which do not explicitly incorporate <span class="math notranslate nohighlight">\(L_{sym}\)</span>, are no less vulnerable to oversmoothing [14,16].</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">d</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">model_mad</span><span class="p">):</span>
@@ -433,28 +431,16 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/DeeperGCNs_13_0.png" src="_images/DeeperGCNs_13_0.png" />
-<img alt="_images/DeeperGCNs_13_1.png" src="_images/DeeperGCNs_13_1.png" />
-<img alt="_images/DeeperGCNs_13_2.png" src="_images/DeeperGCNs_13_2.png" />
-<img alt="_images/DeeperGCNs_13_3.png" src="_images/DeeperGCNs_13_3.png" />
-<img alt="_images/DeeperGCNs_13_4.png" src="_images/DeeperGCNs_13_4.png" />
-<img alt="_images/DeeperGCNs_13_5.png" src="_images/DeeperGCNs_13_5.png" />
-<img alt="_images/DeeperGCNs_13_6.png" src="_images/DeeperGCNs_13_6.png" />
+<img alt="_images/DeeperGCNs_14_0.png" src="_images/DeeperGCNs_14_0.png" />
+<img alt="_images/DeeperGCNs_14_1.png" src="_images/DeeperGCNs_14_1.png" />
+<img alt="_images/DeeperGCNs_14_2.png" src="_images/DeeperGCNs_14_2.png" />
+<img alt="_images/DeeperGCNs_14_3.png" src="_images/DeeperGCNs_14_3.png" />
+<img alt="_images/DeeperGCNs_14_4.png" src="_images/DeeperGCNs_14_4.png" />
+<img alt="_images/DeeperGCNs_14_5.png" src="_images/DeeperGCNs_14_5.png" />
+<img alt="_images/DeeperGCNs_14_6.png" src="_images/DeeperGCNs_14_6.png" />
 </div>
 </div>
-<p>We observe a substantial decline in MAD for deeper GCN layers. This indicates that the elements of the dominant eigenvector of <span class="math notranslate nohighlight">\(A\)</span>, <span class="math notranslate nohighlight">\(v_{1}\)</span>, are tightly clustered; most converge to similar values in the limit as <span class="math notranslate nohighlight">\(l\rightarrow{}\infty\)</span>, which manifests as oversmoothing. We can visualize this by looking at the distribution of Katz Centrality:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">test_loader</span><span class="p">:</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">normalize</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">cuda</span><span class="p">(),</span><span class="n">data</span><span class="o">.</span><span class="n">batch</span><span class="o">.</span><span class="n">cuda</span><span class="p">())</span><span class="o">.</span><span class="n">cpu</span><span class="p">(),</span><span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span><span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Normalized Katz&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Counts&#39;</span><span class="p">)</span>
-    <span class="k">break</span><span class="p">;</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>The large marjority of nodes have min-max normalized <span class="math notranslate nohighlight">\(d_{katz}\)</span> of around <span class="math notranslate nohighlight">\(0\)</span>. Bearing in mind the relationship between <span class="math notranslate nohighlight">\(d_{Katz}\)</span> and <span class="math notranslate nohighlight">\(v_{1}\)</span>, we can infer that <span class="math notranslate nohighlight">\(v_{1}\)</span> is similarily clustered. Problem is, we don’t necesarily want to converge to exactly <span class="math notranslate nohighlight">\(v_{1}\)</span>, as—at these levels of sparsity—the sample networks are unlikely to be strongly connected.</p>
+<p>We observe a substantial decline in MAD for deeper GCN layers. This indicates that the elements of <span class="math notranslate nohighlight">\(v_{1}\)</span> are tightly clustered; most converge to similar values in the limit as <span class="math notranslate nohighlight">\(l\rightarrow{}\infty\)</span>, which manifests as oversmoothing. Problem is, we don’t necesarily want to converge to exactly <span class="math notranslate nohighlight">\(v_{1}\)</span>, as—at these levels of sparsity—the sample networks are unlikely to be strongly connected.</p>
 </div>
 </div>
 

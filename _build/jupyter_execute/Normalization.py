@@ -4,19 +4,19 @@ import time
 
 # Normalization Techniques
 
-Within the literature, the typical solution to oversmoothing is to apply some type of normalization. To this end, we propose orthogonalizing out vector $\vec{q}$ from the feature matrix $X^{l}\in{}R^{|V|xf}$ and then renormalizing each column $i$. We incorporate additional scale parameters $0\leq{}s_{1}\leq{}1$ and $s_{2}$.
+Within the literature, the typical solution to oversmoothing is to apply some type of normalization. To this end, we propose orthogonalizing out vector $\vec{q}$ (essentially a "best guess" for $v_{1}$) from $X^{l}$ and then renormalizing each column. We incorporate additional scale parameters $0\leq{}s_{1}\leq{}1$ and $s_{2}$.
 
-$$X_{i}^{l+1} = X_{i}^{l} - s_{1}\frac{X_{i}^{l}\cdot{}\vec{q}}{||\vec{q}||_{2}^{2}}\vec{q}$$
-$$X_{i}^{l+1} = s_{2}\frac{X_{i}^{l+1}}{||X_{i}^{l+1}||_{2}}$$
+$$X_{i}^{l} = X_{i}^{l} - s_{1}\frac{X_{i}^{l}\cdot{}\vec{q}}{||\vec{q}||_{2}^{2}}\vec{q}$$
+$$X_{i}^{l} = s_{2}\frac{X_{i}^{l}}{||X_{i}^{l}||_{2}}$$
 
-If $s_{1}=1$ and $\vec{q}=\vec{1}$, this is equivalent to PairNorm [14]. Define the smoothness of feature $i$ at GCN layer $l$ as
+If $s_{1}=1$ and $\vec{q}=\vec{1}$, this is equivalent to PairNorm [16]. Define the smoothness of feature $i$ at GCN layer $l$ as
 
-$$S = \frac{1}{E[X_{i}^{l} - E[X_{i}^{l}]]}$$
+$$S = \frac{1}{E[X^{l} - E[X^{l}]]}$$
 
 PairNorm aims to minimize global smoothness by subtracting out the mean feature vector and renormalizing. 
 
-$$X_{i}^{l+1} = X_{i}^{l} - E[X_{i}^{l}]$$
-$$X_{i}^{l+1} = s \frac{X_{i}^{l+1}}{||X_{i}^{l+1}||_{2}}$$
+$$X_{i}^{l} = X_{i}^{l} - E[X_{i}^{l}]$$
+$$X_{i}^{l} = s \frac{X_{i}^{l}}{||X_{i}^{l}||_{2}}$$
 
 We evaluate our normalization scheme with $\vec{q} = \frac{1}{\vec{d}_{degree}}$ and compare against both PairNorm and GraphSizeNorm [3].
 
@@ -92,10 +92,11 @@ graph_results = []
 model_mad = []
 
 torch.manual_seed(0)
-for k in tqdm([2,4,8,16,32,64]):
+for k in [2,4,8,16,32,64]:
+    torch.manual_seed(0)
     graph = DummyModel(1,32,1,k,OrthNormL2).cuda()
     
-    graph_results.append(train_loop(graph,train_loader,test_loader,100,lr=1e-1))
+    graph_results.append(train_loop(graph,train_loader,test_loader,150,lr=1e-1))
     torch.cuda.empty_cache()
 
     MAD = torch.zeros(k+1)
@@ -164,9 +165,11 @@ model_mad = []
 
 torch.manual_seed(0)
 for k in tqdm([2,4,8,16,32,64]):
+    torch.manual_seed(0)
+
     graph = DummyModel(1,32,1,k,GraphSizeNorm).cuda()
     
-    graph_results.append(train_loop(graph,train_loader,test_loader,100,lr=1e-1))
+    graph_results.append(train_loop(graph,train_loader,test_loader,150,lr=1e-1))
     torch.cuda.empty_cache()
 
     MAD = torch.zeros(k+1)
@@ -234,9 +237,10 @@ graph_results = []
 model_mad = []
 
 for k in [1,2,4,8,16,32,64]:
+    torch.manual_seed(0)
     graph = DummyModel(1,32,1,k,PairNorm).cuda()
     
-    graph_results.append(train_loop(graph,train_loader,test_loader,100,lr=1e-1))
+    graph_results.append(train_loop(graph,train_loader,test_loader,150,lr=1e-1))
     torch.cuda.empty_cache()
 
     MAD = torch.zeros(k+1)
@@ -294,6 +298,7 @@ for idx,d in enumerate(model_mad):
 
 ## Overview
 
-Our new normalization scheme, which we are calling OrthNorm (i.e Orthagonal Normalization, get it?), improves upon the unnormalized case, even without having fully converged. It surpasses PairNorm by around an order of magnitude given the same depth and number of epochs. We suspect this is because $d_{Katz}$ is close enough to $v_{1}$, and so PairNorm reduces the smoothness *too* much. Indeed, PairNorm returns uniform MAP values, whereas those of OrthNorm exhibit a great deal of variance. This is due to $s_{1}$ regulating the magnitude of the orthogonalization; without it, MAP consistently hovers around $.20$, and the loss is about $1e^{-3}$ larger. 
+Our new normalization scheme, which we are calling OrthNorm (i.e Orthagonal Normalization, get it?), improves upon the unnormalized case, even without having fully converged. It surpasses PairNorm by around an order of magnitude given the same depth and number of epochs. We suspect this is because $d_{Katz}$ is close enough to $v_{1}$, and so PairNorm reduces the smoothness *too* much. Indeed, PairNorm returns uniformly large MAP values, whereas those of OrthNorm are generally smaller and more erratic. This is due to $s_{1}$ regulating the magnitude of the orthogonalization; without it, MAP consistently hovers around $.20$, and the loss is about $1e^{-3}$ larger. 
 
 As for GraphSizeNorm, there is certainly some benefit, but it does still converge to a larger value than OrthNorm (which isn't even convergent yet). Oddly enough, while the MAP is otherwise quite low, GraphSizeNorm spikes in the last few layers for both the $l=32$ and $l=64$ models. We do not have an explanation for why this occurs.
+

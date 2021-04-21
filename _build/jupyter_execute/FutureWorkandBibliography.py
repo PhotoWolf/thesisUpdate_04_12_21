@@ -1,7 +1,8 @@
 # Future Directions
 
-- Thus far, we have only explored centrality measures that can be easily expressed as the weighted sum of matrix powers. Path-based centrality (i.e betweeness, closeness, etc.) may pose additional problems for standard GCN architectures. Moreover, while even Katz Centrality is fairly quick to compute for small to medium sized networks, path centralities do not scale as well. The fastest algorithm is that of Brandes [17], which is $O(|N||E|)$. It is not as trivial to merely precompute these metrics and append them as node features, so a network capable of learning a decent approximation is of value.
-- Regarding our current work, there are a few avenues we'd like to explore further. Overmsoothing and training deeper GCNs is an active area of study in the community, and the theoretical side is not all that well developed. We are vaguely aware of a work linking oversmoothing to a matrix's spectral gap in the context of expander graphs, but nothing in terms of eigenvalue ratio, dominant eigenvectors, etc. There are also some custom architectures we'd like to try, in so far as they might perform better than GraphConv. The code for these is already finished (I spent Janurary playing around with a few different ideas); it is just a matter of testing them on our synthetic dataset. 
+- Thus far, we have only explored centrality measures that can be easily expressed as the weighted sum of matrix powers. Path-based centrality (i.e betweeness, closeness, etc.) may pose additional problems for standard GCN architectures. Moreover, while even Katz Centrality is fairly quick to compute for small to medium sized networks, path centralities do not scale as well. The fastest algorithm is that of Brandes [20], which is $O(|N||E|)$. It is not as trivial to merely precompute these metrics and append them as node features.
+
+- Regarding our current work, there are a few avenues we'd like to explore further. Overmsoothing and training deeper GCNs is an active area of study in the community, and the theoretical side is not all that well developed. There are also some custom architectures we'd like to try, in so far as they might perform better than GraphConv. The code for these is already finished (I spent Janurary playing around with a few different ideas); it is just a matter of testing them on our synthetic dataset. 
 
 # Bibliography
 
@@ -18,7 +19,10 @@
 11. Maas, A.L. (2013). Rectifier Nonlinearities Improve Neural Network Acoustic Models.
 12. Karrer, B., & Newman, M. (2011). Stochastic blockmodels and community structure in networks. Physical review. E, Statistical, nonlinear, and soft matter physics, 83 1 Pt 2, 016107 .
 13. Katz, L. A new status index derived from sociometric analysis. Psychometrika 18, 39–43 (1953).
-14. Zhao, L., & Akoglu, L. (2020). PairNorm: Tackling Oversmoothing in GNNs. ArXiv, abs/1909.12223.
-15. Wu, F., Zhang, T., Souza, A., Fifty, C., Yu, T., & Weinberger, K.Q. (2019). Simplifying Graph Convolutional Networks. ArXiv, abs/1902.07153.
-16. Abu-El-Haija, S., Perozzi, B., Kapoor, A., Harutyunyan, H., Alipourfard, N., Lerman, K., Steeg, G.V., & Galstyan, A. (2019). MixHop: Higher-Order Graph Convolutional Architectures via Sparsified Neighborhood Mixing. ICML.
-17. Brandes, U. (2001). A faster algorithm for betweenness centrality. The Journal of Mathematical Sociology, 25, 163 - 177.
+14. Chen, D., Lin, Y., Li, W., Li, P., Zhou, J., & Sun, X. (2020). Measuring and Relieving the Over-smoothing Problem for Graph Neural Networks from the Topological View. AAAI.
+15. Kipf, T., & Welling, M. (2017). Semi-Supervised Classification with Graph Convolutional Networks. ArXiv, abs/1609.02907.
+16. Zhao, L., & Akoglu, L. (2020). PairNorm: Tackling Oversmoothing in GNNs. ArXiv, abs/1909.12223.
+17. Wu, F., Zhang, T., Souza, A., Fifty, C., Yu, T., & Weinberger, K.Q. (2019). Simplifying Graph Convolutional Networks. ArXiv, abs/1902.07153.
+18. Abu-El-Haija, S., Perozzi, B., Kapoor, A., Harutyunyan, H., Alipourfard, N., Lerman, K., Steeg, G.V., & Galstyan, A. (2019). MixHop: Higher-Order Graph Convolutional Architectures via Sparsified Neighborhood Mixing. ICML.
+19. Brandes, U. (2001). A faster algorithm for betweenness centrality. The Journal of Mathematical Sociology, 25, 163 - 177.
+

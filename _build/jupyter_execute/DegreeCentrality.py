@@ -4,18 +4,23 @@ import time
 
 ## Dataset
 
-We generate random networks via a Stochastic Block Model (SBM). Given probability matrix $P\in{}R^{kxk}$ and $k$ clusters, a Stochastic Block Model defines the network wherein $p(e_{ij})=P_{c_{i},c_{j}}$ for cluster assignments $c_{i},c_{j}$. This allows us to model a wide range of topologies [3,12]. As a starting point, we produce a synthetic dataset of 3000 highly-connected SBMs with cluster size $n\sim{}U(50,100)$, $k=5$, and $P\sim{}U(\frac{1}{n},\frac{10}{n})$. Features are uninformative, being the vector $\vec{1}\in{}R^{|V|}$. $66\%-33\%$ train-test split.
+We generate random networks via a Stochastic Block Model (SBM) [12]. Given probability matrix $P\in{}R^{kxk}$ and $k$ clusters, a Stochastic Block Model defines the network wherein $p(e_{ij})=P_{c_{i},c_{j}}$ for cluster assignments $c_{i},c_{j}$. This allows us to model a wide range of topologies [3,12]. As a starting point, we produce a synthetic dataset of 3000 highly-connected SBMs with cluster size $n\sim{}U(50,100)$, $k=5$, and $P\sim{}U(\frac{1}{n},\frac{10}{n})$. Features are uninformative, being the vector $\vec{1}\in{}R^{|V|}$. $66\%-33\%$ train-test split.
 
 num_graphs = 3000
 d = []
 
 for _ in range(num_graphs):
+    
+    # Get Cluster sizes and connection probabilities
     n = torch.randint(50,100,(5,))
     p = 1/n + (10/n - 1/n) * torch.rand((5,5))
     p = .5 * (p + p.T)
+    
+    # Generate SBM
     x,edges = torch.randn((n.sum(),1)),torch_geometric.utils.remove_isolated_nodes(torch_geometric.utils.stochastic_blockmodel_graph(n,p))[0]
     adj = torch_sparse.SparseTensor(row=edges[0],col=edges[1])
 
+    # Create TorchGeometric Data object
     d.append(torch_geometric.data.Data(x=x[:adj.size(0)],edge_index = edges))
 
 We examine the relationship between the density,$\frac{2|E|}{|V|(|V|-1)}$, of an SBM and the ratio of its two largest eigenvalues, $\frac{|\lambda{}_{2}|}{|\lambda{}_{1}|}$. This latter quantity determines the rate of convergence of $A^{k}\vec{x}$ to the dominant eigenvector $\vec{v_{1}}$. If $||\vec{x}||=1$, then we have:
@@ -36,17 +41,23 @@ p_range = torch.logspace(-2,1,100)
 density = []
 eig_ratio = []
 
+# Iterate over range of connection probabilities
 for p in p_range:
     for _ in range(num_samples):
+        
+        # Get Cluster sizes and connection probabiltiies
         n = torch.randint(50,100,(5,))
         if p<1:
             P = 1/n + ((p-1)/n) * torch.rand((5,5))
         else:
             P = p/n + ((1-p)/n) * torch.rand((5,5))
         P = .5 * (P + P.T) 
+        
+        # Generate SBM
         x,edges = torch.randn((n.sum(),1)),torch_geometric.utils.remove_isolated_nodes(torch_geometric.utils.stochastic_blockmodel_graph(n,P))[0]
         adj = torch_sparse.SparseTensor(row=edges[0],col=edges[1])
 
+        # Compute density and ratio of leading eigenvalues
         density.append(torch_sparse.sum(adj)/(adj.size(0)*adj.size(1)))
         
         vals = torch.sort(torch.norm(torch.eig(adj.to_dense())[0],dim=1))
@@ -79,7 +90,11 @@ Losses/rank displacement are plotted below for one-layer GraphConv and EdgeConv 
 for idx,G in enumerate(d):
     G.edge_weight = torch.ones(G.edge_index[0].shape)
     adj = torch_sparse.SparseTensor(row=G.edge_index[0],col=G.edge_index[1],value=G.edge_weight)
+    
+    # Compute degree centrality
     y = torch_sparse.sum(adj,dim=1)
+    
+    # Assign as target
     G.y = y
     d[idx] = G
     
@@ -126,13 +141,18 @@ plt.tight_layout();
 ### Weighted, Undirected
 
 for idx,G in enumerate(d):
-    
+
+    # Assign weights and symmetrize
     adj = torch_sparse.SparseTensor(row=G.edge_index[0],col=G.edge_index[1],value=torch.randn(G.edge_index[0].shape))
     adj = adj.to_dense()
     adj = .5 * (adj + adj.T)
     adj = torch_sparse.SparseTensor.from_dense(adj)
     G.edge_weight = adj.coo()[2]
+    
+    # Compute degree centrality
     y = torch_sparse.sum(adj,dim=1)
+    
+    # Assign as target
     G.y = y
     d[idx] = G
     
@@ -179,9 +199,15 @@ plt.tight_layout();
 ### Weighted, Directed
 
 for idx,G in enumerate(d):
+    
+    # Assign weights
     G.edge_weight = torch.rand(G.edge_index[0].shape)
     adj = torch_sparse.SparseTensor(row=G.edge_index[0],col=G.edge_index[1],value=G.edge_weight)
+    
+    # Compute degree centrality
     y = torch_sparse.sum(adj,dim=1)
+    
+    # Assign as target
     G.y = y
     d[idx] = G
     

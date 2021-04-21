@@ -34,6 +34,6 @@ Here is a preview of the cell contents:
 -------------------
 ['num_samples = 100', 'p_range = torch.logspace(-2,1,100)', 'density = []', 'eig_ratio = []', '']
 ...
-['', '        density.append(torch_sparse.sum(adj)/(adj.size(0)*adj.size(1)))', '        ', '        vals = torch.sort(torch.norm(torch.eig(adj.to_dense())[0],dim=1))', '        eig_ratio.append(vals[0][-2]/vals[0][-1])']
+['        # Compute density and ratio of leading eigenvalues', '        density.append(torch_sparse.sum(adj)/(adj.size(0)*adj.size(1)))', '        ', '        vals = torch.sort(torch.norm(torch.eig(adj.to_dense())[0],dim=1))', '        eig_ratio.append(vals[0][-2]/vals[0][-1])']
 -------------------
 

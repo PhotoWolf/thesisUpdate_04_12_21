@@ -4,7 +4,7 @@ import time
 
 # Simplified Graph Convolution(al Networks)
 
-Wu et. al. (2019) introduced the Simplified Graph Convolution (SGC) [15]
+Wu et. al. (2019) introduced the Simplified Graph Convolution (SGC) [17]
 
 $$X^{out} = \Theta{}(A^{k}X^{in})$$
 
@@ -162,7 +162,7 @@ Train and test loss are slightly improved from base SGC. Rank displacement benef
 
 ## MixHop
 
-We also examine a single-layer MixHop model as introduced in El-Haija et. al. (2019). Taking similar inspiration from SGC, MixHop concatenates each level of aggreation into a single feature vector [16]. 
+We also examine a single-layer MixHop model as introduced in El-Haija et. al. (2019). Taking similar inspiration from SGC, MixHop concatenates each level of aggreation into a single feature vector [18]. 
 $$X^{out} = \Theta{}(A^{k}X^{in} || A^{k-1}X^{in} || ... || X^{in})$$
 
 

@@ -328,3 +328,85 @@ Or paste this line directly into your browser bar:
 
 [92m===============================================================================[0m
 
+Running Jupyter-Book v0.10.2
+Source Folder: /home/luke/thesisUpdate_04_12_21
+Config Path: None
+Output Path: /home/luke/thesisUpdate_04_12_21/_build/html
+[01mRunning Sphinx v3.5.4[39;49;00m
+[01mloading pickled environment... [39;49;00mdone
+[01mmyst v0.13.6:[39;49;00m MdParserConfig(renderer='sphinx', commonmark_only=False, dmath_allow_labels=True, dmath_allow_space=True, dmath_allow_digits=True, update_mathjax=True, enable_extensions=['colon_fence', 'dollarmath', 'linkify', 'substitution'], disable_syntax=[], url_schemes=['mailto', 'http', 'https'], heading_anchors=None, html_meta=[], footnote_transition=True, substitutions=[], sub_delimiters=['{', '}'])
+[01mbuilding [mo]: [39;49;00mtargets for 0 po files that are out of date
+[01mbuilding [html]: [39;49;00mtargets for 1 source files that are out of date
+[01mupdating environment: [39;49;00m0 added, 1 changed, 0 removed
+[01mreading sources... [39;49;00m[100%] [35mNormalization[39;49;00m                                                                                      Executing: Normalization in: /home/luke/thesisUpdate_04_12_21
+
+[31mWARNING: Execution Failed with traceback saved in /home/luke/thesisUpdate_04_12_21/_build/html/reports/Normalization.log[39;49;00m
+[01mlooking for now-outdated files... [39;49;00mnone found
+[01mpickling environment... [39;49;00mdone
+[01mchecking consistency... [39;49;00mdone
+[01mpreparing documents... [39;49;00mdone
+[01mwriting output... [39;49;00m[ 50%] [32mIntroduction[39;49;00m                                                                                        [01mwriting output... [39;49;00m[100%] [32mNormalization[39;49;00m                                                                                       
+[01mgenerating indices... [39;49;00mgenindex done
+[01mwriting additional pages... [39;49;00msearch done
+[01mcopying images... [39;49;00m[  4%] [33m_build/jupyter_execute/Normalization_12_0.png[39;49;00m                                                       [01mcopying images... [39;49;00m[  9%] [33m_build/jupyter_execute/Normalization_13_0.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 13%] [33m_build/jupyter_execute/Normalization_13_1.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 18%] [33m_build/jupyter_execute/Normalization_13_2.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 22%] [33m_build/jupyter_execute/Normalization_13_3.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 27%] [33m_build/jupyter_execute/Normalization_13_4.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 31%] [33m_build/jupyter_execute/Normalization_13_5.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 36%] [33m_build/jupyter_execute/Normalization_18_0.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 40%] [33m_build/jupyter_execute/Normalization_19_0.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 45%] [33m_build/jupyter_execute/Normalization_19_1.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 50%] [33m_build/jupyter_execute/Normalization_19_2.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 54%] [33m_build/jupyter_execute/Normalization_19_3.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 59%] [33m_build/jupyter_execute/Normalization_19_4.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 63%] [33m_build/jupyter_execute/Normalization_19_5.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 68%] [33m_build/jupyter_execute/Normalization_24_0.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 72%] [33m_build/jupyter_execute/Normalization_25_0.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 77%] [33m_build/jupyter_execute/Normalization_25_1.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 81%] [33m_build/jupyter_execute/Normalization_25_2.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 86%] [33m_build/jupyter_execute/Normalization_25_3.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 90%] [33m_build/jupyter_execute/Normalization_25_4.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 95%] [33m_build/jupyter_execute/Normalization_25_5.png[39;49;00m                                                       [01mcopying images... [39;49;00m[100%] [33m_build/jupyter_execute/Normalization_25_6.png[39;49;00m                                                       
+[01mcopying static files... [39;49;00mdone
+[01mcopying extra files... [39;49;00mdone
+[01mdumping search index in English (code: en)... [39;49;00mdone
+[01mdumping object inventory... [39;49;00mdone
+[01mbuild succeeded, 1 warning.[39;49;00m
+
+The HTML pages are in _build/html.
+
+[92m===============================================================================[0m
+
+Finished generating HTML for book.
+Your book's HTML pages are here:
+    _build/html/
+You can look at your book by opening this file in a browser:
+    _build/html/index.html
+Or paste this line directly into your browser bar:
+    file:///home/luke/thesisUpdate_04_12_21/_build/html/index.html            
+
+[92m===============================================================================[0m
+
+Running Jupyter-Book v0.10.2
+Source Folder: /home/luke/thesisUpdate_04_12_21
+Config Path: None
+Output Path: /home/luke/thesisUpdate_04_12_21/_build/html
+[01mRunning Sphinx v3.5.4[39;49;00m
+[01mloading pickled environment... [39;49;00mdone
+[01mmyst v0.13.6:[39;49;00m MdParserConfig(renderer='sphinx', commonmark_only=False, dmath_allow_labels=True, dmath_allow_space=True, dmath_allow_digits=True, update_mathjax=True, enable_extensions=['colon_fence', 'dollarmath', 'linkify', 'substitution'], disable_syntax=[], url_schemes=['mailto', 'http', 'https'], heading_anchors=None, html_meta=[], footnote_transition=True, substitutions=[], sub_delimiters=['{', '}'])
+[01mbuilding [mo]: [39;49;00mtargets for 0 po files that are out of date
+[01mbuilding [html]: [39;49;00mtargets for 1 source files that are out of date
+[01mupdating environment: [39;49;00m0 added, 1 changed, 0 removed
+[01mreading sources... [39;49;00m[100%] [35mNormalization[39;49;00m                                                                                      Executing: Normalization in: /home/luke/thesisUpdate_04_12_21
+
+[31mWARNING: Execution Failed with traceback saved in /home/luke/thesisUpdate_04_12_21/_build/html/reports/Normalization.log[39;49;00m
+[01mlooking for now-outdated files... [39;49;00mnone found
+[01mpickling environment... [39;49;00mdone
+[01mchecking consistency... [39;49;00mdone
+[01mpreparing documents... [39;49;00mdone
+[01mwriting output... [39;49;00m[ 50%] [32mIntroduction[39;49;00m                                                                                        [01mwriting output... [39;49;00m[100%] [32mNormalization[39;49;00m                                                                                       
+[01mgenerating indices... [39;49;00mgenindex done
+[01mwriting additional pages... [39;49;00msearch done
+[01mcopying images... [39;49;00m[  4%] [33m_build/jupyter_execute/Normalization_12_0.png[39;49;00m                                                       [01mcopying images... [39;49;00m[  9%] [33m_build/jupyter_execute/Normalization_13_0.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 13%] [33m_build/jupyter_execute/Normalization_13_1.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 18%] [33m_build/jupyter_execute/Normalization_13_2.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 22%] [33m_build/jupyter_execute/Normalization_13_3.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 27%] [33m_build/jupyter_execute/Normalization_13_4.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 31%] [33m_build/jupyter_execute/Normalization_13_5.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 36%] [33m_build/jupyter_execute/Normalization_18_0.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 40%] [33m_build/jupyter_execute/Normalization_19_0.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 45%] [33m_build/jupyter_execute/Normalization_19_1.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 50%] [33m_build/jupyter_execute/Normalization_19_2.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 54%] [33m_build/jupyter_execute/Normalization_19_3.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 59%] [33m_build/jupyter_execute/Normalization_19_4.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 63%] [33m_build/jupyter_execute/Normalization_19_5.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 68%] [33m_build/jupyter_execute/Normalization_24_0.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 72%] [33m_build/jupyter_execute/Normalization_25_0.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 77%] [33m_build/jupyter_execute/Normalization_25_1.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 81%] [33m_build/jupyter_execute/Normalization_25_2.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 86%] [33m_build/jupyter_execute/Normalization_25_3.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 90%] [33m_build/jupyter_execute/Normalization_25_4.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 95%] [33m_build/jupyter_execute/Normalization_25_5.png[39;49;00m                                                       [01mcopying images... [39;49;00m[100%] [33m_build/jupyter_execute/Normalization_25_6.png[39;49;00m                                                       
+[01mcopying static files... [39;49;00mdone
+[01mcopying extra files... [39;49;00mdone
+[01mdumping search index in English (code: en)... [39;49;00mdone
+[01mdumping object inventory... [39;49;00mdone
+[01mbuild succeeded, 1 warning.[39;49;00m
+
+The HTML pages are in _build/html.
+
+[92m===============================================================================[0m
+
+Finished generating HTML for book.
+Your book's HTML pages are here:
+    _build/html/
+You can look at your book by opening this file in a browser:
+    _build/html/index.html
+Or paste this line directly into your browser bar:
+    file:///home/luke/thesisUpdate_04_12_21/_build/html/index.html            
+
+[92m===============================================================================[0m
+
