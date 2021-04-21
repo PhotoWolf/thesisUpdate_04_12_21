@@ -32,7 +32,7 @@ nbclient.exceptions.CellTimeoutError: A cell timed out while it was being execut
 The message was: Cell execution timed out.
 Here is a preview of the cell contents:
 -------------------
-['num_graphs = 3000', 'd = []', 'for _ in range(num_graphs):', '    n = torch.randint(50,100,(5,))', '    p = 1/(50*n) + (49/(50*n)) * torch.rand((5,5))']
+['num_graphs = 3000', 'd = []', 'for _ in range(num_graphs):', '    # Set Cluster sizes and edge probabilities', '    n = torch.randint(50,100,(5,))']
 ...
 ['    d[idx] = G', '    ', 'train,test = d[:2000],d[2000::]', 'train_loader = torch_geometric.data.DataLoader(train,batch_size=200,shuffle=True)', 'test_loader = torch_geometric.data.DataLoader(test,batch_size=200,shuffle=True)']
 -------------------

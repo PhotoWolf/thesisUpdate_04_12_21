@@ -307,7 +307,7 @@
 
     <span class="n">d</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">torch_geometric</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Data</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">[:</span><span class="n">adj</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">)],</span><span class="n">edge_index</span> <span class="o">=</span> <span class="n">edges</span><span class="p">))</span>
 
-<span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">G</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">d</span><span class="p">,</span><span class="n">position</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">G</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
     <span class="n">G</span><span class="o">.</span><span class="n">edge_weight</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">edge_index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
     <span class="n">adj</span> <span class="o">=</span> <span class="n">torch_sparse</span><span class="o">.</span><span class="n">SparseTensor</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="n">G</span><span class="o">.</span><span class="n">edge_index</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">col</span><span class="o">=</span><span class="n">G</span><span class="o">.</span><span class="n">edge_index</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">value</span><span class="o">=</span><span class="n">G</span><span class="o">.</span><span class="n">edge_weight</span><span class="p">)</span>
     <span class="n">v</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mf">1.01</span><span class="o">*</span><span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">adj</span><span class="o">.</span><span class="n">to_dense</span><span class="p">())[</span><span class="mi">0</span><span class="p">],</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
@@ -323,15 +323,15 @@
 </div>
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">2</span><span class="o">-</span><span class="n">a7b83814a1b6</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">     </span><span class="mi">10</span>     <span class="n">d</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">torch_geometric</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Data</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">[:</span><span class="n">adj</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">)],</span><span class="n">edge_index</span> <span class="o">=</span> <span class="n">edges</span><span class="p">))</span>
-<span class="g g-Whitespace">     </span><span class="mi">11</span> 
-<span class="ne">---&gt; </span><span class="mi">12</span> <span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">G</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">d</span><span class="p">,</span><span class="n">position</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">2</span><span class="o">-</span><span class="n">abf33f7cf4b9</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="g g-Whitespace">     </span><span class="mi">13</span>     <span class="n">G</span><span class="o">.</span><span class="n">edge_weight</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">edge_index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 <span class="g g-Whitespace">     </span><span class="mi">14</span>     <span class="n">adj</span> <span class="o">=</span> <span class="n">torch_sparse</span><span class="o">.</span><span class="n">SparseTensor</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="n">G</span><span class="o">.</span><span class="n">edge_index</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">col</span><span class="o">=</span><span class="n">G</span><span class="o">.</span><span class="n">edge_index</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">value</span><span class="o">=</span><span class="n">G</span><span class="o">.</span><span class="n">edge_weight</span><span class="p">)</span>
+<span class="ne">---&gt; </span><span class="mi">15</span>     <span class="n">v</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mf">1.01</span><span class="o">*</span><span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">adj</span><span class="o">.</span><span class="n">to_dense</span><span class="p">())[</span><span class="mi">0</span><span class="p">],</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+<span class="g g-Whitespace">     </span><span class="mi">16</span>     <span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">inverse</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">adj</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span> <span class="o">-</span> <span class="n">v</span><span class="o">*</span><span class="n">adj</span><span class="o">.</span><span class="n">to_dense</span><span class="p">()</span><span class="o">.</span><span class="n">T</span><span class="p">)</span> <span class="o">-</span> <span class="n">torch</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">adj</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">)),</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">17</span>     <span class="n">G</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
 
-<span class="ne">TypeError</span>: &#39;position&#39; is an invalid keyword argument for enumerate()
+<span class="ne">KeyboardInterrupt</span>: 
 </pre></div>
 </div>
 </div>
@@ -365,19 +365,8 @@
 <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">16</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="mi">64</span><span class="p">]:</span>
     <span class="n">model</span> <span class="o">=</span> <span class="n">SGC</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">k</span><span class="p">)</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
     
-    <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">train_loop</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="n">train_loader</span><span class="p">,</span><span class="n">test_loader</span><span class="p">,</span><span class="mi">50</span><span class="p">,</span><span class="n">lr</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">))</span>
+    <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">train_loop</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="n">train_loader</span><span class="p">,</span><span class="n">test_loader</span><span class="p">,</span><span class="mi">150</span><span class="p">,</span><span class="n">lr</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">))</span>
     <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">empty_cache</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2401: 100%|██████████| 50/50 [01:12&lt;00:00,  1.45s/it]
-2401: 100%|██████████| 50/50 [01:12&lt;00:00,  1.45s/it]
-2401: 100%|██████████| 50/50 [01:13&lt;00:00,  1.46s/it]
-2401: 100%|██████████| 50/50 [01:13&lt;00:00,  1.48s/it]
-2401: 100%|██████████| 50/50 [01:15&lt;00:00,  1.51s/it]
-2401: 100%|██████████| 50/50 [01:18&lt;00:00,  1.57s/it]
-2401: 100%|██████████| 50/50 [01:24&lt;00:00,  1.69s/it]
 </pre></div>
 </div>
 </div>
@@ -442,7 +431,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="o">=</span> <span class="n">k</span>
 
     <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">X</span><span class="p">,</span><span class="n">edge_index</span><span class="p">,</span><span class="n">edge_weight</span><span class="p">,</span><span class="n">batch</span><span class="p">):</span>
-        <span class="n">coeffs</span><span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Softmax</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)(</span><span class="bp">self</span><span class="o">.</span><span class="n">coefficients</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">-</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Softmax</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)(</span><span class="bp">self</span><span class="o">.</span><span class="n">coefficients</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">coeffs</span><span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coefficients</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 
         <span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="o">/</span><span class="n">torch_scatter</span><span class="o">.</span><span class="n">scatter_sum</span><span class="p">(</span><span class="n">X</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span><span class="n">batch</span><span class="p">,</span><span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">sqrt</span><span class="p">()[</span><span class="n">batch</span><span class="p">]</span>
         
@@ -467,17 +456,6 @@
     
     <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">train_loop</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="n">train_loader</span><span class="p">,</span><span class="n">test_loader</span><span class="p">,</span><span class="mi">50</span><span class="p">,</span><span class="n">lr</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">))</span>
     <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">empty_cache</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2405: 100%|██████████| 50/50 [01:36&lt;00:00,  1.93s/it]
-2407: 100%|██████████| 50/50 [01:33&lt;00:00,  1.86s/it]
-2411: 100%|██████████| 50/50 [01:14&lt;00:00,  1.49s/it]
-2419: 100%|██████████| 50/50 [02:32&lt;00:00,  3.05s/it]
-2435: 100%|██████████| 50/50 [02:58&lt;00:00,  3.57s/it]
-2467: 100%|██████████| 50/50 [03:15&lt;00:00,  3.90s/it]
-2531: 100%|██████████| 50/50 [03:55&lt;00:00,  4.70s/it]
 </pre></div>
 </div>
 </div>
@@ -558,19 +536,28 @@ $<span class="math notranslate nohighlight">\(X^{out} = \Theta{}(A^{k}X^{in} || 
 <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">16</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="mi">64</span><span class="p">]:</span>
     <span class="n">model</span> <span class="o">=</span> <span class="n">MixHop</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">k</span><span class="p">)</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
     
-    <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">train_loop</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="n">train_loader</span><span class="p">,</span><span class="n">test_loader</span><span class="p">,</span><span class="mi">50</span><span class="p">,</span><span class="n">lr</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">))</span>
+    <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">train_loop</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="n">train_loader</span><span class="p">,</span><span class="n">test_loader</span><span class="p">,</span><span class="mi">150</span><span class="p">,</span><span class="n">lr</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">))</span>
     <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">empty_cache</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2433: 100%|██████████| 50/50 [01:12&lt;00:00,  1.45s/it]
-2465: 100%|██████████| 50/50 [01:12&lt;00:00,  1.46s/it]
-2529: 100%|██████████| 50/50 [01:13&lt;00:00,  1.47s/it]
-2657: 100%|██████████| 50/50 [01:14&lt;00:00,  1.48s/it]
-2913: 100%|██████████| 50/50 [01:15&lt;00:00,  1.52s/it]
-3425: 100%|██████████| 50/50 [01:20&lt;00:00,  1.60s/it]
-4449: 100%|██████████| 50/50 [01:30&lt;00:00,  1.82s/it]
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">04</span><span class="n">c1c9519bdb</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span>     <span class="n">model</span> <span class="o">=</span> <span class="n">MixHop</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">k</span><span class="p">)</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> 
+<span class="ne">----&gt; </span><span class="mi">7</span>     <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">train_loop</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="n">train_loader</span><span class="p">,</span><span class="n">test_loader</span><span class="p">,</span><span class="mi">150</span><span class="p">,</span><span class="n">lr</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">))</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span>     <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">empty_cache</span><span class="p">()</span>
+
+<span class="nn">~/thesisUpdate_04_12_21/Introduction.ipynb</span> in <span class="ni">train_loop</span><span class="nt">(model, train_loader, test_loader, epochs, lr)</span>
+<span class="g g-Whitespace">    </span><span class="mi">192</span>    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;paperback-digest&quot;</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">193</span>    <span class="s2">&quot;metadata&quot;</span><span class="p">:</span> <span class="p">{},</span>
+<span class="ne">--&gt; </span><span class="mi">194</span>    <span class="s2">&quot;outputs&quot;</span><span class="p">:</span> <span class="p">[],</span>
+<span class="g g-Whitespace">    </span><span class="mi">195</span>    <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="p">[</span>
+<span class="g g-Whitespace">    </span><span class="mi">196</span>     <span class="s2">&quot;# Takes GCN model and data loaders.</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+
+<span class="ne">KeyboardInterrupt</span>: 
 </pre></div>
 </div>
 </div>
@@ -606,9 +593,6 @@ $<span class="math notranslate nohighlight">\(X^{out} = \Theta{}(A^{k}X^{in} || 
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/HigherMatrixPowers_24_0.png" src="_images/HigherMatrixPowers_24_0.png" />
 </div>
 </div>
 <p>In general, we’ve found attention-style GCNs to work rather poorly; they tend to exhbit greater variance in the loss, and MixHop is no exception. Even for small <span class="math notranslate nohighlight">\(k\)</span>, the test loss and displacement can be erratic. The averages are on par with PolynomialSGC (if marginally worse), but the inconsistency is no less concerning.</p>
