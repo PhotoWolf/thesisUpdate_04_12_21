@@ -417,14 +417,18 @@ $<span class="math notranslate nohighlight">\(\approx{} 1 + cv_{1} \approx{} cv_
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">error</span><span class="o">.</span><span class="n">cpu</span><span class="p">())</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Scaled L1&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;k&#39;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Katz Iterations Convergence&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/KatzCentrality_11_0.png" src="_images/KatzCentrality_11_0.png" />
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Katz Iterations Convergence&#39;)
+</pre></div>
+</div>
+<img alt="_images/KatzCentrality_11_1.png" src="_images/KatzCentrality_11_1.png" />
 </div>
 </div>
-<p>It takes around <span class="math notranslate nohighlight">\(100\)</span> Katz iterations to reach a loss of <span class="math notranslate nohighlight">\(1e^{-3}\)</span>; for reference, this would correspond to a GCN with depth <span class="math notranslate nohighlight">\(l=100\)</span>. Below, we train GraphConv and EdgeConv to minimize <span class="math notranslate nohighlight">\(L(\vec{x},\vec{d}_{Katz})\)</span> on unweighted-undirected, weighted-undirected, and weighted-directed networks.</p>
+<p>We plot the convergence of Katz Iterations. Y-axis is the same MinMax L1 used to train our GCNs, and X-axis is the number of iterations, <span class="math notranslate nohighlight">\(k\)</span>. It takes around <span class="math notranslate nohighlight">\(100\)</span> such iterations to obtain a loss of <span class="math notranslate nohighlight">\(1e^{-3}\)</span>; for reference, this would correspond to a GCN with depth <span class="math notranslate nohighlight">\(l=100\)</span>. Below, we train GraphConv and EdgeConv to minimize <span class="math notranslate nohighlight">\(L(\vec{x},\vec{d}_{Katz})\)</span> on unweighted-undirected, weighted-undirected, and weighted-directed networks using the same proceedure as with <span class="math notranslate nohighlight">\(d_{degree}\)</span>.</p>
 </div>
 <div class="section" id="unweighted-undirected">
 <h2><span class="section-number">3.3. </span>Unweighted, Undirected<a class="headerlink" href="#unweighted-undirected" title="Permalink to this headline">¶</a></h2>
@@ -454,12 +458,12 @@ $<span class="math notranslate nohighlight">\(\approx{} 1 + cv_{1} \approx{} cv_
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
-<span class="n">Graph</span> <span class="o">=</span> <span class="n">GraphConv</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
-<span class="n">Edge</span> <span class="o">=</span> <span class="n">EdgeConv</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
+<span class="n">undirectedGraph</span> <span class="o">=</span> <span class="n">GraphConv</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
+<span class="n">undirectedEdge</span> <span class="o">=</span> <span class="n">EdgeConv</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
 
-<span class="n">graph_metrics</span> <span class="o">=</span> <span class="n">train_loop</span><span class="p">(</span><span class="n">Graph</span><span class="p">,</span><span class="n">train_loader</span><span class="p">,</span><span class="n">test_loader</span><span class="p">,</span><span class="mi">150</span><span class="p">,</span><span class="n">lr</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">)</span>
+<span class="n">graph_metrics</span> <span class="o">=</span> <span class="n">train_loop</span><span class="p">(</span><span class="n">undirectedGraph</span><span class="p">,</span><span class="n">train_loader</span><span class="p">,</span><span class="n">test_loader</span><span class="p">,</span><span class="mi">150</span><span class="p">,</span><span class="n">lr</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">)</span>
 <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">empty_cache</span><span class="p">()</span>
-<span class="n">edge_metrics</span> <span class="o">=</span> <span class="n">train_loop</span><span class="p">(</span><span class="n">Edge</span><span class="p">,</span><span class="n">train_loader</span><span class="p">,</span><span class="n">test_loader</span><span class="p">,</span><span class="mi">150</span><span class="p">,</span><span class="n">lr</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">)</span>
+<span class="n">edge_metrics</span> <span class="o">=</span> <span class="n">train_loop</span><span class="p">(</span><span class="n">undirectedEdge</span><span class="p">,</span><span class="n">train_loader</span><span class="p">,</span><span class="n">test_loader</span><span class="p">,</span><span class="mi">150</span><span class="p">,</span><span class="n">lr</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">)</span>
 <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">empty_cache</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -498,6 +502,7 @@ $<span class="math notranslate nohighlight">\(\approx{} 1 + cv_{1} \approx{} cv_
 <img alt="_images/KatzCentrality_16_0.png" src="_images/KatzCentrality_16_0.png" />
 </div>
 </div>
+<p>We plot a) training loss b) test loss and c) average rank displacement for GraphConv and EdgeConv on our unweighted, undirected dataset.</p>
 </div>
 <div class="section" id="weighted-undirected">
 <h2><span class="section-number">3.4. </span>Weighted, Undirected<a class="headerlink" href="#weighted-undirected" title="Permalink to this headline">¶</a></h2>
@@ -571,9 +576,10 @@ $<span class="math notranslate nohighlight">\(\approx{} 1 + cv_{1} \approx{} cv_
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/KatzCentrality_20_0.png" src="_images/KatzCentrality_20_0.png" />
+<img alt="_images/KatzCentrality_21_0.png" src="_images/KatzCentrality_21_0.png" />
 </div>
 </div>
+<p>We plot a) training loss b) test loss and c) average rank displacement for GraphConv and EdgeConv on our weighted, undirected dataset.</p>
 </div>
 <div class="section" id="weighted-directed">
 <h2><span class="section-number">3.5. </span>Weighted, Directed<a class="headerlink" href="#weighted-directed" title="Permalink to this headline">¶</a></h2>
@@ -647,23 +653,33 @@ $<span class="math notranslate nohighlight">\(\approx{} 1 + cv_{1} \approx{} cv_
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/KatzCentrality_24_0.png" src="_images/KatzCentrality_24_0.png" />
+<img alt="_images/KatzCentrality_26_0.png" src="_images/KatzCentrality_26_0.png" />
 </div>
 </div>
+<p>We plot a) training loss b) test loss and c) average rank displacement for GraphConv and EdgeConv on our weighted, directed dataset.</p>
 </div>
 <div class="section" id="overview">
 <h2><span class="section-number">3.6. </span>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
-<p>Since Katz Centrality inherently involves multiple aggreations, we increased the model depth from 1 to 4, which in turn necesitated a larger learning rate and greater epochs. Loss on <span class="math notranslate nohighlight">\(d_{Katz}\)</span> is comparable to that for <span class="math notranslate nohighlight">\(d_{degree}\)</span>, and it is far better than the equivalent number of Katz Iterations. EdgeConv converges much slower while requiring nearly twice the runtime.</p>
+<p>Since Katz Centrality involves multiple powers of <span class="math notranslate nohighlight">\(A\)</span>, we increased the model depth from 1 to 4, which in turn necesitated a larger learning rate and greater epochs. Loss on <span class="math notranslate nohighlight">\(d_{Katz}\)</span> is comparable to that for <span class="math notranslate nohighlight">\(d_{degree}\)</span>, and it is far better than the equivalent number of Katz Iterations. EdgeConv converges much slower while requiring nearly twice the runtime.</p>
 </div>
 <div class="section" id="but-what-if-the-data-is-low-density">
 <h2><span class="section-number">3.7. </span>But What If the Data is Low-Density?<a class="headerlink" href="#but-what-if-the-data-is-low-density" title="Permalink to this headline">¶</a></h2>
-<p>Our results only hold for high-density SBMs wherein the ratio of leading eigenvalues is relatively small. As established, this ratio controls the rate of convergence of <span class="math notranslate nohighlight">\(A^{k}\vec{x}\)</span> to the dominant eigenvector of <span class="math notranslate nohighlight">\(A\)</span>. Graph convolution involves taking succesive powers of the adjancency matrix and passing its span through a differentiable <span class="math notranslate nohighlight">\(\Theta\)</span>; in fact, Linear GCNs can be considered a weighted form of the Power Iteration method i.e:</p>
+<p>Our results only hold for high-density SBMs wherein the ratio of leading eigenvalues is relatively small. As established, this ratio controls the rate of convergence of <span class="math notranslate nohighlight">\(A^{k}\vec{x}\)</span> to the dominant eigenvector of <span class="math notranslate nohighlight">\(A\)</span>. At its most basic, graph convolution is simply succesive powers of the adjancency matrix seperated by a differentiable <span class="math notranslate nohighlight">\(\Theta\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[X^{l+1} = \Theta^{l}(A\Theta^{l-1}(A\Theta^{l-2}(...(\Theta^{1}(AX^{0})))\]</div>
+<p>where <span class="math notranslate nohighlight">\(X\in{}R^{|V|\times{}n}\)</span> is the network feature matrix. If all <span class="math notranslate nohighlight">\(\Theta\)</span> are linear, then this can be considered a weighted form of the Power Iteration method i.e:</p>
 <div class="math notranslate nohighlight">
 \[X^{l+1} = AX^{l}\Theta^{l}\]</div>
-<p>where <span class="math notranslate nohighlight">\(X\in{}R^{|V|\times{}n}\)</span> is the network feature matrix. So, with this relation in mind, we are naturally interested in how the spectral properties of a network impact GCN convergence. We generate several new SBM datasets by decreasing the intra and inter-cluster probabilities, which leads to a lower graph density. This also makes these graphs more likely to be disconnected, hence the need for Katz Centrality (as opposed to Eigenvalue). For now, we only consider the unweighted, undirected case, as it’s the simplest.</p>
+<p>or equivalently</p>
+<div class="math notranslate nohighlight">
+\[X^{l+1} = A^{l}X^{0}\Theta^{l}\]</div>
+<p>In the limit, <span class="math notranslate nohighlight">\(A^{l}X^{0}\)</span> converges to the matrix <span class="math notranslate nohighlight">\(V\)</span>, where each column <span class="math notranslate nohighlight">\(V_{:i}\)</span> is the dominant eignevector of <span class="math notranslate nohighlight">\(A\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[\lim_{l\rightarrow{}\infty{}} X^{l+1} = V\Theta^{l}\]</div>
+<p>Although this is a highly simplified model (though not an unknown one, see section 6.1), it motivates much of our further work. We are interested in how the spectral properties of a network impact GCN convergence; after all, <span class="math notranslate nohighlight">\(d_{Katz}\)</span> is quite similar to <span class="math notranslate nohighlight">\(d_{eig}\)</span>, and so small <span class="math notranslate nohighlight">\(l\)</span> may be insufficient in some cases. We generate several new SBM datasets by decreasing the intra and inter-cluster probabilities, which leads to a lower graph density and larger eigenvalue ratio. This also makes these graphs more likely to be disconnected, hence the need for Katz Centrality (as Eigenvalue is not well-defined in that case). For now, we only consider the unweighted, undirected case, as it’s the simplest.</p>
 <div class="section" id="p-in-frac-1-n-frac-1-2n">
 <h3><span class="section-number">3.7.1. </span><span class="math notranslate nohighlight">\(p \in{} [\frac{1}{n},\frac{1}{2n}]\)</span><a class="headerlink" href="#p-in-frac-1-n-frac-1-2n" title="Permalink to this headline">¶</a></h3>
-<p>Average density of <span class="math notranslate nohighlight">\(.020\)</span> with <span class="math notranslate nohighlight">\(E[\frac{|\lambda_{1}|}{|\lambda_{2}|}]\approx{}.66\)</span></p>
+<p>We samples intra and inter-cluster probabilities from <span class="math notranslate nohighlight">\(p\in{}[\frac{1}{n},\frac{1}{2n}]\)</span>. Cluster sizes are determined as prior. Average density is <span class="math notranslate nohighlight">\(.020\)</span> with <span class="math notranslate nohighlight">\(E[\frac{|\lambda_{1}|}{|\lambda_{2}|}]\approx{}.66\)</span></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">num_graphs</span> <span class="o">=</span> <span class="mi">3000</span>
@@ -719,6 +735,9 @@ $<span class="math notranslate nohighlight">\(\approx{} 1 + cv_{1} \approx{} cv_
 <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">empty_cache</span><span class="p">()</span>
 <span class="n">edge_metrics</span> <span class="o">=</span> <span class="n">train_loop</span><span class="p">(</span><span class="n">Edge</span><span class="p">,</span><span class="n">train_loader</span><span class="p">,</span><span class="n">test_loader</span><span class="p">,</span><span class="mi">150</span><span class="p">,</span><span class="n">lr</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">)</span>
 <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">empty_cache</span><span class="p">()</span>
+
+<span class="n">transfer_graph</span> <span class="o">=</span> <span class="n">eval_loop</span><span class="p">(</span><span class="n">undirectedGraph</span><span class="p">,</span><span class="n">test_loader</span><span class="p">)</span>
+<span class="n">transfer_edge</span> <span class="o">=</span> <span class="n">eval_loop</span><span class="p">(</span><span class="n">undirectedEdge</span><span class="p">,</span><span class="n">test_loader</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -737,12 +756,16 @@ $<span class="math notranslate nohighlight">\(\approx{} 1 + cv_{1} \approx{} cv_
 <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">graph_metrics</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">edge_metrics</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hlines</span><span class="p">(</span><span class="n">transfer_graph</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="mi">0</span><span class="p">,</span><span class="mi">150</span><span class="p">,</span><span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;tab:blue&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hlines</span><span class="p">(</span><span class="n">transfer_edge</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="mi">0</span><span class="p">,</span><span class="mi">150</span><span class="p">,</span><span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;tab:orange&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Test Error&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Iterations&#39;</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">graph_metrics</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;graph&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">edge_metrics</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;edge&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hlines</span><span class="p">(</span><span class="n">transfer_graph</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="mi">0</span><span class="p">,</span><span class="mi">150</span><span class="p">,</span><span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;tab:blue&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hlines</span><span class="p">(</span><span class="n">transfer_edge</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="mi">0</span><span class="p">,</span><span class="mi">150</span><span class="p">,</span><span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;tab:orange&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Ranking Error&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Avg. Displacement&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Iterations&#39;</span><span class="p">)</span>
@@ -753,13 +776,14 @@ $<span class="math notranslate nohighlight">\(\approx{} 1 + cv_{1} \approx{} cv_
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/KatzCentrality_34_0.png" src="_images/KatzCentrality_34_0.png" />
+<img alt="_images/KatzCentrality_37_0.png" src="_images/KatzCentrality_37_0.png" />
 </div>
 </div>
+<p>We plot a) training loss b) test loss and c) average rank displacement for GraphConv and EdgeConv. The dashed lines correspond to the performance of the earlier models (those trained with the <span class="math notranslate nohighlight">\(p\in{}[\frac{1}{n},\frac{10}{n}]\)</span> SBMs) on the new dataset.</p>
 </div>
 <div class="section" id="p-in-frac-1-50n-frac-1-n">
 <h3><span class="section-number">3.7.2. </span><span class="math notranslate nohighlight">\(p\in{}[\frac{1}{50n},\frac{1}{n}]\)</span><a class="headerlink" href="#p-in-frac-1-50n-frac-1-n" title="Permalink to this headline">¶</a></h3>
-<p>Average density of <span class="math notranslate nohighlight">\(.008\)</span> with <span class="math notranslate nohighlight">\(E[\frac{|\lambda_{1}|}{|\lambda_{2}|}]\approx{}.925\)</span></p>
+<p>We samples intra and inter-cluster probabilities from <span class="math notranslate nohighlight">\(p\in{}[\frac{1}{50n},\frac{1}{n}]\)</span>. Cluster sizes are determined as prior. Average density is <span class="math notranslate nohighlight">\(.008\)</span> with <span class="math notranslate nohighlight">\(E[\frac{|\lambda_{1}|}{|\lambda_{2}|}]\approx{}.925\)</span></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">num_graphs</span> <span class="o">=</span> <span class="mi">3000</span>
@@ -815,6 +839,9 @@ $<span class="math notranslate nohighlight">\(\approx{} 1 + cv_{1} \approx{} cv_
 <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">empty_cache</span><span class="p">()</span>
 <span class="n">edge_metrics</span> <span class="o">=</span> <span class="n">train_loop</span><span class="p">(</span><span class="n">Edge</span><span class="p">,</span><span class="n">train_loader</span><span class="p">,</span><span class="n">test_loader</span><span class="p">,</span><span class="mi">150</span><span class="p">,</span><span class="n">lr</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">)</span>
 <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">empty_cache</span><span class="p">()</span>
+
+<span class="n">transfer_graph</span> <span class="o">=</span> <span class="n">eval_loop</span><span class="p">(</span><span class="n">undirectedGraph</span><span class="p">,</span><span class="n">test_loader</span><span class="p">)</span>
+<span class="n">transfer_edge</span> <span class="o">=</span> <span class="n">eval_loop</span><span class="p">(</span><span class="n">undirectedEdge</span><span class="p">,</span><span class="n">test_loader</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -833,12 +860,16 @@ $<span class="math notranslate nohighlight">\(\approx{} 1 + cv_{1} \approx{} cv_
 <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">graph_metrics</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">edge_metrics</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hlines</span><span class="p">(</span><span class="n">transfer_graph</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="mi">0</span><span class="p">,</span><span class="mi">150</span><span class="p">,</span><span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;tab:blue&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hlines</span><span class="p">(</span><span class="n">transfer_edge</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="mi">0</span><span class="p">,</span><span class="mi">150</span><span class="p">,</span><span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;tab:orange&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Test Error&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Iterations&#39;</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">graph_metrics</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;graph&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">edge_metrics</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;edge&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hlines</span><span class="p">(</span><span class="n">transfer_graph</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="mi">0</span><span class="p">,</span><span class="mi">150</span><span class="p">,</span><span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;tab:blue&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hlines</span><span class="p">(</span><span class="n">transfer_edge</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="mi">0</span><span class="p">,</span><span class="mi">150</span><span class="p">,</span><span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;tab:orange&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Ranking Error&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Avg. Displacement&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Iterations&#39;</span><span class="p">)</span>
@@ -849,9 +880,10 @@ $<span class="math notranslate nohighlight">\(\approx{} 1 + cv_{1} \approx{} cv_
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/KatzCentrality_40_0.png" src="_images/KatzCentrality_40_0.png" />
+<img alt="_images/KatzCentrality_44_0.png" src="_images/KatzCentrality_44_0.png" />
 </div>
 </div>
+<p>We plot a) training loss b) test loss and c) average rank displacement for GraphConv and EdgeConv. The dashed lines correspond to the performance of the earlier models (those trained with the <span class="math notranslate nohighlight">\(p\in{}[\frac{1}{n},\frac{10}{n}]\)</span> SBMs) on the new dataset.</p>
 </div>
 </div>
 <div class="section" id="id1">

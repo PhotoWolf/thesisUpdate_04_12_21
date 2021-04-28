@@ -452,6 +452,26 @@
         
     <span class="c1"># Return average values per epoch</span>
     <span class="k">return</span> <span class="n">train_loss</span><span class="p">,</span><span class="n">test_loss</span><span class="p">,</span><span class="n">rank</span>
+
+<span class="c1"># Takes model and test_loader. </span>
+<span class="k">def</span> <span class="nf">eval_loop</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="n">test_loader</span><span class="p">):</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+    <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+      <span class="n">ts</span><span class="p">,</span><span class="n">r</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span><span class="mi">0</span>
+    
+      <span class="c1"># Compute mean test error and rank</span>
+      <span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">data</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">test_loader</span><span class="p">):</span>
+          <span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">edge_index</span><span class="p">,</span><span class="n">edge_weight</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">cuda</span><span class="p">(),</span><span class="n">data</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">cuda</span><span class="p">(),</span><span class="n">data</span><span class="o">.</span><span class="n">edge_index</span><span class="o">.</span><span class="n">cuda</span><span class="p">(),</span><span class="n">data</span><span class="o">.</span><span class="n">edge_weight</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
+          <span class="n">batch</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">batch</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
+
+          <span class="n">preds</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">edge_index</span><span class="p">,</span><span class="n">edge_weight</span><span class="p">,</span><span class="n">batch</span><span class="p">)</span>
+
+          <span class="n">loss</span> <span class="o">=</span> <span class="n">scaled_L1</span><span class="p">(</span><span class="n">preds</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(),</span><span class="n">Y</span><span class="p">,</span><span class="n">batch</span><span class="p">)</span>
+          <span class="n">ts</span> <span class="o">+=</span> <span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+          <span class="n">r</span> <span class="o">+=</span> <span class="n">rank_disp</span><span class="p">(</span><span class="n">preds</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(),</span><span class="n">Y</span><span class="p">,</span><span class="n">batch</span><span class="p">)</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+
+      <span class="c1"># Return metrics</span>
+      <span class="k">return</span> <span class="n">ts</span><span class="o">/</span><span class="p">(</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span><span class="n">r</span><span class="o">/</span><span class="p">(</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
