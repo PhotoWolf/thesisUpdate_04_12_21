@@ -23,7 +23,7 @@ for _ in range(num_graphs):
 
     d.append(torch_geometric.data.Data(x=x[:adj.size(0)],edge_index = edges))
 
-for idx,G in enumerate(d,position=0):
+for idx,G in enumerate(d):
     G.edge_weight = torch.ones(G.edge_index[0].shape)
     adj = torch_sparse.SparseTensor(row=G.edge_index[0],col=G.edge_index[1],value=G.edge_weight)
     v = 1/(1.01*torch.norm(torch.eig(adj.to_dense())[0],dim=1).max())
@@ -57,7 +57,7 @@ torch.manual_seed(0)
 for k in [1,2,4,8,16,32,64]:
     model = SGC(1,32,1,k).cuda()
     
-    results.append(train_loop(model,train_loader,test_loader,50,lr=1e-1))
+    results.append(train_loop(model,train_loader,test_loader,150,lr=1e-1))
     torch.cuda.empty_cache()
 
 ## Results
@@ -110,7 +110,7 @@ class PolynomialSGC(torch.nn.Module):
         self.k = k
 
     def forward(self,X,edge_index,edge_weight,batch):
-        coeffs= torch.nn.Softmax(dim=0)(self.coefficients[0]) - torch.nn.Softmax(dim=0)(self.coefficients[1])
+        coeffs= torch.tanh(self.coefficients[0])
 
         X = X/torch_scatter.scatter_sum(X**2,batch,dim=0).sqrt()[batch]
         
@@ -192,7 +192,7 @@ torch.manual_seed(0)
 for k in [1,2,4,8,16,32,64]:
     model = MixHop(1,32,1,k).cuda()
     
-    results.append(train_loop(model,train_loader,test_loader,50,lr=1e-1))
+    results.append(train_loop(model,train_loader,test_loader,150,lr=1e-1))
     torch.cuda.empty_cache()
 
 ### Results

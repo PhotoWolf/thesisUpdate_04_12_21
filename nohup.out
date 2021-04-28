@@ -410,3 +410,49 @@ Or paste this line directly into your browser bar:
 
 [92m===============================================================================[0m
 
+Running Jupyter-Book v0.10.2
+Source Folder: /home/luke/thesisUpdate_04_12_21
+Config Path: None
+Output Path: /home/luke/thesisUpdate_04_12_21/_build/html
+[01mRunning Sphinx v3.5.4[39;49;00m
+[01mloading pickled environment... [39;49;00mdone
+[01mmyst v0.13.6:[39;49;00m MdParserConfig(renderer='sphinx', commonmark_only=False, dmath_allow_labels=True, dmath_allow_space=True, dmath_allow_digits=True, update_mathjax=True, enable_extensions=['colon_fence', 'dollarmath', 'linkify', 'substitution'], disable_syntax=[], url_schemes=['mailto', 'http', 'https'], heading_anchors=None, html_meta=[], footnote_transition=True, substitutions=[], sub_delimiters=['{', '}'])
+[01mbuilding [mo]: [39;49;00mtargets for 0 po files that are out of date
+[01mbuilding [html]: [39;49;00mtargets for 3 source files that are out of date
+[01mupdating environment: [39;49;00m0 added, 3 changed, 0 removed
+[01mreading sources... [39;49;00m[ 33%] [35mDeeperGCNs[39;49;00m                                                                                         Executing: DeeperGCNs in: /home/luke/thesisUpdate_04_12_21
+[01mreading sources... [39;49;00m[ 66%] [35mHigherMatrixPowers[39;49;00m                                                                                 Executing: HigherMatrixPowers in: /home/luke/thesisUpdate_04_12_21
+[01mreading sources... [39;49;00m[100%] [35mNormalization[39;49;00m                                                                                      Executing: Normalization in: /home/luke/thesisUpdate_04_12_21
+
+[31mWARNING: Execution Failed with traceback saved in /home/luke/thesisUpdate_04_12_21/_build/html/reports/DeeperGCNs.log[39;49;00m
+[91m/home/luke/thesisUpdate_04_12_21/DeeperGCNs.ipynb:20002: WARNING: Non-consecutive header level increase; 0 to 2 [myst.header][39;49;00m
+[31mWARNING: Execution Failed with traceback saved in /home/luke/thesisUpdate_04_12_21/_build/html/reports/HigherMatrixPowers.log[39;49;00m
+[31mWARNING: Execution Failed with traceback saved in /home/luke/thesisUpdate_04_12_21/_build/html/reports/Normalization.log[39;49;00m
+[01mlooking for now-outdated files... [39;49;00mnone found
+[01mpickling environment... [39;49;00mdone
+[01mchecking consistency... [39;49;00mdone
+[01mpreparing documents... [39;49;00mdone
+[01mwriting output... [39;49;00m[ 25%] [32mDeeperGCNs[39;49;00m                                                                                          [01mwriting output... [39;49;00m[ 50%] [32mHigherMatrixPowers[39;49;00m                                                                                  [01mwriting output... [39;49;00m[ 75%] [32mIntroduction[39;49;00m                                                                                        [01mwriting output... [39;49;00m[100%] [32mNormalization[39;49;00m                                                                                       
+[01mgenerating indices... [39;49;00mgenindex done
+[01mwriting additional pages... [39;49;00msearch done
+[01mcopying images... [39;49;00m[  3%] [33m_build/jupyter_execute/DeeperGCNs_9_0.png[39;49;00m                                                           [01mcopying images... [39;49;00m[  6%] [33m_build/jupyter_execute/DeeperGCNs_10_0.png[39;49;00m                                                          [01mcopying images... [39;49;00m[  9%] [33m_build/jupyter_execute/DeeperGCNs_14_0.png[39;49;00m                                                          [01mcopying images... [39;49;00m[ 12%] [33m_build/jupyter_execute/DeeperGCNs_14_1.png[39;49;00m                                                          [01mcopying images... [39;49;00m[ 16%] [33m_build/jupyter_execute/DeeperGCNs_14_2.png[39;49;00m                                                          [01mcopying images... [39;49;00m[ 19%] [33m_build/jupyter_execute/DeeperGCNs_14_3.png[39;49;00m                                                          [01mcopying images... [39;49;00m[ 22%] [33m_build/jupyter_execute/DeeperGCNs_14_4.png[39;49;00m                                                          [01mcopying images... [39;49;00m[ 25%] [33m_build/jupyter_execute/HigherMatrixPowers_8_0.png[39;49;00m                                                   [01mcopying images... [39;49;00m[ 29%] [33m_build/jupyter_execute/HigherMatrixPowers_16_0.png[39;49;00m                                                  [01mcopying images... [39;49;00m[ 32%] [33m_build/jupyter_execute/Normalization_12_0.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 35%] [33m_build/jupyter_execute/Normalization_13_0.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 38%] [33m_build/jupyter_execute/Normalization_13_1.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 41%] [33m_build/jupyter_execute/Normalization_13_2.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 45%] [33m_build/jupyter_execute/Normalization_13_3.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 48%] [33m_build/jupyter_execute/Normalization_13_4.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 51%] [33m_build/jupyter_execute/Normalization_13_5.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 54%] [33m_build/jupyter_execute/Normalization_18_0.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 58%] [33m_build/jupyter_execute/Normalization_19_0.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 61%] [33m_build/jupyter_execute/Normalization_19_1.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 64%] [33m_build/jupyter_execute/Normalization_19_2.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 67%] [33m_build/jupyter_execute/Normalization_19_3.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 70%] [33m_build/jupyter_execute/Normalization_19_4.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 74%] [33m_build/jupyter_execute/Normalization_19_5.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 77%] [33m_build/jupyter_execute/Normalization_24_0.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 80%] [33m_build/jupyter_execute/Normalization_25_0.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 83%] [33m_build/jupyter_execute/Normalization_25_1.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 87%] [33m_build/jupyter_execute/Normalization_25_2.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 90%] [33m_build/jupyter_execute/Normalization_25_3.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 93%] [33m_build/jupyter_execute/Normalization_25_4.png[39;49;00m                                                       [01mcopying images... [39;49;00m[ 96%] [33m_build/jupyter_execute/Normalization_25_5.png[39;49;00m                                                       [01mcopying images... [39;49;00m[100%] [33m_build/jupyter_execute/Normalization_25_6.png[39;49;00m                                                       
+[01mcopying static files... [39;49;00mdone
+[01mcopying extra files... [39;49;00mdone
+[01mdumping search index in English (code: en)... [39;49;00mdone
+[01mdumping object inventory... [39;49;00mdone
+[01mbuild succeeded, 4 warnings.[39;49;00m
+
+The HTML pages are in _build/html.
+
+[92m===============================================================================[0m
+
+Finished generating HTML for book.
+Your book's HTML pages are here:
+    _build/html/
+You can look at your book by opening this file in a browser:
+    _build/html/index.html
+Or paste this line directly into your browser bar:
+    file:///home/luke/thesisUpdate_04_12_21/_build/html/index.html            
+
+[92m===============================================================================[0m
+
