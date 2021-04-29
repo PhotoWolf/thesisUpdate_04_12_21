@@ -6,13 +6,13 @@ import time
 
 Within the literature, the typical solution to oversmoothing is to apply some type of normalization. To this end, we propose orthogonalizing out vector $\vec{q}$ (essentially a "best guess" for the dominant eigenvector) from $X^{l}$ and then renormalizing each column. We incorporate additional scale parameters $0\leq{}s_{1}\leq{}1$ and $s_{2}$.
 
-$$X_{i}^{l} = X_{i}^{l} - s_{1}\frac{X_{i}^{l}\cdot{}\vec{q}}{||\vec{q}||_{2}^{2}}\vec{q}$$
-$$X_{i}^{l} = s_{2}\frac{X_{i}^{l}}{||X_{i}^{l}||_{2}}$$
+$$X^{l} = X^{l} - s_{1}\vec{q}\frac{\vec{q}^{T}X^{l}}{||\vec{q}||_{2}^{2}}$$
+$$X_{:,i}^{l} = s_{2}\frac{X_{:,i}^{l}}{||X_{:,i}^{l}||_{2}}$$
 
 If $s_{1}=1$ and $\vec{q}=\vec{1}$, this is equivalent to PairNorm [16].
 
-$$X_{i}^{l} = X_{i}^{l} - E[X_{i}^{l}]$$
-$$X_{i}^{l} = s \frac{X_{i}^{l}}{||X_{i}^{l}||_{2}}$$
+$$X_{:,i}^{l} = X_{i}^{l} - E[X_{:,i}^{l}]$$
+$$X_{:,i}^{l} = s \frac{X_{:,i}^{l}}{||X_{:,i}^{l}||_{2}}$$
 
 We evaluate our normalization scheme with $\vec{q} = \frac{1}{\vec{d}_{degree}}$ and compare against both PairNorm and GraphSizeNorm [3].
 
@@ -131,7 +131,7 @@ for k in [4,8,16,32,64]:
         
         for jdx,m in enumerate(graph.intermediate):
             X = X + m[0](X) + torch_scatter.scatter_sum(m[1](X)[col], row.cuda(),dim=0)
-            X = torch.nn.LeakyReLU()(graph.bn[jdx](X))
+            X = torch.nn.LeakyReLU()(graph.norm[jdx](X,data.edge_index.cuda(),data.edge_weight.cuda(),batch))
             MAD[jdx] += batched_MAD(X,data.edge_index.cuda(),data.edge_weight.cuda()).mean().item()
             Agg[jdx] += batched_agg(X,data.edge_index.cuda(),data.edge_weight.cuda(),batch).item()
         
@@ -213,7 +213,7 @@ for k in [4,8,16,32,64]:
         
         for jdx,m in enumerate(graph.intermediate):
             X = X + m[0](X) + torch_scatter.scatter_sum(m[1](X)[col], row.cuda(),dim=0)
-            X = torch.nn.LeakyReLU()(graph.bn[jdx](X))
+            X = torch.nn.LeakyReLU()(graph.norm[jdx](X,data.edge_index.cuda(),data.edge_weight.cuda(),batch))
             MAD[jdx] += batched_MAD(X,data.edge_index.cuda(),data.edge_weight.cuda()).mean().item()
             Agg[jdx] += batched_agg(X,data.edge_index.cuda(),data.edge_weight.cuda(),batch).item()
         
@@ -295,7 +295,7 @@ for k in [4,8,16,32,64]:
         
         for jdx,m in enumerate(graph.intermediate):
             X = X + m[0](X) + torch_scatter.scatter_sum(m[1](X)[col], row.cuda(),dim=0)
-            X = torch.nn.LeakyReLU()(graph.bn[jdx](X))
+            X = torch.nn.LeakyReLU()(graph.norm[jdx](X,data.edge_index.cuda(),data.edge_weight.cuda(),batch))
             MAD[jdx] += batched_MAD(X,data.edge_index.cuda(),data.edge_weight.cuda()).mean().item()
             Agg[jdx] += batched_agg(X,data.edge_index.cuda(),data.edge_weight.cuda(),batch).item()
         
@@ -346,6 +346,6 @@ for idx,d in enumerate(model_mad):
 
 ## Overview
 
-Our new normalization scheme, which we are calling OrthNorm (i.e Orthagonal Normalization, get it?), improves upon the unnormalized case, even without having fully converged. It surpasses PairNorm by around an order of magnitude given the same depth and number of epochs. We suspect this is because $d_{Katz}$ is close enough to $v_{1}$, and so PairNorm reduces the smoothness *too* much. Indeed, PairNorm returns uniformly large MAP values, whereas those of OrthNorm are generally smaller and more erratic. This is due to $s_{1}$ regulating the magnitude of the orthogonalization; without it, MAP consistently hovers around $.20$, and the loss is about $1e^{-3}$ larger. 
+Our new normalization scheme, which we are calling OrthNorm (i.e Orthagonal Normalization, get it?), improves upon the unnormalized case, even without having fully converged. It surpasses PairNorm by around an order of magnitude given the same depth and number of epochs. We suspect this is because $d_{Katz}$ is close enough to $v_{1}$, and so PairNorm reduces the smoothness *too* much. Indeed, PairNorm returns large MAP and AggNorm values for each layer, whereas those of OrthNorm are generally smaller and more variable. This is due to $s_{1}$ regulating the magnitude of the orthogonalization; without it, MAP consistently hovers around $.20$ and StepAgg continually decreases. 
 
 As for GraphSizeNorm, there is certainly some benefit, but it does still converge to a larger value than OrthNorm (which isn't even convergent yet). Oddly enough, while the MAP is otherwise quite low, GraphSizeNorm spikes in the last few layers for both the $l=32$ and $l=64$ models. We do not have an explanation for why this occurs.

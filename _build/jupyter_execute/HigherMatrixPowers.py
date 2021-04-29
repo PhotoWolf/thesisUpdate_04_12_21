@@ -102,7 +102,9 @@ $$X^{out} = \Theta{}((c^{2}_{k}-c^{1}_{k})A^{k}X^{in} + (c^{2}_{k-1}-c^{1}_{k-1}
 class PolynomialSGC(torch.nn.Module):
     def __init__(self,in_channels,int_channels,out_channels,k=2):
         super(PolynomialSGC,self).__init__()
-        self.coefficients = torch.nn.Parameter(torch.randn((2,k+1)))
+        self.coefficients = torch.nn.Sequential(*[torch.nn.Linear(k,int_channels),torch.nn.LeakyReLU(),torch_geometric.nn.BatchNorm(int_channels),
+                                            torch.nn.Linear(int_channels,int_channels),torch.nn.LeakyReLU(),torch_geometric.nn.BatchNorm(int_channels),
+                                            torch.nn.Linear(int_channels,k+1)])
         self.finish = torch.nn.Sequential(*[torch.nn.Linear(1,int_channels),torch.nn.LeakyReLU(),torch_geometric.nn.BatchNorm(int_channels),
                                             torch.nn.Linear(int_channels,int_channels),torch.nn.LeakyReLU(),torch_geometric.nn.BatchNorm(int_channels),
                                             torch.nn.Linear(int_channels,int_channels),torch.nn.LeakyReLU(),torch_geometric.nn.BatchNorm(int_channels),
@@ -110,46 +112,57 @@ class PolynomialSGC(torch.nn.Module):
         self.k = k
 
     def forward(self,X,edge_index,edge_weight,batch):
-        coeffs= torch.tanh(self.coefficients[0])
-
         X = X/torch_scatter.scatter_sum(X**2,batch,dim=0).sqrt()[batch]
         
-        Z = coeffs[0] * X
+        Z = X.unsqueeze(1)
+        
         for idx in range(self.k):
-              X = torch_scatter.scatter_sum(edge_weight[:,None] * X[edge_index[1]],edge_index[0],dim=0)
-              X = X/torch_scatter.scatter_sum(X**2,batch,dim=0).sqrt()[batch]
-              Z = Z + coeffs[idx+1] * X
-        Z = Z/torch_scatter.scatter_sum(Z**2,batch,dim=0).sqrt()[batch]
+            nX = torch_scatter.scatter_sum(edge_weight[:,None] * X[edge_index[1]],edge_index[0],dim=0)
+            
+            rayleigh = torch_scatter.scatter_sum(nX * X,batch, dim=0)/torch_scatter.scatter_sum(X**2,batch,dim=0)
+            if idx==0:
+                C = rayleigh
+            else:
+                C = torch.cat((C,rayleigh),dim=1)
+                
+            X = nX/torch_scatter.scatter_sum(nX**2,batch,dim=0).sqrt()[batch]
+            Z = torch.cat((Z,X.unsqueeze(1)),dim=1)
+            
+        C = C[1::]/C[:-1]
+        C = torch.nn.Softmax(dim=1)(self.coefficients(C))
+        Z = torch.sum(C[batch,:,None] * Z,dim=1)
         return self.finish(Z)
 
 results = []
 
 torch.manual_seed(0)
 for k in [1,2,4,8,16,32,64]:
-    model = PolynomialSGC(1,32,1,k).cuda()
+    model = PolynomialSGC(1,32,1,k)
     
     results.append(train_loop(model,train_loader,test_loader,50,lr=1e-1))
     torch.cuda.empty_cache()
+
+torch.cuda.empty_cache()
 
 ### Results
 
 plt.figure(figsize=(15,8))
 
 plt.subplot(1,3,1)
-for idx,k in enumerate([1,2,4,8,16,32,64]):
+for idx,k in enumerate([1,2,4,8]):
     plt.semilogy(results[idx][0])
 plt.title('Train Error')
 plt.ylabel('L1 Error')
 plt.xlabel('Iterations')
 
 plt.subplot(1,3,2)
-for idx,k in enumerate([1,2,4,8,16,32,64]):
+for idx,k in enumerate([1,2,4,8]):
     plt.semilogy(results[idx][1])
 plt.title('Test Error')
 plt.xlabel('Iterations')
 
 plt.subplot(1,3,3)
-for idx,k in enumerate([1,2,4,8,16,32,64]):
+for idx,k in enumerate([1,2,4,8]):
     plt.semilogy(results[idx][2],label=k)
 plt.title('Ranking Error')
 plt.ylabel('Avg. Displacement')

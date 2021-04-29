@@ -152,4 +152,3 @@ for idx,d in enumerate(model_mad):
   plt.show()
 
 We observe a decline in MAD and AggNorm for deeper GCN layers, although it stops decreasing much after a point. The AggNorm may be interpreted as a measure of how close the columns of $X^{l}$ are to eigenvectors of $A$.  
-

@@ -203,6 +203,26 @@ def train_loop(model,train_loader,test_loader,epochs,lr=1e-3):
     # Return average values per epoch
     return train_loss,test_loss,rank
 
+# Takes model and test_loader. 
+def eval_loop(model,test_loader):
+    model.eval()
+    with torch.no_grad():
+      ts,r = 0,0
+    
+      # Compute mean test error and rank
+      for idx,data in enumerate(test_loader):
+          X,Y,edge_index,edge_weight = data.x.cuda(),data.y.cuda(),data.edge_index.cuda(),data.edge_weight.cuda()
+          batch = data.batch.cuda()
+
+          preds = model(X,edge_index,edge_weight,batch)
+
+          loss = scaled_L1(preds.squeeze(),Y,batch)
+          ts += loss.item()
+          r += rank_disp(preds.squeeze(),Y,batch).item()
+
+      # Return metrics
+      return ts/(idx+1),r/(idx+1)
+
 
 ```{toctree}
 :hidden:

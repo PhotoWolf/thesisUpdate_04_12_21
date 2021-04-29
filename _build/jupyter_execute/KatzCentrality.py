@@ -85,8 +85,9 @@ error/=(idx+1)
 plt.semilogy(error.cpu())
 plt.ylabel('Scaled L1')
 plt.xlabel('k');
+plt.title('Katz Iterations Convergence')
 
-It takes around $100$ Katz iterations to reach a loss of $1e^{-3}$; for reference, this would correspond to a GCN with depth $l=100$. Below, we train GraphConv and EdgeConv to minimize $L(\vec{x},\vec{d}_{Katz})$ on unweighted-undirected, weighted-undirected, and weighted-directed networks. 
+We plot the convergence of Katz Iterations. Y-axis is the same MinMax L1 used to train our GCNs, and X-axis is the number of iterations, $k$. It takes around $100$ such iterations to obtain a loss of $1e^{-3}$; for reference, this would correspond to a GCN with depth $l=100$. Below, we train GraphConv and EdgeConv to minimize $L(\vec{x},\vec{d}_{Katz})$ on unweighted-undirected, weighted-undirected, and weighted-directed networks using the same proceedure as with $d_{degree}$.
 
 ### Unweighted, Undirected
 
@@ -109,12 +110,12 @@ test_loader = torch_geometric.data.DataLoader(test,batch_size=200,shuffle=True)
 
 torch.manual_seed(0)
 
-Graph = GraphConv(1,32,1,4).cuda()
-Edge = EdgeConv(1,32,1,4).cuda()
+undirectedGraph = GraphConv(1,32,1,4).cuda()
+undirectedEdge = EdgeConv(1,32,1,4).cuda()
 
-graph_metrics = train_loop(Graph,train_loader,test_loader,150,lr=1e-1)
+graph_metrics = train_loop(undirectedGraph,train_loader,test_loader,150,lr=1e-1)
 torch.cuda.empty_cache()
-edge_metrics = train_loop(Edge,train_loader,test_loader,150,lr=1e-1)
+edge_metrics = train_loop(undirectedEdge,train_loader,test_loader,150,lr=1e-1)
 torch.cuda.empty_cache()
 
 plt.figure(figsize=(15,8))
@@ -141,6 +142,8 @@ plt.xlabel('Iterations')
 plt.legend()
 
 plt.tight_layout();
+
+We plot a) training loss b) test loss and c) average rank displacement for GraphConv and EdgeConv on our unweighted, undirected dataset.
 
 ### Weighted, Undirected
 
@@ -199,6 +202,8 @@ plt.legend()
 
 plt.tight_layout();
 
+We plot a) training loss b) test loss and c) average rank displacement for GraphConv and EdgeConv on our weighted, undirected dataset.
+
 ### Weighted, Directed
 
 for idx,G in enumerate(d):
@@ -256,21 +261,35 @@ plt.legend()
 
 plt.tight_layout();
 
+We plot a) training loss b) test loss and c) average rank displacement for GraphConv and EdgeConv on our weighted, directed dataset.
+
 ### Overview
 
-Since Katz Centrality inherently involves multiple aggreations, we increased the model depth from 1 to 4, which in turn necesitated a larger learning rate and greater epochs. Loss on $d_{Katz}$ is comparable to that for $d_{degree}$, and it is far better than the equivalent number of Katz Iterations. EdgeConv converges much slower while requiring nearly twice the runtime.
+Since Katz Centrality involves multiple powers of $A$, we increased the model depth from 1 to 4, which in turn necesitated a larger learning rate and greater epochs. Loss on $d_{Katz}$ is comparable to that for $d_{degree}$, and it is far better than the equivalent number of Katz Iterations. EdgeConv converges much slower while requiring nearly twice the runtime.
 
 ### But What If the Data is Low-Density?
 
-Our results only hold for high-density SBMs wherein the ratio of leading eigenvalues is relatively small. As established, this ratio controls the rate of convergence of $A^{k}\vec{x}$ to the dominant eigenvector of $A$. Graph convolution involves taking succesive powers of the adjancency matrix and passing its span through a differentiable $\Theta$; in fact, Linear GCNs can be considered a weighted form of the Power Iteration method i.e:
+Our results only hold for high-density SBMs wherein the ratio of leading eigenvalues is relatively small. As established, this ratio controls the rate of convergence of $A^{k}\vec{x}$ to the dominant eigenvector of $A$. At its most basic, graph convolution is simply succesive powers of the adjancency matrix seperated by a differentiable $\Theta$:
+
+$$X^{l+1} = \Theta^{l}(A\Theta^{l-1}(A\Theta^{l-2}(...(\Theta^{1}(AX^{0})))$$
+
+where $X\in{}R^{|V|\times{}n}$ is the network feature matrix. If all $\Theta$ are linear, then this can be considered a weighted form of the Power Iteration method i.e:
 
 $$X^{l+1} = AX^{l}\Theta^{l}$$
 
-where $X\in{}R^{|V|\times{}n}$ is the network feature matrix. So, with this relation in mind, we are naturally interested in how the spectral properties of a network impact GCN convergence. We generate several new SBM datasets by decreasing the intra and inter-cluster probabilities, which leads to a lower graph density. This also makes these graphs more likely to be disconnected, hence the need for Katz Centrality (as opposed to Eigenvalue). For now, we only consider the unweighted, undirected case, as it's the simplest. 
+or equivalently
+
+$$X^{l+1} = A^{l}X^{0}\Theta^{l}$$
+
+In the limit, $A^{l}X^{0}$ converges to the matrix $V$, where each column $V_{:i}$ is the dominant eignevector of $A$.
+
+$$\lim_{l\rightarrow{}\infty{}} X^{l+1} = V\Theta^{l}$$
+
+Although this is a highly simplified model (though not an unknown one, see section 6.1), it motivates much of our further work. We are interested in how the spectral properties of a network impact GCN convergence; after all, $d_{Katz}$ is quite similar to $d_{eig}$, and so small $l$ may be insufficient in some cases. We generate several new SBM datasets by decreasing the intra and inter-cluster probabilities, which leads to a lower graph density and larger eigenvalue ratio. This also makes these graphs more likely to be disconnected, hence the need for Katz Centrality (as Eigenvalue is not well-defined in that case). For now, we only consider the unweighted, undirected case, as it's the simplest. 
 
 #### $p \in{} [\frac{1}{n},\frac{1}{2n}]$
 
-Average density of $.020$ with $E[\frac{|\lambda_{1}|}{|\lambda_{2}|}]\approx{}.66$
+We samples intra and inter-cluster probabilities from $p\in{}[\frac{1}{n},\frac{1}{2n}]$. Cluster sizes are determined as prior. Average density is $.020$ with $E[\frac{|\lambda_{1}|}{|\lambda_{2}|}]\approx{}.66$
 
 num_graphs = 3000
 d = []
@@ -316,6 +335,9 @@ torch.cuda.empty_cache()
 edge_metrics = train_loop(Edge,train_loader,test_loader,150,lr=1e-1)
 torch.cuda.empty_cache()
 
+transfer_graph = eval_loop(undirectedGraph,test_loader)
+transfer_edge = eval_loop(undirectedEdge,test_loader)
+
 plt.figure(figsize=(15,8))
 
 plt.subplot(1,3,1)
@@ -328,12 +350,16 @@ plt.xlabel('Iterations')
 plt.subplot(1,3,2)
 plt.semilogy(graph_metrics[1])
 plt.semilogy(edge_metrics[1])
+plt.hlines(transfer_graph[0],0,150,linestyle='--',color='tab:blue')
+plt.hlines(transfer_edge[0],0,150,linestyle='--',color='tab:orange')
 plt.title('Test Error')
 plt.xlabel('Iterations')
 
 plt.subplot(1,3,3)
 plt.semilogy(graph_metrics[2],label='graph')
 plt.semilogy(edge_metrics[2],label='edge')
+plt.hlines(transfer_graph[1],0,150,linestyle='--',color='tab:blue')
+plt.hlines(transfer_edge[1],0,150,linestyle='--',color='tab:orange')
 plt.title('Ranking Error')
 plt.ylabel('Avg. Displacement')
 plt.xlabel('Iterations')
@@ -341,9 +367,11 @@ plt.legend()
 
 plt.tight_layout();
 
+We plot a) training loss b) test loss and c) average rank displacement for GraphConv and EdgeConv. The dashed lines correspond to the performance of the earlier models (those trained with the $p\in{}[\frac{1}{n},\frac{10}{n}]$ SBMs) on the new dataset. 
+
 #### $p\in{}[\frac{1}{50n},\frac{1}{n}]$
 
-Average density of $.008$ with $E[\frac{|\lambda_{1}|}{|\lambda_{2}|}]\approx{}.925$
+We samples intra and inter-cluster probabilities from $p\in{}[\frac{1}{50n},\frac{1}{n}]$. Cluster sizes are determined as prior. Average density is $.008$ with $E[\frac{|\lambda_{1}|}{|\lambda_{2}|}]\approx{}.925$
 
 num_graphs = 3000
 d = []
@@ -389,6 +417,9 @@ torch.cuda.empty_cache()
 edge_metrics = train_loop(Edge,train_loader,test_loader,150,lr=1e-1)
 torch.cuda.empty_cache()
 
+transfer_graph = eval_loop(undirectedGraph,test_loader)
+transfer_edge = eval_loop(undirectedEdge,test_loader)
+
 plt.figure(figsize=(15,8))
 
 plt.subplot(1,3,1)
@@ -401,18 +432,24 @@ plt.xlabel('Iterations')
 plt.subplot(1,3,2)
 plt.semilogy(graph_metrics[1])
 plt.semilogy(edge_metrics[1])
+plt.hlines(transfer_graph[0],0,150,linestyle='--',color='tab:blue')
+plt.hlines(transfer_edge[0],0,150,linestyle='--',color='tab:orange')
 plt.title('Test Error')
 plt.xlabel('Iterations')
 
 plt.subplot(1,3,3)
 plt.semilogy(graph_metrics[2],label='graph')
 plt.semilogy(edge_metrics[2],label='edge')
+plt.hlines(transfer_graph[1],0,150,linestyle='--',color='tab:blue')
+plt.hlines(transfer_edge[1],0,150,linestyle='--',color='tab:orange')
 plt.title('Ranking Error')
 plt.ylabel('Avg. Displacement')
 plt.xlabel('Iterations')
 plt.legend()
 
 plt.tight_layout();
+
+We plot a) training loss b) test loss and c) average rank displacement for GraphConv and EdgeConv. The dashed lines correspond to the performance of the earlier models (those trained with the $p\in{}[\frac{1}{n},\frac{10}{n}]$ SBMs) on the new dataset. 
 
 ### Overview
 
