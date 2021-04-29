@@ -345,10 +345,32 @@
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
 <span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">3</span><span class="o">-</span><span class="mi">8</span><span class="n">f62b9b8fdd4</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">     </span><span class="mi">23</span>         <span class="n">density</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">torch_sparse</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">adj</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">adj</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">*</span><span class="n">adj</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">1</span><span class="p">)))</span>
-<span class="g g-Whitespace">     </span><span class="mi">24</span> 
-<span class="ne">---&gt; </span><span class="mi">25</span>         <span class="n">vals</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">adj</span><span class="o">.</span><span class="n">to_dense</span><span class="p">())[</span><span class="mi">0</span><span class="p">],</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
-<span class="g g-Whitespace">     </span><span class="mi">26</span>         <span class="n">eig_ratio</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">vals</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span><span class="o">/</span><span class="n">vals</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="g g-Whitespace">     </span><span class="mi">17</span> 
+<span class="g g-Whitespace">     </span><span class="mi">18</span>         <span class="c1"># Generate SBM</span>
+<span class="ne">---&gt; </span><span class="mi">19</span>         <span class="n">x</span><span class="p">,</span><span class="n">edges</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">((</span><span class="n">n</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span><span class="mi">1</span><span class="p">)),</span><span class="n">torch_geometric</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">remove_isolated_nodes</span><span class="p">(</span><span class="n">torch_geometric</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">stochastic_blockmodel_graph</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">P</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+<span class="g g-Whitespace">     </span><span class="mi">20</span>         <span class="n">adj</span> <span class="o">=</span> <span class="n">torch_sparse</span><span class="o">.</span><span class="n">SparseTensor</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="n">edges</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">col</span><span class="o">=</span><span class="n">edges</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="g g-Whitespace">     </span><span class="mi">21</span> 
+
+<span class="nn">/opt/conda/lib/python3.7/site-packages/torch_geometric/utils/random.py</span> in <span class="ni">stochastic_blockmodel_graph</span><span class="nt">(block_sizes, edge_probs, directed)</span>
+<span class="g g-Whitespace">     </span><span class="mi">78</span> 
+<span class="g g-Whitespace">     </span><span class="mi">79</span>     <span class="k">if</span> <span class="ow">not</span> <span class="n">directed</span><span class="p">:</span>
+<span class="ne">---&gt; </span><span class="mi">80</span>         <span class="n">edge_index</span> <span class="o">=</span> <span class="n">to_undirected</span><span class="p">(</span><span class="n">edge_index</span><span class="p">,</span> <span class="n">num_nodes</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">81</span> 
+<span class="g g-Whitespace">     </span><span class="mi">82</span>     <span class="k">return</span> <span class="n">edge_index</span>
+
+<span class="nn">/opt/conda/lib/python3.7/site-packages/torch_geometric/utils/undirected.py</span> in <span class="ni">to_undirected</span><span class="nt">(edge_index, num_nodes)</span>
+<span class="g g-Whitespace">     </span><span class="mi">47</span>     <span class="n">num_nodes</span> <span class="o">=</span> <span class="n">maybe_num_nodes</span><span class="p">(</span><span class="n">edge_index</span><span class="p">,</span> <span class="n">num_nodes</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">48</span> 
+<span class="ne">---&gt; </span><span class="mi">49</span>     <span class="n">row</span><span class="p">,</span> <span class="n">col</span> <span class="o">=</span> <span class="n">edge_index</span>
+<span class="g g-Whitespace">     </span><span class="mi">50</span>     <span class="n">row</span><span class="p">,</span> <span class="n">col</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">],</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span><span class="n">col</span><span class="p">,</span> <span class="n">row</span><span class="p">],</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">51</span>     <span class="n">edge_index</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">],</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="nn">/opt/conda/lib/python3.7/site-packages/torch/tensor.py</span> in <span class="ni">__iter__</span><span class="nt">(self)</span>
+<span class="g g-Whitespace">    </span><span class="mi">582</span>         <span class="k">if</span> <span class="n">has_torch_function_unary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">583</span>             <span class="k">return</span> <span class="n">handle_torch_function</span><span class="p">(</span><span class="n">Tensor</span><span class="o">.</span><span class="fm">__iter__</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="p">,),</span> <span class="bp">self</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">584</span>         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dim</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">585</span>             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;iteration over a 0-d tensor&#39;</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">586</span>         <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">_C</span><span class="o">.</span><span class="n">_get_tracing_state</span><span class="p">():</span>
 
 <span class="ne">KeyboardInterrupt</span>: 
 </pre></div>
@@ -462,6 +484,7 @@
 <img alt="_images/DegreeCentrality_13_0.png" src="_images/DegreeCentrality_13_0.png" />
 </div>
 </div>
+<p>We plot a) training loss b) test loss and c) average rank displacement for GraphConv and EdgeConv on our unweighted, undirected dataset.</p>
 </div>
 <div class="section" id="weighted-undirected">
 <h2><span class="section-number">2.2. </span>Weighted, Undirected<a class="headerlink" href="#weighted-undirected" title="Permalink to this headline">¶</a></h2>
@@ -547,9 +570,10 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/DegreeCentrality_17_0.png" src="_images/DegreeCentrality_17_0.png" />
+<img alt="_images/DegreeCentrality_18_0.png" src="_images/DegreeCentrality_18_0.png" />
 </div>
 </div>
+<p>We plot a) training loss b) test loss and c) average rank displacement for GraphConv and EdgeConv on our weighted, undirected dataset.</p>
 </div>
 <div class="section" id="weighted-directed">
 <h2><span class="section-number">2.3. </span>Weighted, Directed<a class="headerlink" href="#weighted-directed" title="Permalink to this headline">¶</a></h2>
@@ -632,9 +656,10 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/DegreeCentrality_21_0.png" src="_images/DegreeCentrality_21_0.png" />
+<img alt="_images/DegreeCentrality_23_0.png" src="_images/DegreeCentrality_23_0.png" />
 </div>
 </div>
+<p>We plot a) training loss b) test loss and c) average rank displacement for GraphConv and EdgeConv on our weighted, directed dataset.</p>
 </div>
 <div class="section" id="overview">
 <h2><span class="section-number">2.4. </span>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
