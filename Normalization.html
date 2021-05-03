@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>5. Normalization Techniques &#8212; My Jupyter Book</title>
+    <title>4. Normalization Techniques &#8212; My Jupyter Book</title>
     
   <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -56,8 +56,8 @@
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="6. Dataset" href="HigherMatrixPowers.html" />
-    <link rel="prev" title="4. Do Deeper Networks Solve the Problem?" href="DeeperGCNs.html" />
+    <link rel="next" title="5. Simplified Graph Convolution(al Networks)" href="HigherMatrixPowers.html" />
+    <link rel="prev" title="3. Do Deeper Networks Solve the Problem?" href="DeeperGCNs.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -95,57 +95,52 @@
 <ul class="current nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="DegreeCentrality.html">
-   1. Dataset
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="DegreeCentrality.html#degree-centrality">
-   2. Degree Centrality
+   1. Degree Centrality
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="KatzCentrality.html">
-   3. Katz Centrality
+   2. Katz Centrality
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="DeeperGCNs.html">
-   4. Do Deeper Networks Solve the Problem?
+   3. Do Deeper Networks Solve the Problem?
   </a>
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   5. Normalization Techniques
+   4. Normalization Techniques
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="HigherMatrixPowers.html">
-   6. Dataset
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="HigherMatrixPowers.html#simplified-graph-convolution-al-networks">
-   7. Simplified Graph Convolution(al Networks)
+   5. Simplified Graph Convolution(al Networks)
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="HigherMatrixPowers.html#polynomialsgc">
-   8. PolynomialSGC
+   6. PolynomialSGC
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="HigherMatrixPowers.html#mixhop">
-   9. MixHop
+   7. MixHop
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="HigherMatrixPowers.html#overview">
+   8. Overview
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="FutureWorkandBibliography.html">
-   10. Future Directions
+   9. Future Directions
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="FutureWorkandBibliography.html#bibliography">
-   11. Bibliography
+   10. Bibliography
   </a>
  </li>
 </ul>
@@ -238,92 +233,66 @@
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#dataset">
-   5.1. Dataset
+   4.1. Dataset
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#model">
-   5.2. Model
+   4.2. Model
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#orthnorm-vec-q-vec-1">
-   5.3. OrthNorm:
-   <span class="math notranslate nohighlight">
-    \(\vec{q} = \vec{1}\)
-   </span>
+  <a class="reference internal nav-link" href="#orthnorm">
+   4.3. OrthNorm
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#ablation-study">
-     5.3.1. Ablation Study
+    <a class="reference internal nav-link" href="#vec-q-vec-1">
+     4.3.1.
+     <span class="math notranslate nohighlight">
+      \(\vec{q} = \vec{1}\)
+     </span>
     </a>
    </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#orthnorm-q-d-degree-circ-1">
-   5.4. OrthNorm:
-   <span class="math notranslate nohighlight">
-    \(q = d_{degree}^{\circ{}-1}\)
-   </span>
-  </a>
-  <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id1">
-     5.4.1. Ablation Study
+    <a class="reference internal nav-link" href="#q-d-degree-circ-1">
+     4.3.2.
+     <span class="math notranslate nohighlight">
+      \(q = d_{degree}^{\circ{}-1}\)
+     </span>
     </a>
    </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#orthnorm-q-v-1-circ-1">
-   5.5. OrthNorm:
-   <span class="math notranslate nohighlight">
-    \(q=v_{1}^{\circ{}-1}\)
-   </span>
-  </a>
-  <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id2">
-     5.5.1. Ablation Study
+    <a class="reference internal nav-link" href="#q-v-1-circ-1">
+     4.3.3.
+     <span class="math notranslate nohighlight">
+      \(q=v_{1}^{\circ{}-1}\)
+     </span>
     </a>
    </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#orthnorm-best-model">
-   5.6. OrthNorm: Best Model
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#graphsizenorm">
-   5.7. GraphSizeNorm
-  </a>
-  <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id3">
-     5.7.1. Ablation Study
+    <a class="reference internal nav-link" href="#best-model">
+     4.3.4. Best Model
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#pairnorm">
-   5.8. PairNorm
+   4.4. PairNorm
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id4">
-     5.8.1. Ablation Study
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#results">
-     5.8.2. Results
+    <a class="reference internal nav-link" href="#ablation-study">
+     4.4.1. Ablation Study
     </a>
    </li>
   </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#overview">
+   4.5. Overview
+  </a>
  </li>
 </ul>
 
@@ -339,6 +308,40 @@
                 
   <div class="cell docutils container">
 <div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">HTML</span>
+<span class="n">HTML</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;&lt;script&gt;</span>
+<span class="s1">code_show=true; </span>
+<span class="s1">function code_toggle() {</span>
+<span class="s1"> if (code_show){</span>
+<span class="s1"> $(&#39;div.input&#39;).hide();</span>
+<span class="s1"> } else {</span>
+<span class="s1"> $(&#39;div.input&#39;).show();</span>
+<span class="s1"> }</span>
+<span class="s1"> code_show = !code_show</span>
+<span class="s1">} </span>
+<span class="s1">$( document ).ready(code_toggle);</span>
+<span class="s1">&lt;/script&gt;</span>
+<span class="s1">&lt;form action=&quot;javascript:code_toggle()&quot;&gt;&lt;input type=&quot;submit&quot; value=&quot;Toggle Code On/Off&quot;&gt;&lt;/form&gt;&#39;&#39;&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><script>
+code_show=true; 
+function code_toggle() {
+ if (code_show){
+ $('div.input').hide();
+ } else {
+ $('div.input').show();
+ }
+ code_show = !code_show
+} 
+$( document ).ready(code_toggle);
+</script>
+<form action="javascript:code_toggle()"><input type="submit" value="Toggle Code On/Off"></form></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ipynb.fs.full.Introduction</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
 <span class="kn">import</span> <span class="nn">time</span>
@@ -346,9 +349,8 @@
 </div>
 </div>
 </div>
-<p>Note: I’ve been making some big additions to this section; all is WIP for the next day or so.</p>
 <div class="section" id="normalization-techniques">
-<h1><span class="section-number">5. </span>Normalization Techniques<a class="headerlink" href="#normalization-techniques" title="Permalink to this headline">¶</a></h1>
+<h1><span class="section-number">4. </span>Normalization Techniques<a class="headerlink" href="#normalization-techniques" title="Permalink to this headline">¶</a></h1>
 <p>Within the literature, the typical approach to oversmoothing is to apply some type of normalization. To this end, we propose orthogonalizing out vector <span class="math notranslate nohighlight">\(\vec{q}\)</span> from <span class="math notranslate nohighlight">\(X^{l}_{:,i}\)</span> and then renormalizing each column. We incorporate additional scale parameters <span class="math notranslate nohighlight">\(0\leq{}s_{1}\leq{}1\)</span> and <span class="math notranslate nohighlight">\(s_{2}\)</span>, which allow the model to “self-regulate” its own smoothness.</p>
 <div class="math notranslate nohighlight">
 \[X^{l}_{:,i} = X^{l}_{:,i} - s_{1}\frac{\vec{q}^{T}X^{l}_{:,i}}{||\vec{q}||_{2}^{2}}\vec{q}\]</div>
@@ -359,9 +361,10 @@
 \[X_{:,i}^{l} = X_{:,i}^{l} - \frac{1}{n}\sum_{i=0}^{n}X_{:,i}^{l}\]</div>
 <div class="math notranslate nohighlight">
 \[X_{:,i}^{l} = s \frac{X_{:,i}^{l}}{||X_{:,i}^{l}||_{2}}\]</div>
-<p>In practice, we find that <span class="math notranslate nohighlight">\(\vec{q}\)</span> should approximate the Hadamard inverse of the dominant eigenvector i.e <span class="math notranslate nohighlight">\(\vec{q}\approx{}v_{1}^{\circ{}-1}\)</span> where <span class="math notranslate nohighlight">\(v_{1}^{\circ{}-1}\cdot{}v_{1} = n\)</span> for <span class="math notranslate nohighlight">\(v_{1}\in{}R^{n}\)</span>. We conduct ablation studies for <span class="math notranslate nohighlight">\(\vec{q}=\vec{1}\)</span>,<span class="math notranslate nohighlight">\(\vec{q} = d_{degree}^{\circ{}-1}\)</span>, and <span class="math notranslate nohighlight">\(\vec{q}=v_{1}^{\circ{}-1}\)</span> at <span class="math notranslate nohighlight">\(l_{max}=64\)</span>. Parameters are <span class="math notranslate nohighlight">\(s_{1}\)</span> (grad-enabled vs. constant) and whether the network possesses 1-hop residual connections, which have been shown to improve the stability and performance of deeper GCNs [15]. The best model is then trained for all <span class="math notranslate nohighlight">\(l_{max}=1,2,4,...,64\)</span>. We also compare against both PairNorm and GraphSizeNorm [3].</p>
+<p>PairNorm is the current SOTA for GCN normalization/oversmoothing; however, it 1) implicitly assumes that our aggregation step employs the Graph Laplacian or has a similar steady-state and 2) fully orthogonalizes out <span class="math notranslate nohighlight">\(\vec{q}\)</span> at each layer, which may be undesirable for learning structure.</p>
+<p>In practice, we find that <span class="math notranslate nohighlight">\(\vec{q}\)</span> should approximate the Hadamard inverse of the dominant eigenvector, <span class="math notranslate nohighlight">\(v_{1}^{\circ{}-1}\)</span>, where <span class="math notranslate nohighlight">\(x^{\circ{}-1}\cdot{}x = n\)</span> for <span class="math notranslate nohighlight">\(x\in{}R^{n}\)</span>. We conduct ablation studies for <span class="math notranslate nohighlight">\(\vec{q}=\vec{1}\)</span>,<span class="math notranslate nohighlight">\(\vec{q} = d_{degree}^{\circ{}-1}\)</span>, and <span class="math notranslate nohighlight">\(\vec{q}=v_{1}^{\circ{}-1}\)</span> at <span class="math notranslate nohighlight">\(l_{max}=64\)</span>. Parameters are <span class="math notranslate nohighlight">\(s_{1}\)</span> (grad-enabled vs. constant <span class="math notranslate nohighlight">\(\sigma{}(1)\)</span>) and whether the network possesses 1-hop residual connections, which have been shown to improve the stability and performance of deeper GCNs [15]. The best model is then trained for all <span class="math notranslate nohighlight">\(l_{max}=1,2,4,...,64\)</span>. We also compare against PairNorm under various settings.</p>
 <div class="section" id="dataset">
-<h2><span class="section-number">5.1. </span>Dataset<a class="headerlink" href="#dataset" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">4.1. </span>Dataset<a class="headerlink" href="#dataset" title="Permalink to this headline">¶</a></h2>
 <p>See Section 4.1 for description/parameters.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -404,7 +407,7 @@
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">2</span><span class="o">-</span><span class="mi">81</span><span class="n">aaef866393</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">3</span><span class="o">-</span><span class="mi">81</span><span class="n">aaef866393</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="g g-Whitespace">     </span><span class="mi">19</span> 
 <span class="g g-Whitespace">     </span><span class="mi">20</span>     <span class="c1"># Compute Katz Centrality</span>
 <span class="ne">---&gt; </span><span class="mi">21</span>     <span class="n">vals</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">adj</span><span class="o">.</span><span class="n">to_dense</span><span class="p">())[</span><span class="mi">0</span><span class="p">],</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
@@ -418,7 +421,7 @@
 </div>
 </div>
 <div class="section" id="model">
-<h2><span class="section-number">5.2. </span>Model<a class="headerlink" href="#model" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">4.2. </span>Model<a class="headerlink" href="#model" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">best_table</span> <span class="o">=</span> <span class="p">[]</span>
@@ -462,7 +465,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">q</span> <span class="o">=</span> <span class="n">q</span>
 
         <span class="c1"># Scale parameters</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">s1</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="n">requires_grad</span><span class="o">=</span><span class="n">grad</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">s1</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="n">requires_grad</span><span class="o">=</span><span class="n">grad</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">s2</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
 
     <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">X</span><span class="p">,</span><span class="n">edge_index</span><span class="p">,</span><span class="n">edge_weight</span><span class="p">,</span><span class="n">batch</span><span class="p">):</span>
@@ -576,8 +579,10 @@
 </div>
 </div>
 </div>
-<div class="section" id="orthnorm-vec-q-vec-1">
-<h2><span class="section-number">5.3. </span>OrthNorm: <span class="math notranslate nohighlight">\(\vec{q} = \vec{1}\)</span><a class="headerlink" href="#orthnorm-vec-q-vec-1" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="orthnorm">
+<h2><span class="section-number">4.3. </span>OrthNorm<a class="headerlink" href="#orthnorm" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="vec-q-vec-1">
+<h3><span class="section-number">4.3.1. </span><span class="math notranslate nohighlight">\(\vec{q} = \vec{1}\)</span><a class="headerlink" href="#vec-q-vec-1" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compute ones vector</span>
@@ -587,8 +592,6 @@
 </div>
 </div>
 </div>
-<div class="section" id="ablation-study">
-<h3><span class="section-number">5.3.1. </span>Ablation Study<a class="headerlink" href="#ablation-study" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">graph_results</span> <span class="o">=</span> <span class="p">[]</span>
@@ -598,7 +601,7 @@
 <span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">DummyModel</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="n">OrthNorm</span><span class="p">,</span><span class="n">identity</span><span class="p">)</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
 
-<span class="n">graph_results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">train_loop</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="n">train_loader</span><span class="p">,</span><span class="n">test_loader</span><span class="p">,</span><span class="mi">25</span><span class="p">,</span><span class="n">lr</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">))</span>
+<span class="n">graph_results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">train_loop</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="n">train_loader</span><span class="p">,</span><span class="n">test_loader</span><span class="p">,</span><span class="mi">150</span><span class="p">,</span><span class="n">lr</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">))</span>
 <span class="n">metrics</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">get_metrics</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="n">test_loader</span><span class="p">))</span>
 <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">empty_cache</span><span class="p">()</span>
 
@@ -606,7 +609,7 @@
 <span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">DummyModel</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="n">OrthNorm</span><span class="p">,</span><span class="n">identity</span><span class="p">,</span><span class="n">res</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
 
-<span class="n">graph_results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">train_loop</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="n">train_loader</span><span class="p">,</span><span class="n">test_loader</span><span class="p">,</span><span class="mi">25</span><span class="p">,</span><span class="n">lr</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">))</span>
+<span class="n">graph_results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">train_loop</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="n">train_loader</span><span class="p">,</span><span class="n">test_loader</span><span class="p">,</span><span class="mi">150</span><span class="p">,</span><span class="n">lr</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">))</span>
 <span class="n">metrics</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">get_metrics</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="n">test_loader</span><span class="p">))</span>
 <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">empty_cache</span><span class="p">()</span>
 
@@ -614,7 +617,7 @@
 <span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">DummyModel</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="n">OrthNorm</span><span class="p">,</span><span class="n">identity</span><span class="p">,</span><span class="n">grad</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
 
-<span class="n">graph_results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">train_loop</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="n">train_loader</span><span class="p">,</span><span class="n">test_loader</span><span class="p">,</span><span class="mi">25</span><span class="p">,</span><span class="n">lr</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">))</span>
+<span class="n">graph_results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">train_loop</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="n">train_loader</span><span class="p">,</span><span class="n">test_loader</span><span class="p">,</span><span class="mi">150</span><span class="p">,</span><span class="n">lr</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">))</span>
 <span class="n">metrics</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">get_metrics</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="n">test_loader</span><span class="p">))</span>
 <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">empty_cache</span><span class="p">()</span>
 
@@ -622,7 +625,7 @@
 <span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">DummyModel</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="n">OrthNorm</span><span class="p">,</span><span class="n">identity</span><span class="p">,</span><span class="n">res</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">grad</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
 
-<span class="n">graph_results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">train_loop</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="n">train_loader</span><span class="p">,</span><span class="n">test_loader</span><span class="p">,</span><span class="mi">25</span><span class="p">,</span><span class="n">lr</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">))</span>
+<span class="n">graph_results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">train_loop</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="n">train_loader</span><span class="p">,</span><span class="n">test_loader</span><span class="p">,</span><span class="mi">150</span><span class="p">,</span><span class="n">lr</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">))</span>
 <span class="n">metrics</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">get_metrics</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="n">test_loader</span><span class="p">))</span>
 <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">empty_cache</span><span class="p">()</span>
 </pre></div>
@@ -660,8 +663,11 @@
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="_images/Normalization_17_0.png" src="_images/Normalization_17_0.png" />
 </div>
-<p>We plot a) training loss b) test loss and c) average rank displacement. The defining factor appears to be whether <span class="math notranslate nohighlight">\(s_{1}\)</span> is a trainable parameter; fixing it increases the L1 error by around an order of magnitude. Adding residual connections marginally hampers performance. In the NonRes,Grad case, we see significant improvement from the earlier <span class="math notranslate nohighlight">\(l=64\)</span> model with batch normalization (see 4.1).</p>
+</div>
+<p>We plot a) training loss b) test loss and c) average rank displacement. The defining factor appears to be whether <span class="math notranslate nohighlight">\(s_{1}\)</span> is a trainable parameter; fixing it increases the L1 error by around an order of magnitude. Adding residual connections does not noticably impact performance. Regardless, we see significant improvement from the earlier <span class="math notranslate nohighlight">\(l=64\)</span> model with batch normalization (see 4.1).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">l</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="s1">&#39;NonRes,Grad&#39;</span><span class="p">,</span><span class="s1">&#39;ResGrad&#39;</span><span class="p">,</span><span class="s1">&#39;NonRes,NoGrad&#39;</span><span class="p">,</span><span class="s1">&#39;Res,NoGrad&#39;</span><span class="p">]):</span>
@@ -687,8 +693,14 @@
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="_images/Normalization_19_0.png" src="_images/Normalization_19_0.png" />
+<img alt="_images/Normalization_19_1.png" src="_images/Normalization_19_1.png" />
+<img alt="_images/Normalization_19_2.png" src="_images/Normalization_19_2.png" />
+<img alt="_images/Normalization_19_3.png" src="_images/Normalization_19_3.png" />
 </div>
-<p>In general, all three of our metrics converge to smaller values when the <span class="math notranslate nohighlight">\(s_{1}\)</span> gradient is enabled, which indicates that each <span class="math notranslate nohighlight">\(x_{i}\)</span> is approaching <span class="math notranslate nohighlight">\(v_{1}\)</span>. We observe two regimes throughout the model layers; when <span class="math notranslate nohighlight">\(l&lt;32\)</span>, metrics are relatively large, but, once <span class="math notranslate nohighlight">\(l\geq{}32\)</span>, they all drop sharply. This is most pronounced for AggNorm. Below we plot the trained values of <span class="math notranslate nohighlight">\(s_{1}\)</span> vs. <span class="math notranslate nohighlight">\(l\)</span> and see a similar pattern. <span class="math notranslate nohighlight">\(s_{1}\)</span> oscillates between <span class="math notranslate nohighlight">\(.6\)</span> and <span class="math notranslate nohighlight">\(.8\)</span> for the first half of the model and then decays to <span class="math notranslate nohighlight">\(0.0\)</span> in the final few layers.</p>
+</div>
+<p>We observe two regimes throughout the model layers; when <span class="math notranslate nohighlight">\(l&lt;32\)</span>, AggNorm and Rayleigh are relatively large, but, once <span class="math notranslate nohighlight">\(l\geq{}32\)</span>, the mean values drop sharply. Below we plot the trained values of <span class="math notranslate nohighlight">\(s_{1}\)</span> vs. <span class="math notranslate nohighlight">\(l\)</span> and see a similar pattern. <span class="math notranslate nohighlight">\(s_{1}\)</span> mostly oscillates between <span class="math notranslate nohighlight">\(.6\)</span> and <span class="math notranslate nohighlight">\(.8\)</span> for the first half of the model and then decays to <span class="math notranslate nohighlight">\(0.0\)</span> in the final few layers.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">64</span><span class="p">),(</span><span class="n">metrics</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]),</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;NonRes,Grad&#39;</span><span class="p">,</span><span class="n">s</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
@@ -699,6 +711,9 @@
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="_images/Normalization_21_0.png" src="_images/Normalization_21_0.png" />
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -708,9 +723,8 @@
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="orthnorm-q-d-degree-circ-1">
-<h2><span class="section-number">5.4. </span>OrthNorm: <span class="math notranslate nohighlight">\(q = d_{degree}^{\circ{}-1}\)</span><a class="headerlink" href="#orthnorm-q-d-degree-circ-1" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="q-d-degree-circ-1">
+<h3><span class="section-number">4.3.2. </span><span class="math notranslate nohighlight">\(q = d_{degree}^{\circ{}-1}\)</span><a class="headerlink" href="#q-d-degree-circ-1" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compute Hadamard Inverse of degree</span>
@@ -722,8 +736,6 @@
 </div>
 </div>
 </div>
-<div class="section" id="id1">
-<h3><span class="section-number">5.4.1. </span>Ablation Study<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">graph_results</span> <span class="o">=</span> <span class="p">[]</span>
@@ -796,7 +808,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/Normalization_27_0.png" src="_images/Normalization_27_0.png" />
+<img alt="_images/Normalization_26_0.png" src="_images/Normalization_26_0.png" />
 </div>
 </div>
 <p>We plot a) training loss b) test loss and c) average rank displacement. Like with <span class="math notranslate nohighlight">\(\vec{q}=\vec{1}\)</span>, the greatest boost in performance comes from training with regards to <span class="math notranslate nohighlight">\(s_{1}\)</span>. We observe slightly better losses when the gradient is disabled, and adding residual connections offers further improvement in the gradient-enabled case.</p>
@@ -826,10 +838,10 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/Normalization_29_0.png" src="_images/Normalization_29_0.png" />
-<img alt="_images/Normalization_29_1.png" src="_images/Normalization_29_1.png" />
-<img alt="_images/Normalization_29_2.png" src="_images/Normalization_29_2.png" />
-<img alt="_images/Normalization_29_3.png" src="_images/Normalization_29_3.png" />
+<img alt="_images/Normalization_28_0.png" src="_images/Normalization_28_0.png" />
+<img alt="_images/Normalization_28_1.png" src="_images/Normalization_28_1.png" />
+<img alt="_images/Normalization_28_2.png" src="_images/Normalization_28_2.png" />
+<img alt="_images/Normalization_28_3.png" src="_images/Normalization_28_3.png" />
 </div>
 </div>
 <p>There is still a defined jump in our metrics for the ResGrad model, whereas NonResGrad is more variable than before. Indeed, in the below figure, we see the <span class="math notranslate nohighlight">\(s_{1}\)</span> values of the latter randomly spike during the <span class="math notranslate nohighlight">\(l\geq{}32\)</span> regime.</p>
@@ -844,7 +856,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/Normalization_31_0.png" src="_images/Normalization_31_0.png" />
+<img alt="_images/Normalization_30_0.png" src="_images/Normalization_30_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -855,9 +867,8 @@
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="orthnorm-q-v-1-circ-1">
-<h2><span class="section-number">5.5. </span>OrthNorm: <span class="math notranslate nohighlight">\(q=v_{1}^{\circ{}-1}\)</span><a class="headerlink" href="#orthnorm-q-v-1-circ-1" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="q-v-1-circ-1">
+<h3><span class="section-number">4.3.3. </span><span class="math notranslate nohighlight">\(q=v_{1}^{\circ{}-1}\)</span><a class="headerlink" href="#q-v-1-circ-1" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compute the Hadamard inverse of the approximate dominant eigenvector</span>
@@ -872,8 +883,6 @@
 </div>
 </div>
 </div>
-<div class="section" id="id2">
-<h3><span class="section-number">5.5.1. </span>Ablation Study<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">graph_results</span> <span class="o">=</span> <span class="p">[]</span>
@@ -946,7 +955,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/Normalization_37_0.png" src="_images/Normalization_37_0.png" />
+<img alt="_images/Normalization_35_0.png" src="_images/Normalization_35_0.png" />
 </div>
 </div>
 <p>We plot a) training loss b) test loss and c) average rank displacement. Performance is further improved for gradient-disabled models, particularily when residual connections are also incorporated. NonRes,Gred converges to the lowest test loss.</p>
@@ -976,10 +985,10 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/Normalization_39_0.png" src="_images/Normalization_39_0.png" />
-<img alt="_images/Normalization_39_1.png" src="_images/Normalization_39_1.png" />
-<img alt="_images/Normalization_39_2.png" src="_images/Normalization_39_2.png" />
-<img alt="_images/Normalization_39_3.png" src="_images/Normalization_39_3.png" />
+<img alt="_images/Normalization_37_0.png" src="_images/Normalization_37_0.png" />
+<img alt="_images/Normalization_37_1.png" src="_images/Normalization_37_1.png" />
+<img alt="_images/Normalization_37_2.png" src="_images/Normalization_37_2.png" />
+<img alt="_images/Normalization_37_3.png" src="_images/Normalization_37_3.png" />
 </div>
 </div>
 <p>Difference between regimes is less apparent, as our metrics are prone to large spikes shortly after <span class="math notranslate nohighlight">\(l=32\)</span>. AggNorm is the most informative of the three; it steadily declines, and, when ranked, its final values roughly correspond to the ordering of the models with regards to test loss. We still observe a clear partition in the <span class="math notranslate nohighlight">\(s_{1}\)</span> (see below).</p>
@@ -994,7 +1003,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/Normalization_41_0.png" src="_images/Normalization_41_0.png" />
+<img alt="_images/Normalization_39_0.png" src="_images/Normalization_39_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1005,9 +1014,8 @@
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="orthnorm-best-model">
-<h2><span class="section-number">5.6. </span>OrthNorm: Best Model<a class="headerlink" href="#orthnorm-best-model" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="best-model">
+<h3><span class="section-number">4.3.4. </span>Best Model<a class="headerlink" href="#best-model" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -1070,7 +1078,7 @@
 </table>
 </div></div></div>
 </div>
-<p>Across the board, the best results are obtained for <span class="math notranslate nohighlight">\(\vec{q}=v_{1}^{\circ{}-1}\)</span>. Difference between choices of <span class="math notranslate nohighlight">\(\vec{q}\)</span> is minimal when <span class="math notranslate nohighlight">\(s_{1}\)</span> is gradient-enabled, but otherwise <span class="math notranslate nohighlight">\(v_{1}^{\circ{}-1}\)</span> offers noticably better performance. We find limited benefit to residual connections. Below, we train the NonRes,Grad model for all <span class="math notranslate nohighlight">\(l=1,2,4,...,64\)</span> using the inverse approximate <span class="math notranslate nohighlight">\(v_{1}\)</span>.</p>
+<p>Across the board, the best results are obtained for <span class="math notranslate nohighlight">\(\vec{q}=v_{1}^{\circ{}-1}\)</span>. We do not currently have a theoretical explanation for this, and indeed it seems somewhat counterintuitive. Difference between choices of <span class="math notranslate nohighlight">\(\vec{q}\)</span> is minimal when <span class="math notranslate nohighlight">\(s_{1}\)</span> is gradient-enabled, but otherwise <span class="math notranslate nohighlight">\(v_{1}^{\circ{}-1}\)</span> offers noticably better performance. We find limited benefit to residual connections. Below, we train the NonRes,Grad model for all <span class="math notranslate nohighlight">\(l=1,2,4,...,64\)</span> using the inverse approximate <span class="math notranslate nohighlight">\(v_{1}\)</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">graph_results</span> <span class="o">=</span> <span class="p">[]</span>
@@ -1118,129 +1126,17 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/Normalization_47_0.png" src="_images/Normalization_47_0.png" />
+<img alt="_images/Normalization_45_0.png" src="_images/Normalization_45_0.png" />
 </div>
 </div>
-<p>We plot a) training loss b) test loss and c) average rank displacement. All models for <span class="math notranslate nohighlight">\(l_{max}\geq{}8\)</span> are improved versus the batch normalization case.</p>
-</div>
-<div class="section" id="graphsizenorm">
-<h2><span class="section-number">5.7. </span>GraphSizeNorm<a class="headerlink" href="#graphsizenorm" title="Permalink to this headline">¶</a></h2>
-<p>GraphSizeNorm is a computationally cheap normalization scheme defined by [3] as</p>
-<div class="math notranslate nohighlight">
-\[X^{l} = \frac{X^{l}}{|V|}\]</div>
-<p>This provides a useful benchmark without the added standardization of BatchNorm. We assess both residual and non-residual models at <span class="math notranslate nohighlight">\(l_{max}=64\)</span></p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Class for GraphSizeNorm. </span>
-<span class="k">class</span> <span class="nc">GraphSizeNorm</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">q</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">grad</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">GraphSizeNorm</span><span class="p">,</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">norm</span> <span class="o">=</span> <span class="n">torch_geometric</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">GraphSizeNorm</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">s1</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">X</span><span class="p">,</span><span class="n">edge_index</span><span class="p">,</span><span class="n">edge_weight</span><span class="p">,</span><span class="n">batch</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">batch</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="section" id="id3">
-<h3><span class="section-number">5.7.1. </span>Ablation Study<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">graph_results</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="n">metrics</span> <span class="o">=</span> <span class="p">[]</span>
-
-<span class="c1">### Non-residual</span>
-<span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">DummyModel</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="n">GraphSizeNorm</span><span class="p">,</span><span class="kc">None</span><span class="p">)</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
-
-<span class="n">graph_results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">train_loop</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="n">train_loader</span><span class="p">,</span><span class="n">test_loader</span><span class="p">,</span><span class="mi">150</span><span class="p">,</span><span class="n">lr</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">))</span>
-<span class="n">metrics</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">get_metrics</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="n">test_loader</span><span class="p">))</span>
-<span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">empty_cache</span><span class="p">()</span>
-
-<span class="c1">### Residual</span>
-<span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">DummyModel</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="n">GraphSizeNorm</span><span class="p">,</span><span class="kc">None</span><span class="p">,</span><span class="n">res</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
-
-<span class="n">graph_results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">train_loop</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="n">train_loader</span><span class="p">,</span><span class="n">test_loader</span><span class="p">,</span><span class="mi">150</span><span class="p">,</span><span class="n">lr</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">))</span>
-<span class="n">metrics</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">get_metrics</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="n">test_loader</span><span class="p">))</span>
-<span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">empty_cache</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
-  <span class="n">plt</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">graph_results</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Train Error&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;L1 Error&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Iterations&#39;</span><span class="p">)</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
-  <span class="n">plt</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">graph_results</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Test Error&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Iterations&#39;</span><span class="p">)</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">alpha</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="s1">&#39;NonRes&#39;</span><span class="p">,</span><span class="s1">&#39;Res&#39;</span><span class="p">]):</span>
-  <span class="n">plt</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">graph_results</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="mi">2</span><span class="p">],</span><span class="n">label</span><span class="o">=</span><span class="n">alpha</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Ranking Error&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Avg. Displacement&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Iterations&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">();</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/Normalization_54_0.png" src="_images/Normalization_54_0.png" />
-</div>
-</div>
-<p>We plot a) training loss b) test loss and c) average rank displacement. GraphSizeNorm improves over BatchNorm, but converges to a larger value than OrthNorm. Adding residual connections leads to minor improvement.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">l</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="s1">&#39;NonRes&#39;</span><span class="p">,</span><span class="s1">&#39;Res&#39;</span><span class="p">]):</span>
-  <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
-  <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
-  <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">metrics</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;MAD&#39;</span><span class="p">)</span>
-  <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Layer&#39;</span><span class="p">)</span>
-  <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Mean Average Distance&#39;</span><span class="p">)</span>
-
-  <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
-  <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">metrics</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
-  <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Layer&#39;</span><span class="p">)</span>
-  <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Aggregation Norm&#39;</span><span class="p">)</span>
-
-  <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
-  <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">metrics</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
-  <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Layer&#39;</span><span class="p">)</span>
-  <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Normalized Rayleigh&#39;</span><span class="p">)</span>
-
-  <span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
-  <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
-  <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/Normalization_56_0.png" src="_images/Normalization_56_0.png" />
-<img alt="_images/Normalization_56_1.png" src="_images/Normalization_56_1.png" />
-</div>
-</div>
-<p>AggNorm and Normalized Rayleigh decay to around zero in both instances. However, the MAP skyrockets in the final few layers; this appears correlated with some small AggNorm spikes. Our model is thereby learning to do two somewhat contradictory things: produce individual node features <span class="math notranslate nohighlight">\(x_{i}\)</span> which are nearly orthogonal to <span class="math notranslate nohighlight">\(x_{j}\forall{}j\in{}N_{i}^{1}\)</span> and maintain <span class="math notranslate nohighlight">\(X_{:,i}\approx{}v_{1}\)</span>.</p>
+<p>We plot a) training loss b) test loss and c) average rank displacement. All models for <span class="math notranslate nohighlight">\(l_{max}\geq{}8\)</span> are improved versus the batch normalization case in 4.1</p>
 </div>
 </div>
 <div class="section" id="pairnorm">
-<h2><span class="section-number">5.8. </span>PairNorm<a class="headerlink" href="#pairnorm" title="Permalink to this headline">¶</a></h2>
-<p>We assess PairNorm (see 5.1) with both individual and global scaling, as well as residual connections.</p>
+<h2><span class="section-number">4.4. </span>PairNorm<a class="headerlink" href="#pairnorm" title="Permalink to this headline">¶</a></h2>
+<p>We assess PairNorm (see 5.1) with both individual and global scaling, as well as residual connections. [15] find that GCNConv and GATConv perform better with individual scaling, but this was on datasets (the “holy trinity” of graph learning: Cora, Citeseer, and PubMed) with limited structural class dependence. Global scaling is given by:</p>
+<div class="math notranslate nohighlight">
+\[X_{:,i}^{l} = s \frac{X_{:,i}^{l}}{\sqrt{\frac{1}{n}\sum_{j=0}^{n}||X_{:,j}^{l}||_{2}^{2}}}\]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># PairNorm implementation</span>
@@ -1255,8 +1151,8 @@
 </div>
 </div>
 </div>
-<div class="section" id="id4">
-<h3><span class="section-number">5.8.1. </span>Ablation Study<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="ablation-study">
+<h3><span class="section-number">4.4.1. </span>Ablation Study<a class="headerlink" href="#ablation-study" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">graph_results</span> <span class="o">=</span> <span class="p">[]</span>
@@ -1297,9 +1193,6 @@
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="results">
-<h3><span class="section-number">5.8.2. </span>Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
@@ -1332,9 +1225,10 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/Normalization_64_0.png" src="_images/Normalization_64_0.png" />
+<img alt="_images/Normalization_52_0.png" src="_images/Normalization_52_0.png" />
 </div>
 </div>
+<p>We plot a) training loss b) test loss and c) average rank displacement. Individual scaling (or PairNorm-SI, as it is refered to in [15]) performs worse than global scaling, which is itself only comparable to OrthNorm with constant <span class="math notranslate nohighlight">\(s_{1}\)</span>. Residual connections offer no pronounced improvement.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">l</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="s1">&#39;NonRes,SI&#39;</span><span class="p">,</span><span class="s1">&#39;Res,SI&#39;</span><span class="p">,</span><span class="s1">&#39;NonRes&#39;</span><span class="p">,</span><span class="s1">&#39;Res&#39;</span><span class="p">]):</span>
@@ -1361,14 +1255,18 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/Normalization_65_0.png" src="_images/Normalization_65_0.png" />
-<img alt="_images/Normalization_65_1.png" src="_images/Normalization_65_1.png" />
-<img alt="_images/Normalization_65_2.png" src="_images/Normalization_65_2.png" />
-<img alt="_images/Normalization_65_3.png" src="_images/Normalization_65_3.png" />
+<img alt="_images/Normalization_54_0.png" src="_images/Normalization_54_0.png" />
+<img alt="_images/Normalization_54_1.png" src="_images/Normalization_54_1.png" />
+<img alt="_images/Normalization_54_2.png" src="_images/Normalization_54_2.png" />
+<img alt="_images/Normalization_54_3.png" src="_images/Normalization_54_3.png" />
 </div>
 </div>
-<p>Our new normalization scheme, which we are calling OrthNorm (i.e Orthagonal Normalization, get it?), improves upon the unnormalized case, even without having fully converged. It surpasses PairNorm by around an order of magnitude given the same depth and number of epochs. We suspect this is because <span class="math notranslate nohighlight">\(d_{Katz}\)</span> is close enough to <span class="math notranslate nohighlight">\(v_{1}\)</span>, and so PairNorm reduces the smoothness <em>too</em> much. Indeed, PairNorm returns large MAP and AggNorm values for each layer, whereas those of OrthNorm are generally smaller and more variable. This is due to <span class="math notranslate nohighlight">\(s_{1}\)</span> regulating the magnitude of the orthogonalization; without it, MAP consistently hovers around <span class="math notranslate nohighlight">\(.20\)</span> and StepAgg continually decreases.</p>
+<p>Outside of the ResSI model, our metrics looks quite similar to the BatchNorm case (see 4.1) with large starting values and a gradual decay. Final values are close to those of OrthNorm when <span class="math notranslate nohighlight">\(\vec{q}=\vec{1}\)</span>, which makes sense due to their similarity.</p>
 </div>
+</div>
+<div class="section" id="overview">
+<h2><span class="section-number">4.5. </span>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Our new normalization scheme, which we are calling OrthNorm (i.e Orthagonal Normalization, get it?), improves upon the BatchNorm case. It surpasses PairNorm by around an order of magnitude given the same depth and number of epochs. We suspect this is because <span class="math notranslate nohighlight">\(d_{Katz}\)</span> is close enough to <span class="math notranslate nohighlight">\(v_{1}\)</span>, and so PairNorm reduces the feature smoothness <em>too</em> much. Indeed, PairNorm returns larger MAP, AggNorm, and normalized Rayleigh for each layer, whereas those of OrthNorm are generally smaller and more variable. This is due to <span class="math notranslate nohighlight">\(s_{1}\)</span> regulating the degree of orthogonalization; indeed, fixing <span class="math notranslate nohighlight">\(s_{1}\)</span> noticably hampers performance.</p>
 </div>
 </div>
 
@@ -1397,8 +1295,8 @@
         
         <div class='prev-next-bottom'>
             
-    <a class='left-prev' id="prev-link" href="DeeperGCNs.html" title="previous page"><span class="section-number">4. </span>Do Deeper Networks Solve the Problem?</a>
-    <a class='right-next' id="next-link" href="HigherMatrixPowers.html" title="next page"><span class="section-number">6. </span>Dataset</a>
+    <a class='left-prev' id="prev-link" href="DeeperGCNs.html" title="previous page"><span class="section-number">3. </span>Do Deeper Networks Solve the Problem?</a>
+    <a class='right-next' id="next-link" href="HigherMatrixPowers.html" title="next page"><span class="section-number">5. </span>Simplified Graph Convolution(al Networks)</a>
 
         </div>
         

@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>4. Do Deeper Networks Solve the Problem? &#8212; My Jupyter Book</title>
+    <title>3. Do Deeper Networks Solve the Problem? &#8212; My Jupyter Book</title>
     
   <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -56,8 +56,8 @@
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="5. Normalization Techniques" href="Normalization.html" />
-    <link rel="prev" title="3. Katz Centrality" href="KatzCentrality.html" />
+    <link rel="next" title="4. Normalization Techniques" href="Normalization.html" />
+    <link rel="prev" title="2. Katz Centrality" href="KatzCentrality.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -95,57 +95,52 @@
 <ul class="current nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="DegreeCentrality.html">
-   1. Dataset
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="DegreeCentrality.html#degree-centrality">
-   2. Degree Centrality
+   1. Degree Centrality
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="KatzCentrality.html">
-   3. Katz Centrality
+   2. Katz Centrality
   </a>
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   4. Do Deeper Networks Solve the Problem?
+   3. Do Deeper Networks Solve the Problem?
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="Normalization.html">
-   5. Normalization Techniques
+   4. Normalization Techniques
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="HigherMatrixPowers.html">
-   6. Dataset
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="HigherMatrixPowers.html#simplified-graph-convolution-al-networks">
-   7. Simplified Graph Convolution(al Networks)
+   5. Simplified Graph Convolution(al Networks)
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="HigherMatrixPowers.html#polynomialsgc">
-   8. PolynomialSGC
+   6. PolynomialSGC
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="HigherMatrixPowers.html#mixhop">
-   9. MixHop
+   7. MixHop
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="HigherMatrixPowers.html#overview">
+   8. Overview
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="FutureWorkandBibliography.html">
-   10. Future Directions
+   9. Future Directions
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="FutureWorkandBibliography.html#bibliography">
-   11. Bibliography
+   10. Bibliography
   </a>
  </li>
 </ul>
@@ -238,17 +233,17 @@
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#model-and-dataset-code">
-   4.1. Model and Dataset Code
+   3.1. Model and Dataset Code
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#results">
-   4.2. Results
+   3.2. Results
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#is-this-oversmoothing">
-   4.3. Is This Oversmoothing?
+   3.3. Is This Oversmoothing?
   </a>
  </li>
 </ul>
@@ -265,6 +260,40 @@
                 
   <div class="cell docutils container">
 <div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">HTML</span>
+<span class="n">HTML</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;&lt;script&gt;</span>
+<span class="s1">code_show=true; </span>
+<span class="s1">function code_toggle() {</span>
+<span class="s1"> if (code_show){</span>
+<span class="s1"> $(&#39;div.input&#39;).hide();</span>
+<span class="s1"> } else {</span>
+<span class="s1"> $(&#39;div.input&#39;).show();</span>
+<span class="s1"> }</span>
+<span class="s1"> code_show = !code_show</span>
+<span class="s1">} </span>
+<span class="s1">$( document ).ready(code_toggle);</span>
+<span class="s1">&lt;/script&gt;</span>
+<span class="s1">&lt;form action=&quot;javascript:code_toggle()&quot;&gt;&lt;input type=&quot;submit&quot; value=&quot;Toggle Code On/Off&quot;&gt;&lt;/form&gt;&#39;&#39;&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><script>
+code_show=true; 
+function code_toggle() {
+ if (code_show){
+ $('div.input').hide();
+ } else {
+ $('div.input').show();
+ }
+ code_show = !code_show
+} 
+$( document ).ready(code_toggle);
+</script>
+<form action="javascript:code_toggle()"><input type="submit" value="Toggle Code On/Off"></form></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ipynb.fs.full.Introduction</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
 <span class="kn">import</span> <span class="nn">time</span>
@@ -273,13 +302,13 @@
 </div>
 </div>
 <div class="section" id="do-deeper-networks-solve-the-problem">
-<h1><span class="section-number">4. </span>Do Deeper Networks Solve the Problem?<a class="headerlink" href="#do-deeper-networks-solve-the-problem" title="Permalink to this headline">¶</a></h1>
+<h1><span class="section-number">3. </span>Do Deeper Networks Solve the Problem?<a class="headerlink" href="#do-deeper-networks-solve-the-problem" title="Permalink to this headline">¶</a></h1>
 <p>If <span class="math notranslate nohighlight">\(\frac{|\lambda_{2}|}{|\lambda_{1}|}\)</span> is large, then the summand in <span class="math notranslate nohighlight">\(d_{Katz}\)</span>, <span class="math notranslate nohighlight">\((\alpha{}A)^{k}\vec{1}\)</span>,  requires <span class="math notranslate nohighlight">\(k&gt;&gt;0\)</span> before converging to the dominant eigenvector, <span class="math notranslate nohighlight">\(v_{1}\)</span>,</p>
 <div class="math notranslate nohighlight">
 \[d_{Katz} = \sum_{k=0}^{n} (\alpha{}A)^{k}\vec{1} + \vec{v_{1}}\sum_{k=n+1}^{\infty}\alpha{}^{k}\]</div>
 <p>at which point the second term can be computed without further powers of <span class="math notranslate nohighlight">\(A\)</span>. As such, we posit that deeper GCNs are required to learn the Katz Centrality of low-density, high eigenvalue-ratio SBMs.</p>
 <div class="section" id="model-and-dataset-code">
-<h2><span class="section-number">4.1. </span>Model and Dataset Code<a class="headerlink" href="#model-and-dataset-code" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">3.1. </span>Model and Dataset Code<a class="headerlink" href="#model-and-dataset-code" title="Permalink to this headline">¶</a></h2>
 <p>SBMs are the same as before, with <span class="math notranslate nohighlight">\(p\in{}[\frac{1}{50n},\frac{1}{n}]\)</span>. We still consider only the undirected, unweighted case.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -322,7 +351,7 @@
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">2</span><span class="o">-</span><span class="mi">81</span><span class="n">aaef866393</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">3</span><span class="o">-</span><span class="mi">81</span><span class="n">aaef866393</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="g g-Whitespace">     </span><span class="mi">19</span> 
 <span class="g g-Whitespace">     </span><span class="mi">20</span>     <span class="c1"># Compute Katz Centrality</span>
 <span class="ne">---&gt; </span><span class="mi">21</span>     <span class="n">vals</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">adj</span><span class="o">.</span><span class="n">to_dense</span><span class="p">())[</span><span class="mi">0</span><span class="p">],</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
@@ -403,7 +432,7 @@
 </div>
 </div>
 <div class="section" id="results">
-<h2><span class="section-number">4.2. </span>Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">3.2. </span>Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
@@ -436,7 +465,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/DeeperGCNs_9_0.png" src="_images/DeeperGCNs_9_0.png" />
+<img alt="_images/DeeperGCNs_10_0.png" src="_images/DeeperGCNs_10_0.png" />
 </div>
 </div>
 <p>We plot a) training loss b) test loss and c) average rank displacement for <span class="math notranslate nohighlight">\(l_{max}=1,2,4,...,64\)</span>. We also plot below the best values on the test loss versus number of trainable parameters.</p>
@@ -451,13 +480,13 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/DeeperGCNs_11_0.png" src="_images/DeeperGCNs_11_0.png" />
+<img alt="_images/DeeperGCNs_12_0.png" src="_images/DeeperGCNs_12_0.png" />
 </div>
 </div>
 <p>Increasing network depth leads to better performance. However, the minimum test loss begins to stagnate past <span class="math notranslate nohighlight">\(l_{max}=8\)</span> relative to parameter count, and it is still worse than for the initial <span class="math notranslate nohighlight">\(p\in{}[\frac{1}{n},\frac{10}{n}]\)</span> dataset. Side note: the loss is already quite small for <span class="math notranslate nohighlight">\(l_{max}=32\)</span> and <span class="math notranslate nohighlight">\(l_{max}=64\)</span> when the model in completely untrained; perhaps some sort of resevoir computing would work well?</p>
 </div>
 <div class="section" id="is-this-oversmoothing">
-<h2><span class="section-number">4.3. </span>Is This Oversmoothing?<a class="headerlink" href="#is-this-oversmoothing" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">3.3. </span>Is This Oversmoothing?<a class="headerlink" href="#is-this-oversmoothing" title="Permalink to this headline">¶</a></h2>
 <p>GCNs suffer from a peculiar phenomena known as <em>oversmoothing</em>. In essence,  performance tends to degrade as you add more layers, and the features of each node converge to similar values. We choose to measure smoothness by the sparsified Mean Average Distance [14],</p>
 <div class="math notranslate nohighlight">
 \[\frac{1}{\sum_{i,j\in{}E}w_{ij}}\sum_{i,j\in{}E}w_{ij}(1 - \frac{|x_{j}^{T}x_{i}|}{||x_{i}||_{2}||x_{j}||_{2}})\]</div>
@@ -499,12 +528,12 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/DeeperGCNs_15_0.png" src="_images/DeeperGCNs_15_0.png" />
-<img alt="_images/DeeperGCNs_15_1.png" src="_images/DeeperGCNs_15_1.png" />
-<img alt="_images/DeeperGCNs_15_2.png" src="_images/DeeperGCNs_15_2.png" />
-<img alt="_images/DeeperGCNs_15_3.png" src="_images/DeeperGCNs_15_3.png" />
-<img alt="_images/DeeperGCNs_15_4.png" src="_images/DeeperGCNs_15_4.png" />
-<img alt="_images/DeeperGCNs_15_5.png" src="_images/DeeperGCNs_15_5.png" />
+<img alt="_images/DeeperGCNs_16_0.png" src="_images/DeeperGCNs_16_0.png" />
+<img alt="_images/DeeperGCNs_16_1.png" src="_images/DeeperGCNs_16_1.png" />
+<img alt="_images/DeeperGCNs_16_2.png" src="_images/DeeperGCNs_16_2.png" />
+<img alt="_images/DeeperGCNs_16_3.png" src="_images/DeeperGCNs_16_3.png" />
+<img alt="_images/DeeperGCNs_16_4.png" src="_images/DeeperGCNs_16_4.png" />
+<img alt="_images/DeeperGCNs_16_5.png" src="_images/DeeperGCNs_16_5.png" />
 </div>
 </div>
 <p>In the above figure, we observe an initial decline in MAD, AggNorm, and Rayleigh followed by oscillations in the deeper layers. The range of values does not change much from <span class="math notranslate nohighlight">\(l_{max}=8\)</span> onwards, which, taken all together, indicates oversmoothing. However, we do not wish to eliminate this smoothing entirely. The relationship between <span class="math notranslate nohighlight">\(\vec{d}_{Katz}\)</span> and <span class="math notranslate nohighlight">\(\vec{v}_{1}\)</span> has been previously established; the fact that deeper models offer some improvement (and generally drive the Rayleigh Quotient down) suggests that our GCNs are attempting learning something close to, but not exactly, <span class="math notranslate nohighlight">\(v_{1}\)</span>.</p>
@@ -536,8 +565,8 @@
         
         <div class='prev-next-bottom'>
             
-    <a class='left-prev' id="prev-link" href="KatzCentrality.html" title="previous page"><span class="section-number">3. </span>Katz Centrality</a>
-    <a class='right-next' id="next-link" href="Normalization.html" title="next page"><span class="section-number">5. </span>Normalization Techniques</a>
+    <a class='left-prev' id="prev-link" href="KatzCentrality.html" title="previous page"><span class="section-number">2. </span>Katz Centrality</a>
+    <a class='right-next' id="next-link" href="Normalization.html" title="next page"><span class="section-number">4. </span>Normalization Techniques</a>
 
         </div>
         

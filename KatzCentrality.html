@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>3. Katz Centrality &#8212; My Jupyter Book</title>
+    <title>2. Katz Centrality &#8212; My Jupyter Book</title>
     
   <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -56,8 +56,8 @@
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="4. Do Deeper Networks Solve the Problem?" href="DeeperGCNs.html" />
-    <link rel="prev" title="1. Dataset" href="DegreeCentrality.html" />
+    <link rel="next" title="3. Do Deeper Networks Solve the Problem?" href="DeeperGCNs.html" />
+    <link rel="prev" title="1. Degree Centrality" href="DegreeCentrality.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -95,57 +95,52 @@
 <ul class="current nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="DegreeCentrality.html">
-   1. Dataset
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="DegreeCentrality.html#degree-centrality">
-   2. Degree Centrality
+   1. Degree Centrality
   </a>
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   3. Katz Centrality
+   2. Katz Centrality
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="DeeperGCNs.html">
-   4. Do Deeper Networks Solve the Problem?
+   3. Do Deeper Networks Solve the Problem?
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="Normalization.html">
-   5. Normalization Techniques
+   4. Normalization Techniques
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="HigherMatrixPowers.html">
-   6. Dataset
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="HigherMatrixPowers.html#simplified-graph-convolution-al-networks">
-   7. Simplified Graph Convolution(al Networks)
+   5. Simplified Graph Convolution(al Networks)
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="HigherMatrixPowers.html#polynomialsgc">
-   8. PolynomialSGC
+   6. PolynomialSGC
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="HigherMatrixPowers.html#mixhop">
-   9. MixHop
+   7. MixHop
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="HigherMatrixPowers.html#overview">
+   8. Overview
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="FutureWorkandBibliography.html">
-   10. Future Directions
+   9. Future Directions
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="FutureWorkandBibliography.html#bibliography">
-   11. Bibliography
+   10. Bibliography
   </a>
  </li>
 </ul>
@@ -238,42 +233,42 @@
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#dataset">
-   3.1. Dataset
+   2.1. Dataset
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#efficacy-of-katz-iterations">
-   3.2. Efficacy of Katz Iterations
+   2.2. Efficacy of Katz Iterations
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#unweighted-undirected">
-   3.3. Unweighted, Undirected
+   2.3. Unweighted, Undirected
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#weighted-undirected">
-   3.4. Weighted, Undirected
+   2.4. Weighted, Undirected
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#weighted-directed">
-   3.5. Weighted, Directed
+   2.5. Weighted, Directed
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#overview">
-   3.6. Overview
+   2.6. Overview
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#but-what-if-the-data-is-low-density">
-   3.7. But What If the Data is Low-Density?
+   2.7. But What If the Data is Low-Density?
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#p-in-frac-1-n-frac-1-2n">
-     3.7.1.
+     2.7.1.
      <span class="math notranslate nohighlight">
       \(p \in{} [\frac{1}{n},\frac{1}{2n}]\)
      </span>
@@ -281,7 +276,7 @@
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#p-in-frac-1-50n-frac-1-n">
-     3.7.2.
+     2.7.2.
      <span class="math notranslate nohighlight">
       \(p\in{}[\frac{1}{50n},\frac{1}{n}]\)
      </span>
@@ -291,7 +286,7 @@
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id1">
-   3.8. Overview
+   2.8. Overview
   </a>
  </li>
 </ul>
@@ -308,6 +303,40 @@
                 
   <div class="cell docutils container">
 <div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">HTML</span>
+<span class="n">HTML</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;&lt;script&gt;</span>
+<span class="s1">code_show=true; </span>
+<span class="s1">function code_toggle() {</span>
+<span class="s1"> if (code_show){</span>
+<span class="s1"> $(&#39;div.input&#39;).hide();</span>
+<span class="s1"> } else {</span>
+<span class="s1"> $(&#39;div.input&#39;).show();</span>
+<span class="s1"> }</span>
+<span class="s1"> code_show = !code_show</span>
+<span class="s1">} </span>
+<span class="s1">$( document ).ready(code_toggle);</span>
+<span class="s1">&lt;/script&gt;</span>
+<span class="s1">&lt;form action=&quot;javascript:code_toggle()&quot;&gt;&lt;input type=&quot;submit&quot; value=&quot;Toggle Code On/Off&quot;&gt;&lt;/form&gt;&#39;&#39;&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><script>
+code_show=true; 
+function code_toggle() {
+ if (code_show){
+ $('div.input').hide();
+ } else {
+ $('div.input').show();
+ }
+ code_show = !code_show
+} 
+$( document ).ready(code_toggle);
+</script>
+<form action="javascript:code_toggle()"><input type="submit" value="Toggle Code On/Off"></form></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ipynb.fs.full.Introduction</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
 <span class="kn">import</span> <span class="nn">time</span>
@@ -316,7 +345,7 @@
 </div>
 </div>
 <div class="section" id="katz-centrality">
-<h1><span class="section-number">3. </span>Katz Centrality<a class="headerlink" href="#katz-centrality" title="Permalink to this headline">¶</a></h1>
+<h1><span class="section-number">2. </span>Katz Centrality<a class="headerlink" href="#katz-centrality" title="Permalink to this headline">¶</a></h1>
 <p>Moving on from <span class="math notranslate nohighlight">\(d_{degree}\)</span>, we now analyze the ability of GCNs to learn Katz Centrality. The Katz Centrality of matrix <span class="math notranslate nohighlight">\(A\in{}R^{n\times{}n}\)</span> is defined as</p>
 <div class="math notranslate nohighlight">
 \[d_{Katz} = \sum_{k=0}^{\infty}\alpha^{k}(A^{T})^{k}\vec{1}\]</div>
@@ -341,7 +370,7 @@
 $<span class="math notranslate nohighlight">\(\approx{} 1 + cv_{1} \approx{} cv_{1} = c\lim_{k\rightarrow{}\infty}(\frac{1}{|\lambda_{1}|}A^{T})^{k}\vec{1} \)</span>$</p>
 <p>Constant <span class="math notranslate nohighlight">\(c\)</span> vanishes anyway in the normalization. Choice of <span class="math notranslate nohighlight">\(\alpha{}&lt;\frac{1}{|\lambda_{1}|}\)</span> ensures convergence. For our purposes, <span class="math notranslate nohighlight">\(\alpha = \frac{1}{1.01|\lambda_{1}|}\)</span>.</p>
 <div class="section" id="dataset">
-<h2><span class="section-number">3.1. </span>Dataset<a class="headerlink" href="#dataset" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">2.1. </span>Dataset<a class="headerlink" href="#dataset" title="Permalink to this headline">¶</a></h2>
 <p>SBM parameters are the same as before.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -359,31 +388,10 @@ $<span class="math notranslate nohighlight">\(\approx{} 1 + cv_{1} \approx{} cv_
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">2</span><span class="o">-</span><span class="n">aee62bfce25a</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">      </span><span class="mi">6</span>     <span class="n">p</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">n</span> <span class="o">+</span> <span class="p">(</span><span class="mi">10</span><span class="o">/</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="o">/</span><span class="n">n</span><span class="p">)</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
-<span class="g g-Whitespace">      </span><span class="mi">7</span>     <span class="n">p</span> <span class="o">=</span> <span class="o">.</span><span class="mi">5</span> <span class="o">*</span> <span class="p">(</span><span class="n">p</span> <span class="o">+</span> <span class="n">p</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
-<span class="ne">----&gt; </span><span class="mi">8</span>     <span class="n">x</span><span class="p">,</span><span class="n">edges</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">((</span><span class="n">n</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span><span class="mi">1</span><span class="p">)),</span><span class="n">torch_geometric</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">remove_isolated_nodes</span><span class="p">(</span><span class="n">torch_geometric</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">stochastic_blockmodel_graph</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">p</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
-<span class="g g-Whitespace">      </span><span class="mi">9</span>     <span class="n">adj</span> <span class="o">=</span> <span class="n">torch_sparse</span><span class="o">.</span><span class="n">SparseTensor</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="n">edges</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">col</span><span class="o">=</span><span class="n">edges</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-<span class="g g-Whitespace">     </span><span class="mi">10</span> 
-
-<span class="nn">/opt/conda/lib/python3.7/site-packages/torch_geometric/utils/random.py</span> in <span class="ni">stochastic_blockmodel_graph</span><span class="nt">(block_sizes, edge_probs, directed)</span>
-<span class="g g-Whitespace">     </span><span class="mi">74</span>         <span class="n">row</span><span class="p">,</span> <span class="n">col</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">num_nodes</span><span class="p">))</span><span class="o">.</span><span class="n">t</span><span class="p">()</span>
-<span class="g g-Whitespace">     </span><span class="mi">75</span> 
-<span class="ne">---&gt; </span><span class="mi">76</span>     <span class="n">mask</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">bernoulli</span><span class="p">(</span><span class="n">prob</span><span class="p">[</span><span class="n">node_idx</span><span class="p">[</span><span class="n">row</span><span class="p">],</span> <span class="n">node_idx</span><span class="p">[</span><span class="n">col</span><span class="p">]])</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">bool</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">77</span>     <span class="n">edge_index</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">row</span><span class="p">[</span><span class="n">mask</span><span class="p">],</span> <span class="n">col</span><span class="p">[</span><span class="n">mask</span><span class="p">]],</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">78</span> 
-
-<span class="ne">KeyboardInterrupt</span>: 
-</pre></div>
-</div>
-</div>
 </div>
 </div>
 <div class="section" id="efficacy-of-katz-iterations">
-<h2><span class="section-number">3.2. </span>Efficacy of Katz Iterations<a class="headerlink" href="#efficacy-of-katz-iterations" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">2.2. </span>Efficacy of Katz Iterations<a class="headerlink" href="#efficacy-of-katz-iterations" title="Permalink to this headline">¶</a></h2>
 <p>As a point of comparison, we manually compute Katz Iterations up to <span class="math notranslate nohighlight">\(k=100\)</span> and report convergence.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -396,6 +404,20 @@ $<span class="math notranslate nohighlight">\(\approx{} 1 + cv_{1} \approx{} cv_
     <span class="n">d</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">G</span>
     
 <span class="n">train</span><span class="p">,</span><span class="n">test</span> <span class="o">=</span> <span class="n">d</span><span class="p">[:</span><span class="mi">2000</span><span class="p">],</span><span class="n">d</span><span class="p">[</span><span class="mi">2000</span><span class="p">::]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">4</span><span class="o">-</span><span class="mi">4966</span><span class="n">d482b684</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span>     <span class="n">G</span><span class="o">.</span><span class="n">edge_weight</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">edge_index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span>     <span class="n">adj</span> <span class="o">=</span> <span class="n">torch_sparse</span><span class="o">.</span><span class="n">SparseTensor</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="n">G</span><span class="o">.</span><span class="n">edge_index</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">col</span><span class="o">=</span><span class="n">G</span><span class="o">.</span><span class="n">edge_index</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">value</span><span class="o">=</span><span class="n">G</span><span class="o">.</span><span class="n">edge_weight</span><span class="p">)</span>
+<span class="ne">----&gt; </span><span class="mi">4</span>     <span class="n">v</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mf">1.01</span><span class="o">*</span><span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">adj</span><span class="o">.</span><span class="n">to_dense</span><span class="p">())[</span><span class="mi">0</span><span class="p">],</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span>     <span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">inverse</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">adj</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span> <span class="o">-</span> <span class="n">v</span><span class="o">*</span><span class="n">adj</span><span class="o">.</span><span class="n">to_dense</span><span class="p">()</span><span class="o">.</span><span class="n">T</span><span class="p">),</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span>     <span class="n">G</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+
+<span class="ne">KeyboardInterrupt</span>: 
 </pre></div>
 </div>
 </div>
@@ -447,13 +469,13 @@ $<span class="math notranslate nohighlight">\(\approx{} 1 + cv_{1} \approx{} cv_
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Katz Iterations Convergence&#39;)
 </pre></div>
 </div>
-<img alt="_images/KatzCentrality_11_1.png" src="_images/KatzCentrality_11_1.png" />
+<img alt="_images/KatzCentrality_12_1.png" src="_images/KatzCentrality_12_1.png" />
 </div>
 </div>
 <p>We plot the convergence of Katz Iterations. Y-axis is the same MinMax L1 used to train our GCNs, and X-axis is the number of iterations, <span class="math notranslate nohighlight">\(k\)</span>. It takes around <span class="math notranslate nohighlight">\(100\)</span> such iterations to obtain a loss of <span class="math notranslate nohighlight">\(1e^{-3}\)</span>; for reference, this would correspond to a GCN with depth <span class="math notranslate nohighlight">\(l=100\)</span>. Below, we train GraphConv and EdgeConv to minimize <span class="math notranslate nohighlight">\(L(\vec{x},\vec{d}_{Katz})\)</span> on unweighted-undirected, weighted-undirected, and weighted-directed networks using the same proceedure as with <span class="math notranslate nohighlight">\(d_{degree}\)</span>.</p>
 </div>
 <div class="section" id="unweighted-undirected">
-<h2><span class="section-number">3.3. </span>Unweighted, Undirected<a class="headerlink" href="#unweighted-undirected" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">2.3. </span>Unweighted, Undirected<a class="headerlink" href="#unweighted-undirected" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">G</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>    
@@ -521,13 +543,13 @@ $<span class="math notranslate nohighlight">\(\approx{} 1 + cv_{1} \approx{} cv_
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/KatzCentrality_16_0.png" src="_images/KatzCentrality_16_0.png" />
+<img alt="_images/KatzCentrality_17_0.png" src="_images/KatzCentrality_17_0.png" />
 </div>
 </div>
 <p>We plot a) training loss b) test loss and c) average rank displacement for GraphConv and EdgeConv on our unweighted, undirected dataset.</p>
 </div>
 <div class="section" id="weighted-undirected">
-<h2><span class="section-number">3.4. </span>Weighted, Undirected<a class="headerlink" href="#weighted-undirected" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">2.4. </span>Weighted, Undirected<a class="headerlink" href="#weighted-undirected" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">G</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
@@ -598,13 +620,13 @@ $<span class="math notranslate nohighlight">\(\approx{} 1 + cv_{1} \approx{} cv_
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/KatzCentrality_21_0.png" src="_images/KatzCentrality_21_0.png" />
+<img alt="_images/KatzCentrality_22_0.png" src="_images/KatzCentrality_22_0.png" />
 </div>
 </div>
 <p>We plot a) training loss b) test loss and c) average rank displacement for GraphConv and EdgeConv on our weighted, undirected dataset.</p>
 </div>
 <div class="section" id="weighted-directed">
-<h2><span class="section-number">3.5. </span>Weighted, Directed<a class="headerlink" href="#weighted-directed" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">2.5. </span>Weighted, Directed<a class="headerlink" href="#weighted-directed" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">G</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
@@ -675,17 +697,17 @@ $<span class="math notranslate nohighlight">\(\approx{} 1 + cv_{1} \approx{} cv_
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/KatzCentrality_26_0.png" src="_images/KatzCentrality_26_0.png" />
+<img alt="_images/KatzCentrality_27_0.png" src="_images/KatzCentrality_27_0.png" />
 </div>
 </div>
 <p>We plot a) training loss b) test loss and c) average rank displacement for GraphConv and EdgeConv on our weighted, directed dataset.</p>
 </div>
 <div class="section" id="overview">
-<h2><span class="section-number">3.6. </span>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">2.6. </span>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <p>Since Katz Centrality involves multiple powers of <span class="math notranslate nohighlight">\(A\)</span>, we increased the model depth from 1 to 4, which in turn necesitated a larger learning rate and greater epochs. Loss on <span class="math notranslate nohighlight">\(d_{Katz}\)</span> is comparable to that for <span class="math notranslate nohighlight">\(d_{degree}\)</span>, and it is far better than the equivalent number of Katz Iterations. EdgeConv converges much slower while requiring nearly twice the runtime.</p>
 </div>
 <div class="section" id="but-what-if-the-data-is-low-density">
-<h2><span class="section-number">3.7. </span>But What If the Data is Low-Density?<a class="headerlink" href="#but-what-if-the-data-is-low-density" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">2.7. </span>But What If the Data is Low-Density?<a class="headerlink" href="#but-what-if-the-data-is-low-density" title="Permalink to this headline">¶</a></h2>
 <p>Our results only hold for high-density SBMs wherein the ratio of leading eigenvalues is relatively small. As established, this ratio controls the rate of convergence of <span class="math notranslate nohighlight">\(A^{k}\vec{x}\)</span> to the dominant eigenvector of <span class="math notranslate nohighlight">\(A\)</span>. At its most basic, graph convolution is simply succesive powers of the adjancency matrix seperated by a differentiable <span class="math notranslate nohighlight">\(\Theta\)</span>:</p>
 <div class="math notranslate nohighlight">
 \[X^{l+1} = \Theta^{l}(A\Theta^{l-1}(A\Theta^{l-2}(...(\Theta^{1}(AX^{0})))\]</div>
@@ -700,7 +722,7 @@ $<span class="math notranslate nohighlight">\(\approx{} 1 + cv_{1} \approx{} cv_
 \[\lim_{l\rightarrow{}\infty{}} X^{l+1} = V\Theta^{l}\]</div>
 <p>Although this is a highly simplified model (though not an unknown one, see section 6.1), it motivates much of our further work. We are interested in how the spectral properties of a network impact GCN convergence; after all, <span class="math notranslate nohighlight">\(d_{Katz}\)</span> is quite similar to <span class="math notranslate nohighlight">\(d_{eig}\)</span>, and so small <span class="math notranslate nohighlight">\(l\)</span> may be insufficient in some cases. We generate several new SBM datasets by decreasing the intra and inter-cluster probabilities, which leads to a lower graph density and larger eigenvalue ratio. This also makes these graphs more likely to be disconnected, hence the need for Katz Centrality (as Eigenvalue is not well-defined in that case). For now, we only consider the unweighted, undirected case, as it’s the simplest.</p>
 <div class="section" id="p-in-frac-1-n-frac-1-2n">
-<h3><span class="section-number">3.7.1. </span><span class="math notranslate nohighlight">\(p \in{} [\frac{1}{n},\frac{1}{2n}]\)</span><a class="headerlink" href="#p-in-frac-1-n-frac-1-2n" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">2.7.1. </span><span class="math notranslate nohighlight">\(p \in{} [\frac{1}{n},\frac{1}{2n}]\)</span><a class="headerlink" href="#p-in-frac-1-n-frac-1-2n" title="Permalink to this headline">¶</a></h3>
 <p>We samples intra and inter-cluster probabilities from <span class="math notranslate nohighlight">\(p\in{}[\frac{1}{n},\frac{1}{2n}]\)</span>. Cluster sizes are determined as prior. Average density is <span class="math notranslate nohighlight">\(.020\)</span> with <span class="math notranslate nohighlight">\(E[\frac{|\lambda_{1}|}{|\lambda_{2}|}]\approx{}.66\)</span></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -798,13 +820,13 @@ $<span class="math notranslate nohighlight">\(\approx{} 1 + cv_{1} \approx{} cv_
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/KatzCentrality_37_0.png" src="_images/KatzCentrality_37_0.png" />
+<img alt="_images/KatzCentrality_38_0.png" src="_images/KatzCentrality_38_0.png" />
 </div>
 </div>
 <p>We plot a) training loss b) test loss and c) average rank displacement for GraphConv and EdgeConv. The dashed lines correspond to the performance of the earlier models (those trained with the <span class="math notranslate nohighlight">\(p\in{}[\frac{1}{n},\frac{10}{n}]\)</span> SBMs) on the new dataset.</p>
 </div>
 <div class="section" id="p-in-frac-1-50n-frac-1-n">
-<h3><span class="section-number">3.7.2. </span><span class="math notranslate nohighlight">\(p\in{}[\frac{1}{50n},\frac{1}{n}]\)</span><a class="headerlink" href="#p-in-frac-1-50n-frac-1-n" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">2.7.2. </span><span class="math notranslate nohighlight">\(p\in{}[\frac{1}{50n},\frac{1}{n}]\)</span><a class="headerlink" href="#p-in-frac-1-50n-frac-1-n" title="Permalink to this headline">¶</a></h3>
 <p>We samples intra and inter-cluster probabilities from <span class="math notranslate nohighlight">\(p\in{}[\frac{1}{50n},\frac{1}{n}]\)</span>. Cluster sizes are determined as prior. Average density is <span class="math notranslate nohighlight">\(.008\)</span> with <span class="math notranslate nohighlight">\(E[\frac{|\lambda_{1}|}{|\lambda_{2}|}]\approx{}.925\)</span></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -902,14 +924,14 @@ $<span class="math notranslate nohighlight">\(\approx{} 1 + cv_{1} \approx{} cv_
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/KatzCentrality_44_0.png" src="_images/KatzCentrality_44_0.png" />
+<img alt="_images/KatzCentrality_45_0.png" src="_images/KatzCentrality_45_0.png" />
 </div>
 </div>
 <p>We plot a) training loss b) test loss and c) average rank displacement for GraphConv and EdgeConv. The dashed lines correspond to the performance of the earlier models (those trained with the <span class="math notranslate nohighlight">\(p\in{}[\frac{1}{n},\frac{10}{n}]\)</span> SBMs) on the new dataset.</p>
 </div>
 </div>
 <div class="section" id="id1">
-<h2><span class="section-number">3.8. </span>Overview<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">2.8. </span>Overview<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <p>As the eigenvalue ratio increases, there is a clear degredation in GCN performance, going from order <span class="math notranslate nohighlight">\(10^{-3}\)</span> on the test loss when <span class="math notranslate nohighlight">\(\frac{|\lambda_2{}|}{|\lambda_{1}|}\approx{}.35\)</span> to <span class="math notranslate nohighlight">\(10^{-2}\)</span> when <span class="math notranslate nohighlight">\(\frac{|\lambda_2{}|}{|\lambda_{1}|}\approx{}.92\)</span>. A similar statement holds for the rank displacement. Since EdgeConv offers no benefits in this scenario, we exclude it from any further experiments.</p>
 </div>
 </div>
@@ -939,8 +961,8 @@ $<span class="math notranslate nohighlight">\(\approx{} 1 + cv_{1} \approx{} cv_
         
         <div class='prev-next-bottom'>
             
-    <a class='left-prev' id="prev-link" href="DegreeCentrality.html" title="previous page"><span class="section-number">1. </span>Dataset</a>
-    <a class='right-next' id="next-link" href="DeeperGCNs.html" title="next page"><span class="section-number">4. </span>Do Deeper Networks Solve the Problem?</a>
+    <a class='left-prev' id="prev-link" href="DegreeCentrality.html" title="previous page"><span class="section-number">1. </span>Degree Centrality</a>
+    <a class='right-next' id="next-link" href="DeeperGCNs.html" title="next page"><span class="section-number">3. </span>Do Deeper Networks Solve the Problem?</a>
 
         </div>
         
