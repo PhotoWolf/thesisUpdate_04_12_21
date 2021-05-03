@@ -304,7 +304,7 @@
 <p>In practice, we find that <span class="math notranslate nohighlight">\(\vec{q}\)</span> should approximate the Hadamard inverse of the dominant eigenvector, <span class="math notranslate nohighlight">\(v_{1}^{\circ{}-1}\)</span>, where <span class="math notranslate nohighlight">\(x^{\circ{}-1}\cdot{}x = n\)</span> for <span class="math notranslate nohighlight">\(x\in{}R^{n}\)</span>. We conduct ablation studies for <span class="math notranslate nohighlight">\(\vec{q}=\vec{1}\)</span>,<span class="math notranslate nohighlight">\(\vec{q} = d_{degree}^{\circ{}-1}\)</span>, and <span class="math notranslate nohighlight">\(\vec{q}=v_{1}^{\circ{}-1}\)</span> at <span class="math notranslate nohighlight">\(l_{max}=64\)</span>. Parameters are <span class="math notranslate nohighlight">\(s_{1}\)</span> (grad-enabled vs. constant <span class="math notranslate nohighlight">\(\sigma{}(1)\)</span>) and whether the network possesses 1-hop residual connections, which have been shown to improve the stability and performance of deeper GCNs [15]. The best model is then trained for all <span class="math notranslate nohighlight">\(l_{max}=1,2,4,...,64\)</span>. We also compare against PairNorm under various settings.</p>
 <div class="section" id="dataset">
 <h2><span class="section-number">4.1. </span>Dataset<a class="headerlink" href="#dataset" title="Permalink to this headline">¶</a></h2>
-<p>See Section 4.1 for description/parameters.</p>
+<p>See Section 2.7.2 for description/parameters.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">num_graphs</span> <span class="o">=</span> <span class="mi">3000</span>
