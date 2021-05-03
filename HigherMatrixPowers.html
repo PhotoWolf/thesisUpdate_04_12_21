@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>5. Simplified Graph Convolution(al Networks) &#8212; My Jupyter Book</title>
+    <title>5. Higher-Order Matrix Powers &#8212; My Jupyter Book</title>
     
   <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -56,7 +56,7 @@
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="9. Future Directions" href="FutureWorkandBibliography.html" />
+    <link rel="next" title="6. Future Directions" href="FutureWorkandBibliography.html" />
     <link rel="prev" title="4. Normalization Techniques" href="Normalization.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -115,32 +115,17 @@
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   5. Simplified Graph Convolution(al Networks)
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="#polynomialsgc">
-   6. PolynomialSGC
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="#mixhop">
-   7. MixHop
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="#overview">
-   8. Overview
+   5. Higher-Order Matrix Powers
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="FutureWorkandBibliography.html">
-   9. Future Directions
+   6. Future Directions
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="FutureWorkandBibliography.html#bibliography">
-   10. Bibliography
+   7. Bibliography
   </a>
  </li>
 </ul>
@@ -231,48 +216,48 @@
         </div>
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   5. Simplified Graph Convolution(al Networks)
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#simplified-graph-convolution-al-networks">
+   5.1. Simplified Graph Convolution(al Networks)
   </a>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#polynomialsgc">
-   6. PolynomialSGC
+   5.2. PolynomialSGC
   </a>
   <ul class="nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#model">
-     6.1. Model
+     5.2.1. Model
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#results">
-     6.2. Results
+     5.2.2. Results
     </a>
    </li>
   </ul>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#mixhop">
-   7. MixHop
+   5.3. MixHop
   </a>
   <ul class="nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id1">
-     7.1. Model
+     5.3.1. Model
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id2">
-     7.2. Results
+     5.3.2. Results
     </a>
    </li>
   </ul>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#overview">
-   8. Overview
+   5.4. Overview
   </a>
  </li>
 </ul>
@@ -373,19 +358,21 @@ $( document ).ready(code_toggle);
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
 <span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">3</span><span class="o">-</span><span class="mi">81</span><span class="n">aaef866393</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">     </span><span class="mi">21</span>     <span class="n">vals</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">adj</span><span class="o">.</span><span class="n">to_dense</span><span class="p">())[</span><span class="mi">0</span><span class="p">],</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">19</span> 
+<span class="g g-Whitespace">     </span><span class="mi">20</span>     <span class="c1"># Compute Katz Centrality</span>
+<span class="ne">---&gt; </span><span class="mi">21</span>     <span class="n">vals</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">adj</span><span class="o">.</span><span class="n">to_dense</span><span class="p">())[</span><span class="mi">0</span><span class="p">],</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="g g-Whitespace">     </span><span class="mi">22</span>     <span class="n">v</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mf">1.01</span><span class="o">*</span><span class="n">vals</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
-<span class="ne">---&gt; </span><span class="mi">23</span>     <span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">inverse</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">adj</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span> <span class="o">-</span> <span class="n">v</span><span class="o">*</span><span class="n">adj</span><span class="o">.</span><span class="n">to_dense</span><span class="p">()</span><span class="o">.</span><span class="n">T</span><span class="p">)</span> <span class="o">-</span> <span class="n">torch</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">adj</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">)),</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">24</span> 
-<span class="g g-Whitespace">     </span><span class="mi">25</span>     <span class="c1"># Set as target</span>
+<span class="g g-Whitespace">     </span><span class="mi">23</span>     <span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">inverse</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">adj</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span> <span class="o">-</span> <span class="n">v</span><span class="o">*</span><span class="n">adj</span><span class="o">.</span><span class="n">to_dense</span><span class="p">()</span><span class="o">.</span><span class="n">T</span><span class="p">)</span> <span class="o">-</span> <span class="n">torch</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">adj</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">)),</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
 <span class="ne">KeyboardInterrupt</span>: 
 </pre></div>
 </div>
 </div>
 </div>
+<div class="section" id="higher-order-matrix-powers">
+<h1><span class="section-number">5. </span>Higher-Order Matrix Powers<a class="headerlink" href="#higher-order-matrix-powers" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="simplified-graph-convolution-al-networks">
-<h1><span class="section-number">5. </span>Simplified Graph Convolution(al Networks)<a class="headerlink" href="#simplified-graph-convolution-al-networks" title="Permalink to this headline">¶</a></h1>
+<h2><span class="section-number">5.1. </span>Simplified Graph Convolution(al Networks)<a class="headerlink" href="#simplified-graph-convolution-al-networks" title="Permalink to this headline">¶</a></h2>
 <p>Wu et. al. (2019) introduced the Simplified Graph Convolution (SGC) [17]</p>
 <div class="math notranslate nohighlight">
 \[X^{out} = \Theta{}(A^{k}X^{in})\]</div>
@@ -454,20 +441,20 @@ $( document ).ready(code_toggle);
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/HigherMatrixPowers_8_0.png" src="_images/HigherMatrixPowers_8_0.png" />
+<img alt="_images/HigherMatrixPowers_9_0.png" src="_images/HigherMatrixPowers_9_0.png" />
 </div>
 </div>
 <p>Test loss and rank displacement are similar to GraphConv models of similar depth. Convergence is nigh-instantaneous (owing to the small parameter count); since we do not have to backpropagate through the aggreations, SGC also takes a third of the time to train.</p>
 </div>
 <div class="section" id="polynomialsgc">
-<h1><span class="section-number">6. </span>PolynomialSGC<a class="headerlink" href="#polynomialsgc" title="Permalink to this headline">¶</a></h1>
+<h2><span class="section-number">5.2. </span>PolynomialSGC<a class="headerlink" href="#polynomialsgc" title="Permalink to this headline">¶</a></h2>
 <p>If matrix <span class="math notranslate nohighlight">\(A\)</span> has eigenpairs <span class="math notranslate nohighlight">\((\lambda_{i},v_{i})\)</span>, <span class="math notranslate nohighlight">\(p(A)\)</span> (for some polynomial <span class="math notranslate nohighlight">\(p\)</span>) possesses eigenpairs <span class="math notranslate nohighlight">\((p(\lambda_{i}),v_{i})\)</span>. SGC uses <span class="math notranslate nohighlight">\(p(A) = A^{k}\)</span>, as all except the final matrix power are discarded. But it is often possible to choose a more efficient polynomial, in the sense that <span class="math notranslate nohighlight">\(\frac{|p(\lambda_{2})|}{|p(\lambda_{1})|}\leq{}(\frac{|\lambda_{2}|}{|\lambda_{1}|})^{k}\)</span>. To this end, we propose an extension of SGC, PolynomialSGC:</p>
 <div class="math notranslate nohighlight">
 \[c^{1}_{i} = \frac{e^{c^{1}_{i}}}{\sum_{i=0}^{k}e^{c^{1}_{i}}} \; \; \; \; c^{2}_{i} = \frac{e^{c^{2}_{i}}}{\sum_{i=0}^{k}e^{c^{2}_{i}}}\]</div>
 <div class="math notranslate nohighlight">
 \[X^{out} = \Theta{}((c^{2}_{k}-c^{1}_{k})A^{k}X^{in} + (c^{2}_{k-1}-c^{1}_{k-1})A^{k-1}X^{in} + ... + (c^{2}_{0}-c^{1}_{0})X^{in})\]</div>
 <div class="section" id="model">
-<h2><span class="section-number">6.1. </span>Model<a class="headerlink" href="#model" title="Permalink to this headline">¶</a></h2>
+<h3><span class="section-number">5.2.1. </span>Model<a class="headerlink" href="#model" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">PolynomialSGC</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
@@ -567,7 +554,7 @@ $( document ).ready(code_toggle);
 </div>
 </div>
 <div class="section" id="results">
-<h2><span class="section-number">6.2. </span>Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
+<h3><span class="section-number">5.2.2. </span>Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
@@ -598,18 +585,18 @@ $( document ).ready(code_toggle);
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/HigherMatrixPowers_17_0.png" src="_images/HigherMatrixPowers_17_0.png" />
+<img alt="_images/HigherMatrixPowers_18_0.png" src="_images/HigherMatrixPowers_18_0.png" />
 </div>
 </div>
 <p>Train and test loss are slightly improved from base SGC. Rank displacement benefits the most, and change is especially notable in the <span class="math notranslate nohighlight">\(l=64\)</span> case.</p>
 </div>
 </div>
 <div class="section" id="mixhop">
-<h1><span class="section-number">7. </span>MixHop<a class="headerlink" href="#mixhop" title="Permalink to this headline">¶</a></h1>
+<h2><span class="section-number">5.3. </span>MixHop<a class="headerlink" href="#mixhop" title="Permalink to this headline">¶</a></h2>
 <p>We also examine a single-layer MixHop model as introduced in El-Haija et. al. (2019). Taking similar inspiration from SGC, MixHop concatenates each level of aggreation into a single feature vector [18].
 $<span class="math notranslate nohighlight">\(X^{out} = \Theta{}(A^{k}X^{in} || A^{k-1}X^{in} || ... || X^{in})\)</span>$</p>
 <div class="section" id="id1">
-<h2><span class="section-number">7.1. </span>Model<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<h3><span class="section-number">5.3.1. </span>Model<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MixHop</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
@@ -669,7 +656,7 @@ $<span class="math notranslate nohighlight">\(X^{out} = \Theta{}(A^{k}X^{in} || 
 </div>
 </div>
 <div class="section" id="id2">
-<h2><span class="section-number">7.2. </span>Results<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<h3><span class="section-number">5.3.2. </span>Results<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
@@ -704,7 +691,8 @@ $<span class="math notranslate nohighlight">\(X^{out} = \Theta{}(A^{k}X^{in} || 
 </div>
 </div>
 <div class="section" id="overview">
-<h1><span class="section-number">8. </span>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h1>
+<h2><span class="section-number">5.4. </span>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+</div>
 </div>
 
     <script type="text/x-thebe-config">
@@ -733,7 +721,7 @@ $<span class="math notranslate nohighlight">\(X^{out} = \Theta{}(A^{k}X^{in} || 
         <div class='prev-next-bottom'>
             
     <a class='left-prev' id="prev-link" href="Normalization.html" title="previous page"><span class="section-number">4. </span>Normalization Techniques</a>
-    <a class='right-next' id="next-link" href="FutureWorkandBibliography.html" title="next page"><span class="section-number">9. </span>Future Directions</a>
+    <a class='right-next' id="next-link" href="FutureWorkandBibliography.html" title="next page"><span class="section-number">6. </span>Future Directions</a>
 
         </div>
         
