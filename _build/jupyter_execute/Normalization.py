@@ -4,7 +4,7 @@ import time
 
 # Normalization Techniques
 
-Within the literature, the typical solution to oversmoothing is to apply some type of normalization. To this end, we propose orthogonalizing out vector $\vec{q}$ (essentially a "best guess" for the dominant eigenvector) from $X^{l}$ and then renormalizing each column. We incorporate additional scale parameters $0\leq{}s_{1}\leq{}1$ and $s_{2}$.
+Within the literature, the typical solution to oversmoothing is to apply some type of normalization. To this end, we propose orthogonalizing out vector $\vec{q}$ (essentially a "best guess" for the dominant eigenvector) from $X^{l}$ and then renormalizing each column. We incorporate additional scale parameters $0\leq{}s_{1}\leq{}1$ and $s_{2}$, which allow the model to "self-regulate" its own smoothness. 
 
 $$X^{l} = X^{l} - s_{1}\vec{q}\frac{\vec{q}^{T}X^{l}}{||\vec{q}||_{2}^{2}}$$
 $$X_{:,i}^{l} = s_{2}\frac{X_{:,i}^{l}}{||X_{:,i}^{l}||_{2}}$$

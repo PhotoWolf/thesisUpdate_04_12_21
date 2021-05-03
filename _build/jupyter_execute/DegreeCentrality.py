@@ -138,6 +138,8 @@ plt.legend()
 
 plt.tight_layout();
 
+We plot a) training loss b) test loss and c) average rank displacement for GraphConv and EdgeConv on our unweighted, undirected dataset.
+
 ### Weighted, Undirected
 
 for idx,G in enumerate(d):
@@ -196,6 +198,8 @@ plt.legend()
 
 plt.tight_layout();
 
+We plot a) training loss b) test loss and c) average rank displacement for GraphConv and EdgeConv on our weighted, undirected dataset.
+
 ### Weighted, Directed
 
 for idx,G in enumerate(d):
@@ -250,6 +254,8 @@ plt.xlabel('Iterations')
 plt.legend()
 
 plt.tight_layout();
+
+We plot a) training loss b) test loss and c) average rank displacement for GraphConv and EdgeConv on our weighted, directed dataset.
 
 ### Overview
 

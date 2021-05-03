@@ -85,7 +85,7 @@ error/=(idx+1)
 plt.semilogy(error.cpu())
 plt.ylabel('Scaled L1')
 plt.xlabel('k');
-plt.title('Katz Iterations Convergence')
+plt.title('Katz Iterations Convergence');
 
 We plot the convergence of Katz Iterations. Y-axis is the same MinMax L1 used to train our GCNs, and X-axis is the number of iterations, $k$. It takes around $100$ such iterations to obtain a loss of $1e^{-3}$; for reference, this would correspond to a GCN with depth $l=100$. Below, we train GraphConv and EdgeConv to minimize $L(\vec{x},\vec{d}_{Katz})$ on unweighted-undirected, weighted-undirected, and weighted-directed networks using the same proceedure as with $d_{degree}$.
 
