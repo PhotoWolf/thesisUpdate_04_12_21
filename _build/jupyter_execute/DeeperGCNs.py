@@ -51,7 +51,7 @@ test_loader = torch_geometric.data.DataLoader(test,batch_size=200,shuffle=True)
 # Compute the Mean Average Distance of inputs
 def batched_MAD(X,edge_index,edge_weights):
     X = X/torch.norm(X,dim=1)[:,None]
-    cosine = 1 - torch.sum(X[edge_index[0]] * X[edge_index[1]],dim=1)
+    cosine = 1 - torch.sum(X[edge_index[0]] * X[edge_index[1]],dim=1).abs()
     return 1/edge_weights.sum() * (edge_weights * cosine).sum()
 
 # Compute the Aggregation Norm
@@ -75,8 +75,8 @@ model_mad = []
 model_agg = []
 model_rayleigh = []
 
-torch.manual_seed(0)
 for k in [1,2,4,8,16,32,64]:
+    torch.manual_seed(0)
     graph = GraphConv(1,32,1,k).cuda()
     
     graph_results.append(train_loop(graph,train_loader,test_loader,150,lr=1e-1))
@@ -94,7 +94,7 @@ for k in [1,2,4,8,16,32,64]:
         X = graph.start(X)
         
         for jdx,m in enumerate(graph.intermediate):
-            X = X + m[0](X) + torch_scatter.scatter_sum(m[1](X)[col], row.cuda(),dim=0)
+            X = m[0](X) + torch_scatter.scatter_sum(m[1](X)[col], row.cuda(),dim=0)
             X = torch.nn.LeakyReLU()(graph.bn[jdx](X))
             MAD[jdx] += batched_MAD(X,data.edge_index.cuda(),data.edge_weight.cuda()).mean().item()
             Agg[jdx] += batched_agg(X,data.edge_index.cuda(),data.edge_weight.cuda(),batch).item()
@@ -134,23 +134,23 @@ plt.legend()
 
 plt.tight_layout();
 
-We plot a) training loss b) test loss and c) average rank displacement for $l=2^{n}, n=0,1,...,6$. We also plot below the best values on the test loss versus number of trainable parameters. 
+We plot a) training loss b) test loss and c) average rank displacement for $l_{max}=1,2,4,...,64$. We also plot below the best values on the test loss versus number of trainable parameters. 
 
 params = [2200,4200,8801,17505,34913,69729,139361]
-plt.semilogy(params,[np.min(graph_results[i][1][-100:]) for i in range(7)])
+plt.semilogy(params,[np.min(graph_results[i][1]) for i in range(7)])
 plt.xlabel('Parameter Count')
 plt.ylabel('Test Loss');
 plt.title('Convergence vs. Parameters');
 
-Increasing network depth to better performance. However, the loss begins to stagnate past $l=8$ relative to parameter count, and it is still nearly half an order of a magnitude worse than for the initial $p\in{}[\frac{1}{n},\frac{10}{n}]$ dataset. Side note: the test loss is already quite small for $l=32$ and $l=64$ when the model in completely untrained; perhaps some sort of resevoir computing would work well?
+Increasing network depth leads to better performance. However, the minimum test loss begins to stagnate past $l_{max}=8$ relative to parameter count, and it is still worse than for the initial $p\in{}[\frac{1}{n},\frac{10}{n}]$ dataset. Side note: the loss is already quite small for $l_{max}=32$ and $l_{max}=64$ when the model in completely untrained; perhaps some sort of resevoir computing would work well?
 
 ### Is This Oversmoothing?
 
-GCNs suffer from a peculiar phenomena known as *oversmoothing*. In essence,  performance tends to degrade as you add more layers, and the features of each node converge to the same values. We choose to measure smoothing by the layerwise Mean Average Distance [14],
+GCNs suffer from a peculiar phenomena known as *oversmoothing*. In essence,  performance tends to degrade as you add more layers, and the features of each node converge to similar values. We choose to measure smoothness by the sparsified Mean Average Distance [14],
 
-$$\frac{1}{\sum_{i,j\in{}E}w_{ij}}\sum_{i,j\in{}E}w_{ij}(1 - \frac{x_{j}^{T}x_{i}}{||x_{i}||_{2}||x_{j}||_{2}})$$
+$$\frac{1}{\sum_{i,j\in{}E}w_{ij}}\sum_{i,j\in{}E}w_{ij}(1 - \frac{|x_{j}^{T}x_{i}|}{||x_{i}||_{2}||x_{j}||_{2}})$$
 
-layer-wise Aggregation Norm,
+Aggregation Norm (or AggNorm),
 
 $$\frac{1}{|V|}\sum_{i\in{}V}||\frac{\sum_{j\in{}N_{i}^{1}}w_{ij}x_{j}}{||\sum_{j\in{}N_{i}^{1}}w_{ij}x_{j}||_{2}} - \frac{x_{i}}{||x_{i}||_{2}}||_{2}$$
 
@@ -158,7 +158,7 @@ and the absolute Rayleigh Coefficient
 
 $$\frac{1}{\lambda_{max}-\lambda_{min}}(\lambda_{max} - |\frac{\vec{x}A\vec{x}}{\vec{x}\cdot{}\vec{x}}|)$$
 
-with MinMax normalization. AggNorm may be interpreted as a measure of how close the columns of $X^{l}$ are to eigenvectors of $A$. The Normalized Rayleigh Quotient is even more specific, with low values indicating greater similarity to dominant eigenvector $v_{1}$. 
+with MinMax normalization. AggNorm may be interpreted as a measure of how close the columns of $X^{l}$ are to eigenvectors of $A$. The normalized Rayleigh Quotient is even more specific, with low values indicating greater similarity to dominant eigenvector $v_{1}$. 
 
 Current theoretical analysis of oversmoothing has been focused on the GCNConv operator of Kipf and Welling [15].
 
@@ -191,4 +191,4 @@ for idx,l in enumerate([2,4,8,16,32,64]):
   plt.show()
 
 
-In the above figure, we observe an initial decline in MAD, AggNorm, and Rayleigh followed by oscillations in the deeper layers. The range of values does not change much from $l=8$ onwards, which, taken all together, indicates oversmoothing. However, we do not wish to eliminate this smoothing entirely. The relationship between $\vec{d}_{Katz}$ and $\vec{v}_{1}$ has been previously established; the fact that deeper models offer some improvement (and generally drive the Rayleigh Quotient down) suggests that our GCNs are attempting learning something close to, but not exactly, $v_{1}$. 
+In the above figure, we observe an initial decline in MAD, AggNorm, and Rayleigh followed by oscillations in the deeper layers. The range of values does not change much from $l_{max}=8$ onwards, which, taken all together, indicates oversmoothing. However, we do not wish to eliminate this smoothing entirely. The relationship between $\vec{d}_{Katz}$ and $\vec{v}_{1}$ has been previously established; the fact that deeper models offer some improvement (and generally drive the Rayleigh Quotient down) suggests that our GCNs are attempting learning something close to, but not exactly, $v_{1}$. 

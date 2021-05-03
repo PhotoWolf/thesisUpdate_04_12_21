@@ -2,38 +2,73 @@ from ipynb.fs.full.Introduction import *
 from tqdm import tqdm
 import time
 
-# Simplified Graph Convolution(al Networks)
+# Compute the Mean Average Distance of inputs
+def batched_MAD(X,edge_index,edge_weights):
+    X = X/torch.norm(X,dim=1)[:,None]
+    cosine = 1 - torch.sum(X[edge_index[0]] * X[edge_index[1]],dim=1)
+    return 1/edge_weights.sum() * (edge_weights * cosine).sum()
 
-Wu et. al. (2019) introduced the Simplified Graph Convolution (SGC) [17]
+# Compute the Aggregation Norm
+def batched_agg(X,edge_index,edge_weights,batch):
+    nX = torch_scatter.scatter_sum(edge_weights[:,None] * X[edge_index[1]], edge_index[0],dim=0)
+    X,nX = X/torch_scatter.scatter_sum(X**2,batch,dim=0).sqrt()[batch],\
+              nX/torch_scatter.scatter_sum(nX**2,batch,dim=0).sqrt()[batch]
+    return torch.norm(X - nX,dim=1).mean()
 
-$$X^{out} = \Theta{}(A^{k}X^{in})$$
+# Compute normalized (absolute) rayleigh quotient
+def rayleigh_quotient(X,edge_index,edge_weights,batch,eig_max,eig_min):
+    num = torch_scatter.scatter_sum(X * torch_scatter.scatter_sum(edge_weights[:,None] * 
+                                        X[edge_index[1]], edge_index[0],dim=0),
+                                        batch, dim=0)
+    denom = torch_scatter.scatter_sum(X**2,batch,dim=0)
+    R = num/(denom)
+    return torch.mean((eig_max[:,None] - R.abs())/(eig_max - eig_min)[:,None])
 
-In practice, they found that removing the non-linearities at each GCN layer did not impact classification accuracy whilst greatly reducing the parameter count. Since learning Katz Centrality for low-density networks seemingly requires deeper (and thus more expensive) models, we felt it prudent to do some experiments. 
+## Dataset
 
-## Model and Dataset
+See Section 4.1 for description/parameters.
 
 num_graphs = 3000
 d = []
 for _ in range(num_graphs):
+    # Set Cluster sizes and edge probabilities
     n = torch.randint(50,100,(5,))
     p = 1/(50*n) + (49/(50*n)) * torch.rand((5,5))
     p = .5 * (p + p.T)
+    
+    # Generate SBM
     x,edges = torch.ones((n.sum(),1)),torch_geometric.utils.remove_isolated_nodes(torch_geometric.utils.stochastic_blockmodel_graph(n,p))[0]
     adj = torch_sparse.SparseTensor(row=edges[0],col=edges[1])
 
+    # Write to Data object
     d.append(torch_geometric.data.Data(x=x[:adj.size(0)],edge_index = edges))
 
 for idx,G in enumerate(d):
     G.edge_weight = torch.ones(G.edge_index[0].shape)
     adj = torch_sparse.SparseTensor(row=G.edge_index[0],col=G.edge_index[1],value=G.edge_weight)
-    v = 1/(1.01*torch.norm(torch.eig(adj.to_dense())[0],dim=1).max())
+    
+    # Compute Katz Centrality
+    vals = torch.norm(torch.eig(adj.to_dense())[0],dim=1)
+    v = 1/(1.01*vals.max())
     y = torch.sum(torch.inverse(torch.eye(adj.size(0)) - v*adj.to_dense().T) - torch.eye(adj.size(0)),dim=1)
+    
+    # Set as target
     G.y = y
+    G.eig_max = vals.max()
+    G.eig_min = vals.min()
     d[idx] = G
     
 train,test = d[:2000],d[2000::]
 train_loader = torch_geometric.data.DataLoader(train,batch_size=200,shuffle=True)
 test_loader = torch_geometric.data.DataLoader(test,batch_size=200,shuffle=True)
+
+## Simplified Graph Convolution(al Networks)
+
+Wu et. al. (2019) introduced the Simplified Graph Convolution (SGC) [17]
+
+$$X^{out} = \Theta{}(A^{k}X^{in})$$
+
+In practice, they found that removing the non-linearities at each GCN layer did not impact classification accuracy whilst greatly reducing the parameter count and training time. Since learning Katz Centrality for low-density networks seemingly requires deeper (and thus more expensive) models, we felt it prudent to do some experiments. 
 
 class SGC(torch.nn.Module):
     def __init__(self,in_channels,int_channels,out_channels,k=2):
@@ -51,35 +86,57 @@ class SGC(torch.nn.Module):
               X = X/torch_scatter.scatter_sum(X**2,batch,dim=0).sqrt()[batch]
         return self.finish(X)
 
-results = []
+graph_results = []
+model_mad = []
+model_agg = []
+model_rayleigh = []
 
-torch.manual_seed(0)
 for k in [1,2,4,8,16,32,64]:
+    torch.manual_seed(0)
     model = SGC(1,32,1,k).cuda()
-    
-    results.append(train_loop(model,train_loader,test_loader,150,lr=1e-1))
-    torch.cuda.empty_cache()
 
-## Results
+    graph_results.append(train_loop(model,train_loader,test_loader,150,lr=1e-1))
+    
+    # Iterate through network layers and compute the MAD/Agg at each
+    MAD,Agg,Ray = torch.zeros(k),torch.zeros(k),torch.zeros(k)
+    
+    for idx,data in enumerate(test_loader):
+        X = data.x.cuda()
+        edge_index,edge_weight = data.edge_index.cuda(),data.edge_weight.cuda()
+        batch = data.batch.cuda()
+
+        model.eval()        
+        for jdx,m in enumerate(range(model.k)):
+            X = torch_scatter.scatter_sum(edge_weight[:,None] * X[edge_index[1]],edge_index[0],dim=0)
+            X = X/torch_scatter.scatter_sum(X**2,batch,dim=0).sqrt()[batch]
+            
+            MAD[jdx] += batched_MAD(X,data.edge_index.cuda(),data.edge_weight.cuda()).mean().item()
+            Agg[jdx] += batched_agg(X,data.edge_index.cuda(),data.edge_weight.cuda(),batch).item()
+            Ray[jdx] += rayleigh_quotient(X,data.edge_index.cuda(),data.edge_weight.cuda(),
+                                    batch,data.eig_max.cuda(),data.eig_min.cuda()).item()
+        
+    model_mad.append(MAD/(idx+1))
+    model_agg.append(Agg/(idx+1))
+    model_rayleigh.append(Ray/(idx+1))
 
 plt.figure(figsize=(15,8))
 
 plt.subplot(1,3,1)
 for idx,k in enumerate([1,2,4,8,16,32,64]):
-    plt.semilogy(results[idx][0])
+    plt.semilogy(graph_results[idx][0])
 plt.title('Train Error')
 plt.ylabel('L1 Error')
 plt.xlabel('Iterations')
 
 plt.subplot(1,3,2)
 for idx,k in enumerate([1,2,4,8,16,32,64]):
-    plt.semilogy(results[idx][1])
+    plt.semilogy(graph_results[idx][1])
 plt.title('Test Error')
 plt.xlabel('Iterations')
 
 plt.subplot(1,3,3)
 for idx,k in enumerate([1,2,4,8,16,32,64]):
-    plt.semilogy(results[idx][2],label=k)
+    plt.semilogy(graph_results[idx][2],label=k)
 plt.title('Ranking Error')
 plt.ylabel('Avg. Displacement')
 plt.xlabel('Iterations')
@@ -88,6 +145,24 @@ plt.legend()
 plt.show()
 
 Above $l=8$, test loss and rank displacement are lower than for GraphConv models of similar depth. Convergence is also much faster, and, with regards to practicality, SGC takes half the time to train.
+
+for idx,l in enumerate([2,4,8,16,32,64]):
+  plt.figure(figsize=(10,5))
+
+
+  plt.subplot(1,2,1)
+  plt.plot(model_agg[idx+1])
+  plt.xlabel('Layer')
+  plt.ylabel('Aggregation Norm')
+
+  plt.subplot(1,2,2)
+  plt.plot(model_rayleigh[idx+1])
+  plt.xlabel('Layer')
+  plt.ylabel('Normalized Rayleigh Quotient')
+    
+  plt.suptitle("l={}".format(l))
+  plt.tight_layout()
+  plt.show()
 
 ## PolynomialSGC
 
