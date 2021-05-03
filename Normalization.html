@@ -56,7 +56,7 @@
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="5. Simplified Graph Convolution(al Networks)" href="HigherMatrixPowers.html" />
+    <link rel="next" title="5. Higher-Order Matrix Powers" href="HigherMatrixPowers.html" />
     <link rel="prev" title="3. Do Deeper Networks Solve the Problem?" href="DeeperGCNs.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -115,32 +115,12 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="HigherMatrixPowers.html">
-   5. Simplified Graph Convolution(al Networks)
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="HigherMatrixPowers.html#polynomialsgc">
-   6. PolynomialSGC
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="HigherMatrixPowers.html#mixhop">
-   7. MixHop
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="HigherMatrixPowers.html#overview">
-   8. Overview
+   5. Higher-Order Matrix Powers
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="FutureWorkandBibliography.html">
-   9. Future Directions
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="FutureWorkandBibliography.html#bibliography">
-   10. Bibliography
+   6. Addendum
   </a>
  </li>
 </ul>
@@ -281,13 +261,6 @@
   <a class="reference internal nav-link" href="#pairnorm">
    4.4. PairNorm
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#ablation-study">
-     4.4.1. Ablation Study
-    </a>
-   </li>
-  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#overview">
@@ -307,40 +280,6 @@
               <div>
                 
   <div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">HTML</span>
-<span class="n">HTML</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;&lt;script&gt;</span>
-<span class="s1">code_show=true; </span>
-<span class="s1">function code_toggle() {</span>
-<span class="s1"> if (code_show){</span>
-<span class="s1"> $(&#39;div.input&#39;).hide();</span>
-<span class="s1"> } else {</span>
-<span class="s1"> $(&#39;div.input&#39;).show();</span>
-<span class="s1"> }</span>
-<span class="s1"> code_show = !code_show</span>
-<span class="s1">} </span>
-<span class="s1">$( document ).ready(code_toggle);</span>
-<span class="s1">&lt;/script&gt;</span>
-<span class="s1">&lt;form action=&quot;javascript:code_toggle()&quot;&gt;&lt;input type=&quot;submit&quot; value=&quot;Toggle Code On/Off&quot;&gt;&lt;/form&gt;&#39;&#39;&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><script>
-code_show=true; 
-function code_toggle() {
- if (code_show){
- $('div.input').hide();
- } else {
- $('div.input').show();
- }
- code_show = !code_show
-} 
-$( document ).ready(code_toggle);
-</script>
-<form action="javascript:code_toggle()"><input type="submit" value="Toggle Code On/Off"></form></div></div>
-</div>
-<div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ipynb.fs.full.Introduction</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
@@ -366,7 +305,7 @@ $( document ).ready(code_toggle);
 <div class="section" id="dataset">
 <h2><span class="section-number">4.1. </span>Dataset<a class="headerlink" href="#dataset" title="Permalink to this headline">¶</a></h2>
 <p>See Section 4.1 for description/parameters.</p>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">num_graphs</span> <span class="o">=</span> <span class="mi">3000</span>
 <span class="n">d</span> <span class="o">=</span> <span class="p">[]</span>
@@ -407,7 +346,7 @@ $( document ).ready(code_toggle);
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">3</span><span class="o">-</span><span class="mi">81</span><span class="n">aaef866393</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">2</span><span class="o">-</span><span class="mi">81</span><span class="n">aaef866393</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="g g-Whitespace">     </span><span class="mi">19</span> 
 <span class="g g-Whitespace">     </span><span class="mi">20</span>     <span class="c1"># Compute Katz Centrality</span>
 <span class="ne">---&gt; </span><span class="mi">21</span>     <span class="n">vals</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">adj</span><span class="o">.</span><span class="n">to_dense</span><span class="p">())[</span><span class="mi">0</span><span class="p">],</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
@@ -422,14 +361,14 @@ $( document ).ready(code_toggle);
 </div>
 <div class="section" id="model">
 <h2><span class="section-number">4.2. </span>Model<a class="headerlink" href="#model" title="Permalink to this headline">¶</a></h2>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">best_table</span> <span class="o">=</span> <span class="p">[]</span>
 </pre></div>
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compute the Mean Average Distance of inputs</span>
 <span class="k">def</span> <span class="nf">batched_MAD</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">edge_index</span><span class="p">,</span><span class="n">edge_weights</span><span class="p">):</span>
@@ -456,7 +395,7 @@ $( document ).ready(code_toggle);
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Class for the OrthNorm</span>
 <span class="k">class</span> <span class="nc">OrthNorm</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
@@ -485,7 +424,7 @@ $( document ).ready(code_toggle);
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">import</span> <span class="nn">torch_geometric</span>
@@ -519,7 +458,7 @@ $( document ).ready(code_toggle);
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># A helper function to compute various metrics</span>
 <span class="k">def</span> <span class="nf">get_metrics</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="n">test_loader</span><span class="p">,</span><span class="n">k</span><span class="o">=</span><span class="mi">64</span><span class="p">):</span>
@@ -583,7 +522,7 @@ $( document ).ready(code_toggle);
 <h2><span class="section-number">4.3. </span>OrthNorm<a class="headerlink" href="#orthnorm" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="vec-q-vec-1">
 <h3><span class="section-number">4.3.1. </span><span class="math notranslate nohighlight">\(\vec{q} = \vec{1}\)</span><a class="headerlink" href="#vec-q-vec-1" title="Permalink to this headline">¶</a></h3>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compute ones vector</span>
 <span class="k">def</span> <span class="nf">identity</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">edge_index</span><span class="p">,</span><span class="n">edge_weight</span><span class="p">,</span><span class="n">batch</span><span class="p">):</span>
@@ -592,7 +531,7 @@ $( document ).ready(code_toggle);
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">graph_results</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">metrics</span> <span class="o">=</span> <span class="p">[]</span>
@@ -632,7 +571,7 @@ $( document ).ready(code_toggle);
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
 
@@ -664,11 +603,11 @@ $( document ).ready(code_toggle);
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/Normalization_17_0.png" src="_images/Normalization_17_0.png" />
+<img alt="_images/Normalization_16_0.png" src="_images/Normalization_16_0.png" />
 </div>
 </div>
 <p>We plot a) training loss b) test loss and c) average rank displacement. The defining factor appears to be whether <span class="math notranslate nohighlight">\(s_{1}\)</span> is a trainable parameter; fixing it increases the L1 error by around an order of magnitude. Adding residual connections does not noticably impact performance. Regardless, we see significant improvement from the earlier <span class="math notranslate nohighlight">\(l=64\)</span> model with batch normalization (see 4.1).</p>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">l</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="s1">&#39;NonRes,Grad&#39;</span><span class="p">,</span><span class="s1">&#39;ResGrad&#39;</span><span class="p">,</span><span class="s1">&#39;NonRes,NoGrad&#39;</span><span class="p">,</span><span class="s1">&#39;Res,NoGrad&#39;</span><span class="p">]):</span>
   <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
@@ -694,14 +633,14 @@ $( document ).ready(code_toggle);
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/Normalization_19_0.png" src="_images/Normalization_19_0.png" />
-<img alt="_images/Normalization_19_1.png" src="_images/Normalization_19_1.png" />
-<img alt="_images/Normalization_19_2.png" src="_images/Normalization_19_2.png" />
-<img alt="_images/Normalization_19_3.png" src="_images/Normalization_19_3.png" />
+<img alt="_images/Normalization_18_0.png" src="_images/Normalization_18_0.png" />
+<img alt="_images/Normalization_18_1.png" src="_images/Normalization_18_1.png" />
+<img alt="_images/Normalization_18_2.png" src="_images/Normalization_18_2.png" />
+<img alt="_images/Normalization_18_3.png" src="_images/Normalization_18_3.png" />
 </div>
 </div>
 <p>We observe two regimes throughout the model layers; when <span class="math notranslate nohighlight">\(l&lt;32\)</span>, AggNorm and Rayleigh are relatively large, but, once <span class="math notranslate nohighlight">\(l\geq{}32\)</span>, the mean values drop sharply. Below we plot the trained values of <span class="math notranslate nohighlight">\(s_{1}\)</span> vs. <span class="math notranslate nohighlight">\(l\)</span> and see a similar pattern. <span class="math notranslate nohighlight">\(s_{1}\)</span> mostly oscillates between <span class="math notranslate nohighlight">\(.6\)</span> and <span class="math notranslate nohighlight">\(.8\)</span> for the first half of the model and then decays to <span class="math notranslate nohighlight">\(0.0\)</span> in the final few layers.</p>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">64</span><span class="p">),(</span><span class="n">metrics</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]),</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;NonRes,Grad&#39;</span><span class="p">,</span><span class="n">s</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">64</span><span class="p">),(</span><span class="n">metrics</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]),</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Res,Grad&#39;</span><span class="p">,</span><span class="n">s</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
@@ -712,10 +651,10 @@ $( document ).ready(code_toggle);
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/Normalization_21_0.png" src="_images/Normalization_21_0.png" />
+<img alt="_images/Normalization_20_0.png" src="_images/Normalization_20_0.png" />
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">best_table</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">graph_results</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)])</span>
 </pre></div>
@@ -725,7 +664,7 @@ $( document ).ready(code_toggle);
 </div>
 <div class="section" id="q-d-degree-circ-1">
 <h3><span class="section-number">4.3.2. </span><span class="math notranslate nohighlight">\(q = d_{degree}^{\circ{}-1}\)</span><a class="headerlink" href="#q-d-degree-circ-1" title="Permalink to this headline">¶</a></h3>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compute Hadamard Inverse of degree</span>
 <span class="k">def</span> <span class="nf">inverse_degree</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">edge_index</span><span class="p">,</span><span class="n">edge_weight</span><span class="p">,</span><span class="n">batch</span><span class="p">):</span>
@@ -736,7 +675,7 @@ $( document ).ready(code_toggle);
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">graph_results</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">metrics</span> <span class="o">=</span> <span class="p">[]</span>
@@ -776,7 +715,7 @@ $( document ).ready(code_toggle);
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
 
@@ -808,11 +747,11 @@ $( document ).ready(code_toggle);
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/Normalization_26_0.png" src="_images/Normalization_26_0.png" />
+<img alt="_images/Normalization_25_0.png" src="_images/Normalization_25_0.png" />
 </div>
 </div>
 <p>We plot a) training loss b) test loss and c) average rank displacement. Like with <span class="math notranslate nohighlight">\(\vec{q}=\vec{1}\)</span>, the greatest boost in performance comes from training with regards to <span class="math notranslate nohighlight">\(s_{1}\)</span>. We observe slightly better losses when the gradient is disabled, and adding residual connections offers further improvement in the gradient-enabled case.</p>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">l</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="s1">&#39;NonRes,Grad&#39;</span><span class="p">,</span><span class="s1">&#39;ResGrad&#39;</span><span class="p">,</span><span class="s1">&#39;NonRes,NoGrad&#39;</span><span class="p">,</span><span class="s1">&#39;Res,NoGrad&#39;</span><span class="p">]):</span>
   <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
@@ -838,14 +777,14 @@ $( document ).ready(code_toggle);
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/Normalization_28_0.png" src="_images/Normalization_28_0.png" />
-<img alt="_images/Normalization_28_1.png" src="_images/Normalization_28_1.png" />
-<img alt="_images/Normalization_28_2.png" src="_images/Normalization_28_2.png" />
-<img alt="_images/Normalization_28_3.png" src="_images/Normalization_28_3.png" />
+<img alt="_images/Normalization_27_0.png" src="_images/Normalization_27_0.png" />
+<img alt="_images/Normalization_27_1.png" src="_images/Normalization_27_1.png" />
+<img alt="_images/Normalization_27_2.png" src="_images/Normalization_27_2.png" />
+<img alt="_images/Normalization_27_3.png" src="_images/Normalization_27_3.png" />
 </div>
 </div>
 <p>There is still a defined jump in our metrics for the ResGrad model, whereas NonResGrad is more variable than before. Indeed, in the below figure, we see the <span class="math notranslate nohighlight">\(s_{1}\)</span> values of the latter randomly spike during the <span class="math notranslate nohighlight">\(l\geq{}32\)</span> regime.</p>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">64</span><span class="p">),(</span><span class="n">metrics</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]),</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;NonRes,Grad&#39;</span><span class="p">,</span><span class="n">s</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">64</span><span class="p">),(</span><span class="n">metrics</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]),</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Res,Grad&#39;</span><span class="p">,</span><span class="n">s</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
@@ -856,10 +795,10 @@ $( document ).ready(code_toggle);
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/Normalization_30_0.png" src="_images/Normalization_30_0.png" />
+<img alt="_images/Normalization_29_0.png" src="_images/Normalization_29_0.png" />
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">best_table</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">graph_results</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)])</span>
 </pre></div>
@@ -869,7 +808,7 @@ $( document ).ready(code_toggle);
 </div>
 <div class="section" id="q-v-1-circ-1">
 <h3><span class="section-number">4.3.3. </span><span class="math notranslate nohighlight">\(q=v_{1}^{\circ{}-1}\)</span><a class="headerlink" href="#q-v-1-circ-1" title="Permalink to this headline">¶</a></h3>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compute the Hadamard inverse of the approximate dominant eigenvector</span>
 <span class="k">def</span> <span class="nf">inverse_eig</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">edge_index</span><span class="p">,</span><span class="n">edge_weight</span><span class="p">,</span><span class="n">batch</span><span class="p">):</span>
@@ -883,7 +822,7 @@ $( document ).ready(code_toggle);
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">graph_results</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">metrics</span> <span class="o">=</span> <span class="p">[]</span>
@@ -923,7 +862,7 @@ $( document ).ready(code_toggle);
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
 
@@ -955,11 +894,11 @@ $( document ).ready(code_toggle);
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/Normalization_35_0.png" src="_images/Normalization_35_0.png" />
+<img alt="_images/Normalization_34_0.png" src="_images/Normalization_34_0.png" />
 </div>
 </div>
 <p>We plot a) training loss b) test loss and c) average rank displacement. Performance is further improved for gradient-disabled models, particularily when residual connections are also incorporated. NonRes,Gred converges to the lowest test loss.</p>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">l</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="s1">&#39;NonRes,Grad&#39;</span><span class="p">,</span><span class="s1">&#39;ResGrad&#39;</span><span class="p">,</span><span class="s1">&#39;NonRes,NoGrad&#39;</span><span class="p">,</span><span class="s1">&#39;Res,NoGrad&#39;</span><span class="p">]):</span>
   <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
@@ -985,14 +924,14 @@ $( document ).ready(code_toggle);
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/Normalization_37_0.png" src="_images/Normalization_37_0.png" />
-<img alt="_images/Normalization_37_1.png" src="_images/Normalization_37_1.png" />
-<img alt="_images/Normalization_37_2.png" src="_images/Normalization_37_2.png" />
-<img alt="_images/Normalization_37_3.png" src="_images/Normalization_37_3.png" />
+<img alt="_images/Normalization_36_0.png" src="_images/Normalization_36_0.png" />
+<img alt="_images/Normalization_36_1.png" src="_images/Normalization_36_1.png" />
+<img alt="_images/Normalization_36_2.png" src="_images/Normalization_36_2.png" />
+<img alt="_images/Normalization_36_3.png" src="_images/Normalization_36_3.png" />
 </div>
 </div>
 <p>Difference between regimes is less apparent, as our metrics are prone to large spikes shortly after <span class="math notranslate nohighlight">\(l=32\)</span>. AggNorm is the most informative of the three; it steadily declines, and, when ranked, its final values roughly correspond to the ordering of the models with regards to test loss. We still observe a clear partition in the <span class="math notranslate nohighlight">\(s_{1}\)</span> (see below).</p>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">64</span><span class="p">),(</span><span class="n">metrics</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]),</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;NonRes,Grad&#39;</span><span class="p">,</span><span class="n">s</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">64</span><span class="p">),(</span><span class="n">metrics</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]),</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Res,Grad&#39;</span><span class="p">,</span><span class="n">s</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
@@ -1003,10 +942,10 @@ $( document ).ready(code_toggle);
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/Normalization_39_0.png" src="_images/Normalization_39_0.png" />
+<img alt="_images/Normalization_38_0.png" src="_images/Normalization_38_0.png" />
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">best_table</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">graph_results</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)])</span>
 </pre></div>
@@ -1016,7 +955,7 @@ $( document ).ready(code_toggle);
 </div>
 <div class="section" id="best-model">
 <h3><span class="section-number">4.3.4. </span>Best Model<a class="headerlink" href="#best-model" title="Permalink to this headline">¶</a></h3>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
@@ -1079,7 +1018,7 @@ $( document ).ready(code_toggle);
 </div></div></div>
 </div>
 <p>Across the board, the best results are obtained for <span class="math notranslate nohighlight">\(\vec{q}=v_{1}^{\circ{}-1}\)</span>. We do not currently have a theoretical explanation for this, and indeed it seems somewhat counterintuitive. Difference between choices of <span class="math notranslate nohighlight">\(\vec{q}\)</span> is minimal when <span class="math notranslate nohighlight">\(s_{1}\)</span> is gradient-enabled, but otherwise <span class="math notranslate nohighlight">\(v_{1}^{\circ{}-1}\)</span> offers noticably better performance. We find limited benefit to residual connections. Below, we train the NonRes,Grad model for all <span class="math notranslate nohighlight">\(l=1,2,4,...,64\)</span> using the inverse approximate <span class="math notranslate nohighlight">\(v_{1}\)</span>.</p>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">graph_results</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">metrics</span> <span class="o">=</span> <span class="p">[]</span>
@@ -1094,7 +1033,7 @@ $( document ).ready(code_toggle);
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
 
@@ -1126,7 +1065,7 @@ $( document ).ready(code_toggle);
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/Normalization_45_0.png" src="_images/Normalization_45_0.png" />
+<img alt="_images/Normalization_44_0.png" src="_images/Normalization_44_0.png" />
 </div>
 </div>
 <p>We plot a) training loss b) test loss and c) average rank displacement. All models for <span class="math notranslate nohighlight">\(l_{max}\geq{}8\)</span> are improved versus the batch normalization case in 4.1</p>
@@ -1137,7 +1076,7 @@ $( document ).ready(code_toggle);
 <p>We assess PairNorm (see 5.1) with both individual and global scaling, as well as residual connections. [15] find that GCNConv and GATConv perform better with individual scaling, but this was on datasets (the “holy trinity” of graph learning: Cora, Citeseer, and PubMed) with limited structural class dependence. Global scaling is given by:</p>
 <div class="math notranslate nohighlight">
 \[X_{:,i}^{l} = s \frac{X_{:,i}^{l}}{\sqrt{\frac{1}{n}\sum_{j=0}^{n}||X_{:,j}^{l}||_{2}^{2}}}\]</div>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># PairNorm implementation</span>
 <span class="k">class</span> <span class="nc">PairNorm</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
@@ -1151,9 +1090,7 @@ $( document ).ready(code_toggle);
 </div>
 </div>
 </div>
-<div class="section" id="ablation-study">
-<h3><span class="section-number">4.4.1. </span>Ablation Study<a class="headerlink" href="#ablation-study" title="Permalink to this headline">¶</a></h3>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">graph_results</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">metrics</span> <span class="o">=</span> <span class="p">[]</span>
@@ -1193,7 +1130,7 @@ $( document ).ready(code_toggle);
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
 
@@ -1225,11 +1162,11 @@ $( document ).ready(code_toggle);
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/Normalization_52_0.png" src="_images/Normalization_52_0.png" />
+<img alt="_images/Normalization_50_0.png" src="_images/Normalization_50_0.png" />
 </div>
 </div>
 <p>We plot a) training loss b) test loss and c) average rank displacement. Individual scaling (or PairNorm-SI, as it is refered to in [15]) performs worse than global scaling, which is itself only comparable to OrthNorm with constant <span class="math notranslate nohighlight">\(s_{1}\)</span>. Residual connections offer no pronounced improvement.</p>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">l</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="s1">&#39;NonRes,SI&#39;</span><span class="p">,</span><span class="s1">&#39;Res,SI&#39;</span><span class="p">,</span><span class="s1">&#39;NonRes&#39;</span><span class="p">,</span><span class="s1">&#39;Res&#39;</span><span class="p">]):</span>
   <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
@@ -1255,14 +1192,13 @@ $( document ).ready(code_toggle);
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/Normalization_54_0.png" src="_images/Normalization_54_0.png" />
-<img alt="_images/Normalization_54_1.png" src="_images/Normalization_54_1.png" />
-<img alt="_images/Normalization_54_2.png" src="_images/Normalization_54_2.png" />
-<img alt="_images/Normalization_54_3.png" src="_images/Normalization_54_3.png" />
+<img alt="_images/Normalization_52_0.png" src="_images/Normalization_52_0.png" />
+<img alt="_images/Normalization_52_1.png" src="_images/Normalization_52_1.png" />
+<img alt="_images/Normalization_52_2.png" src="_images/Normalization_52_2.png" />
+<img alt="_images/Normalization_52_3.png" src="_images/Normalization_52_3.png" />
 </div>
 </div>
 <p>Outside of the ResSI model, our metrics looks quite similar to the BatchNorm case (see 4.1) with large starting values and a gradual decay. Final values are close to those of OrthNorm when <span class="math notranslate nohighlight">\(\vec{q}=\vec{1}\)</span>, which makes sense due to their similarity.</p>
-</div>
 </div>
 <div class="section" id="overview">
 <h2><span class="section-number">4.5. </span>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
@@ -1296,7 +1232,7 @@ $( document ).ready(code_toggle);
         <div class='prev-next-bottom'>
             
     <a class='left-prev' id="prev-link" href="DeeperGCNs.html" title="previous page"><span class="section-number">3. </span>Do Deeper Networks Solve the Problem?</a>
-    <a class='right-next' id="next-link" href="HigherMatrixPowers.html" title="next page"><span class="section-number">5. </span>Simplified Graph Convolution(al Networks)</a>
+    <a class='right-next' id="next-link" href="HigherMatrixPowers.html" title="next page"><span class="section-number">5. </span>Higher-Order Matrix Powers</a>
 
         </div>
         

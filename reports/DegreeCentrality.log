@@ -36,7 +36,7 @@ test_loader = torch_geometric.data.DataLoader(test,batch_size=200,shuffle=True)
 
 [0;31m---------------------------------------------------------------------------[0m
 [0;31mNameError[0m                                 Traceback (most recent call last)
-[0;32m<ipython-input-3-4ad1b9350783>[0m in [0;36m<module>[0;34m[0m
+[0;32m<ipython-input-2-4ad1b9350783>[0m in [0;36m<module>[0;34m[0m
 [0;32m----> 1[0;31m [0;32mfor[0m [0midx[0m[0;34m,[0m[0mG[0m [0;32min[0m [0menumerate[0m[0;34m([0m[0md[0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
 [0m[1;32m      2[0m     [0mG[0m[0;34m.[0m[0medge_weight[0m [0;34m=[0m [0mtorch[0m[0;34m.[0m[0mones[0m[0;34m([0m[0mG[0m[0;34m.[0m[0medge_index[0m[0;34m[[0m[0;36m0[0m[0;34m][0m[0;34m.[0m[0mshape[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
 [1;32m      3[0m     [0madj[0m [0;34m=[0m [0mtorch_sparse[0m[0;34m.[0m[0mSparseTensor[0m[0;34m([0m[0mrow[0m[0;34m=[0m[0mG[0m[0;34m.[0m[0medge_index[0m[0;34m[[0m[0;36m0[0m[0;34m][0m[0;34m,[0m[0mcol[0m[0;34m=[0m[0mG[0m[0;34m.[0m[0medge_index[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m,[0m[0mvalue[0m[0;34m=[0m[0mG[0m[0;34m.[0m[0medge_weight[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
