@@ -120,17 +120,32 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="HigherMatrixPowers.html">
-   6. Simplified Graph Convolution(al Networks)
+   6. Dataset
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="HigherMatrixPowers.html#simplified-graph-convolution-al-networks">
+   7. Simplified Graph Convolution(al Networks)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="HigherMatrixPowers.html#polynomialsgc">
+   8. PolynomialSGC
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="HigherMatrixPowers.html#mixhop">
+   9. MixHop
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="FutureWorkandBibliography.html">
-   7. Future Directions
+   10. Future Directions
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="FutureWorkandBibliography.html#bibliography">
-   8. Bibliography
+   11. Bibliography
   </a>
  </li>
 </ul>
@@ -344,6 +359,27 @@ $<span class="math notranslate nohighlight">\(\approx{} 1 + cv_{1} \approx{} cv_
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">2</span><span class="o">-</span><span class="n">aee62bfce25a</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span>     <span class="n">p</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">n</span> <span class="o">+</span> <span class="p">(</span><span class="mi">10</span><span class="o">/</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="o">/</span><span class="n">n</span><span class="p">)</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span>     <span class="n">p</span> <span class="o">=</span> <span class="o">.</span><span class="mi">5</span> <span class="o">*</span> <span class="p">(</span><span class="n">p</span> <span class="o">+</span> <span class="n">p</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+<span class="ne">----&gt; </span><span class="mi">8</span>     <span class="n">x</span><span class="p">,</span><span class="n">edges</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">((</span><span class="n">n</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span><span class="mi">1</span><span class="p">)),</span><span class="n">torch_geometric</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">remove_isolated_nodes</span><span class="p">(</span><span class="n">torch_geometric</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">stochastic_blockmodel_graph</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">p</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+<span class="g g-Whitespace">      </span><span class="mi">9</span>     <span class="n">adj</span> <span class="o">=</span> <span class="n">torch_sparse</span><span class="o">.</span><span class="n">SparseTensor</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="n">edges</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">col</span><span class="o">=</span><span class="n">edges</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="g g-Whitespace">     </span><span class="mi">10</span> 
+
+<span class="nn">/opt/conda/lib/python3.7/site-packages/torch_geometric/utils/random.py</span> in <span class="ni">stochastic_blockmodel_graph</span><span class="nt">(block_sizes, edge_probs, directed)</span>
+<span class="g g-Whitespace">     </span><span class="mi">74</span>         <span class="n">row</span><span class="p">,</span> <span class="n">col</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">num_nodes</span><span class="p">))</span><span class="o">.</span><span class="n">t</span><span class="p">()</span>
+<span class="g g-Whitespace">     </span><span class="mi">75</span> 
+<span class="ne">---&gt; </span><span class="mi">76</span>     <span class="n">mask</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">bernoulli</span><span class="p">(</span><span class="n">prob</span><span class="p">[</span><span class="n">node_idx</span><span class="p">[</span><span class="n">row</span><span class="p">],</span> <span class="n">node_idx</span><span class="p">[</span><span class="n">col</span><span class="p">]])</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">bool</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">77</span>     <span class="n">edge_index</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">row</span><span class="p">[</span><span class="n">mask</span><span class="p">],</span> <span class="n">col</span><span class="p">[</span><span class="n">mask</span><span class="p">]],</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">78</span> 
+
+<span class="ne">KeyboardInterrupt</span>: 
+</pre></div>
+</div>
+</div>
 </div>
 </div>
 <div class="section" id="efficacy-of-katz-iterations">
@@ -360,20 +396,6 @@ $<span class="math notranslate nohighlight">\(\approx{} 1 + cv_{1} \approx{} cv_
     <span class="n">d</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">G</span>
     
 <span class="n">train</span><span class="p">,</span><span class="n">test</span> <span class="o">=</span> <span class="n">d</span><span class="p">[:</span><span class="mi">2000</span><span class="p">],</span><span class="n">d</span><span class="p">[</span><span class="mi">2000</span><span class="p">::]</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">3</span><span class="o">-</span><span class="mi">4966</span><span class="n">d482b684</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span>     <span class="n">G</span><span class="o">.</span><span class="n">edge_weight</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">edge_index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span>     <span class="n">adj</span> <span class="o">=</span> <span class="n">torch_sparse</span><span class="o">.</span><span class="n">SparseTensor</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="n">G</span><span class="o">.</span><span class="n">edge_index</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">col</span><span class="o">=</span><span class="n">G</span><span class="o">.</span><span class="n">edge_index</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">value</span><span class="o">=</span><span class="n">G</span><span class="o">.</span><span class="n">edge_weight</span><span class="p">)</span>
-<span class="ne">----&gt; </span><span class="mi">4</span>     <span class="n">v</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mf">1.01</span><span class="o">*</span><span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">adj</span><span class="o">.</span><span class="n">to_dense</span><span class="p">())[</span><span class="mi">0</span><span class="p">],</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span>     <span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">inverse</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">adj</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span> <span class="o">-</span> <span class="n">v</span><span class="o">*</span><span class="n">adj</span><span class="o">.</span><span class="n">to_dense</span><span class="p">()</span><span class="o">.</span><span class="n">T</span><span class="p">),</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">6</span>     <span class="n">G</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
-
-<span class="ne">KeyboardInterrupt</span>: 
 </pre></div>
 </div>
 </div>
