@@ -492,7 +492,7 @@
 
             <span class="k">if</span> <span class="n">model</span><span class="o">.</span><span class="n">res</span><span class="p">:</span> <span class="n">X</span> <span class="o">=</span> <span class="n">X</span> <span class="o">+</span> <span class="n">Update</span>
             <span class="k">else</span><span class="p">:</span> <span class="n">X</span> <span class="o">=</span> <span class="n">Update</span>
-            <span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">LeakyReLU</span><span class="p">()(</span><span class="n">model</span><span class="o">.</span><span class="n">norm</span><span class="p">[</span><span class="n">idx</span><span class="p">](</span><span class="n">X</span><span class="p">,</span><span class="n">edge_index</span><span class="p">,</span><span class="n">edge_weight</span><span class="p">,</span><span class="n">batch</span><span class="p">))</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">LeakyReLU</span><span class="p">()(</span><span class="n">model</span><span class="o">.</span><span class="n">norm</span><span class="p">[</span><span class="n">jdx</span><span class="p">](</span><span class="n">X</span><span class="p">,</span><span class="n">edge_index</span><span class="p">,</span><span class="n">edge_weight</span><span class="p">,</span><span class="n">batch</span><span class="p">))</span>
 
             <span class="c1"># Fetch S1</span>
             <span class="n">S</span><span class="p">[</span><span class="n">jdx</span><span class="p">]</span> <span class="o">+=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">norm</span><span class="p">[</span><span class="n">jdx</span><span class="p">]</span><span class="o">.</span><span class="n">s1</span><span class="p">)</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
@@ -606,7 +606,7 @@
 <img alt="_images/Normalization_16_0.png" src="_images/Normalization_16_0.png" />
 </div>
 </div>
-<p>We plot a) training loss b) test loss and c) average rank displacement. The defining factor appears to be whether <span class="math notranslate nohighlight">\(s_{1}\)</span> is a trainable parameter; fixing it increases the L1 error by around an order of magnitude. Adding residual connections does not noticably impact performance. Regardless, we see significant improvement from the earlier <span class="math notranslate nohighlight">\(l=64\)</span> model with batch normalization (see 4.1).</p>
+<p>We plot a) training loss b) test loss and c) average rank displacement. The defining factor appears to be whether <span class="math notranslate nohighlight">\(s_{1}\)</span> is a trainable parameter; fixing it increases the L1 error by around an order of magnitude. Adding residual connections results in marginal improvement for the gradient-enabled case. Overall, we see significant improvement from the earlier <span class="math notranslate nohighlight">\(l=64\)</span> GCN with batch normalization (see 3.2).</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">l</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="s1">&#39;NonRes,Grad&#39;</span><span class="p">,</span><span class="s1">&#39;ResGrad&#39;</span><span class="p">,</span><span class="s1">&#39;NonRes,NoGrad&#39;</span><span class="p">,</span><span class="s1">&#39;Res,NoGrad&#39;</span><span class="p">]):</span>
@@ -639,7 +639,8 @@
 <img alt="_images/Normalization_18_3.png" src="_images/Normalization_18_3.png" />
 </div>
 </div>
-<p>We observe two regimes throughout the model layers; when <span class="math notranslate nohighlight">\(l&lt;32\)</span>, AggNorm and Rayleigh are relatively large, but, once <span class="math notranslate nohighlight">\(l\geq{}32\)</span>, the mean values drop sharply. Below we plot the trained values of <span class="math notranslate nohighlight">\(s_{1}\)</span> vs. <span class="math notranslate nohighlight">\(l\)</span> and see a similar pattern. <span class="math notranslate nohighlight">\(s_{1}\)</span> mostly oscillates between <span class="math notranslate nohighlight">\(.6\)</span> and <span class="math notranslate nohighlight">\(.8\)</span> for the first half of the model and then decays to <span class="math notranslate nohighlight">\(0.0\)</span> in the final few layers.</p>
+<p>For the gradient-enabled GCNs, we observe two regimes: our metrics are relatively large when <span class="math notranslate nohighlight">\(l&lt;32\)</span>, but, once <span class="math notranslate nohighlight">\(l\geq{}32\)</span>, the mean values drop sharply. Below we plot the trained values of <span class="math notranslate nohighlight">\(s_{1}\)</span> vs. <span class="math notranslate nohighlight">\(l\)</span> and see a similar pattern. <span class="math notranslate nohighlight">\(s_{1}\)</span> mostly oscillates between <span class="math notranslate nohighlight">\(.6\)</span> and <span class="math notranslate nohighlight">\(.8\)</span> for the first half of the model and then decays to <span class="math notranslate nohighlight">\(0.0\)</span> in the final few layers.</p>
+<p>Metrics for the gradient-disabled GCNs decay slowly with <span class="math notranslate nohighlight">\(l\)</span>, and they converge to bigger values than than the gradient-enabled models.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">64</span><span class="p">),(</span><span class="n">metrics</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]),</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;NonRes,Grad&#39;</span><span class="p">,</span><span class="n">s</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
@@ -750,7 +751,7 @@
 <img alt="_images/Normalization_25_0.png" src="_images/Normalization_25_0.png" />
 </div>
 </div>
-<p>We plot a) training loss b) test loss and c) average rank displacement. Like with <span class="math notranslate nohighlight">\(\vec{q}=\vec{1}\)</span>, the greatest boost in performance comes from training with regards to <span class="math notranslate nohighlight">\(s_{1}\)</span>. We observe slightly better losses when the gradient is disabled, and adding residual connections offers further improvement in the gradient-enabled case.</p>
+<p>We plot a) training loss b) test loss and c) average rank displacement. Like with <span class="math notranslate nohighlight">\(\vec{q}=\vec{1}\)</span>, most of our performance gains come from <span class="math notranslate nohighlight">\(s_{1}\)</span>. We observe slightly better losses than before when the gradient is disabled. Adding residual connections now actively hampers the model in the gradient-enabled case.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">l</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="s1">&#39;NonRes,Grad&#39;</span><span class="p">,</span><span class="s1">&#39;ResGrad&#39;</span><span class="p">,</span><span class="s1">&#39;NonRes,NoGrad&#39;</span><span class="p">,</span><span class="s1">&#39;Res,NoGrad&#39;</span><span class="p">]):</span>
@@ -783,7 +784,7 @@
 <img alt="_images/Normalization_27_3.png" src="_images/Normalization_27_3.png" />
 </div>
 </div>
-<p>There is still a defined jump in our metrics for the ResGrad model, whereas NonResGrad is more variable than before. Indeed, in the below figure, we see the <span class="math notranslate nohighlight">\(s_{1}\)</span> values of the latter randomly spike during the <span class="math notranslate nohighlight">\(l\geq{}32\)</span> regime.</p>
+<p>There is still a defined jump in our metrics around <span class="math notranslate nohighlight">\(l=32\)</span> for the ResGrad model, whereas NonResGrad is more variable than before. Indeed, in the below figure, we see the <span class="math notranslate nohighlight">\(s_{1}\)</span> values of the latter randomly spike during the <span class="math notranslate nohighlight">\(l\geq{}32\)</span> regime.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">64</span><span class="p">),(</span><span class="n">metrics</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]),</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;NonRes,Grad&#39;</span><span class="p">,</span><span class="n">s</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
@@ -897,7 +898,7 @@
 <img alt="_images/Normalization_34_0.png" src="_images/Normalization_34_0.png" />
 </div>
 </div>
-<p>We plot a) training loss b) test loss and c) average rank displacement. Performance is further improved for gradient-disabled models, particularily when residual connections are also incorporated. NonRes,Gred converges to the lowest test loss.</p>
+<p>We plot a) training loss b) test loss and c) average rank displacement. Performance is further improved for gradient-disabled models, particularily when residual connections are also incorporated. ResGrad converges to the lowest test loss.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">l</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="s1">&#39;NonRes,Grad&#39;</span><span class="p">,</span><span class="s1">&#39;ResGrad&#39;</span><span class="p">,</span><span class="s1">&#39;NonRes,NoGrad&#39;</span><span class="p">,</span><span class="s1">&#39;Res,NoGrad&#39;</span><span class="p">]):</span>
@@ -930,7 +931,7 @@
 <img alt="_images/Normalization_36_3.png" src="_images/Normalization_36_3.png" />
 </div>
 </div>
-<p>Difference between regimes is less apparent, as our metrics are prone to large spikes shortly after <span class="math notranslate nohighlight">\(l=32\)</span>. AggNorm is the most informative of the three; it steadily declines, and, when ranked, its final values roughly correspond to the ordering of the models with regards to test loss. We still observe a clear partition in the <span class="math notranslate nohighlight">\(s_{1}\)</span> (see below).</p>
+<p>Two distinct regimes are visible in our metrics (excluding MAP) for all model permuations, even those where the <span class="math notranslate nohighlight">\(s_{1}\)</span> gradient is disabled. In the gradient-disabled case, all converge to much smaller values than for other choices of <span class="math notranslate nohighlight">\(\vec{q}\)</span>; this reflects the aforementioned improvements in the loss.  We still observe a clear partition in the <span class="math notranslate nohighlight">\(s_{1}\)</span> (see below).</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">64</span><span class="p">),(</span><span class="n">metrics</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]),</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;NonRes,Grad&#39;</span><span class="p">,</span><span class="n">s</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
@@ -994,30 +995,30 @@
   <tbody>
     <tr>
       <th>Ones</th>
-      <td>0.000240</td>
-      <td>0.000293</td>
-      <td>0.002130</td>
-      <td>0.001970</td>
+      <td>0.000365</td>
+      <td>0.000271</td>
+      <td>0.001668</td>
+      <td>0.001721</td>
     </tr>
     <tr>
       <th>InverseDegree</th>
-      <td>0.000326</td>
-      <td>0.000264</td>
-      <td>0.001121</td>
-      <td>0.001095</td>
+      <td>0.000274</td>
+      <td>0.000426</td>
+      <td>0.001036</td>
+      <td>0.001074</td>
     </tr>
     <tr>
       <th>InverseEig</th>
-      <td>0.000229</td>
-      <td>0.000255</td>
-      <td>0.000732</td>
-      <td>0.000432</td>
+      <td>0.000247</td>
+      <td>0.000222</td>
+      <td>0.000402</td>
+      <td>0.000428</td>
     </tr>
   </tbody>
 </table>
 </div></div></div>
 </div>
-<p>Across the board, the best results are obtained for <span class="math notranslate nohighlight">\(\vec{q}=v_{1}^{\circ{}-1}\)</span>. We do not currently have a theoretical explanation for this, and indeed it seems somewhat counterintuitive. Difference between choices of <span class="math notranslate nohighlight">\(\vec{q}\)</span> is minimal when <span class="math notranslate nohighlight">\(s_{1}\)</span> is gradient-enabled, but otherwise <span class="math notranslate nohighlight">\(v_{1}^{\circ{}-1}\)</span> offers noticably better performance. We find limited benefit to residual connections. Below, we train the NonRes,Grad model for all <span class="math notranslate nohighlight">\(l=1,2,4,...,64\)</span> using the inverse approximate <span class="math notranslate nohighlight">\(v_{1}\)</span>.</p>
+<p>Across the board, the best results are obtained for <span class="math notranslate nohighlight">\(\vec{q}=v_{1}^{\circ{}-1}\)</span>. We do not currently have a theoretical explanation for this, and indeed it seems somewhat counterintuitive. Difference between choices of <span class="math notranslate nohighlight">\(\vec{q}\)</span> is minimal when <span class="math notranslate nohighlight">\(s_{1}\)</span> is gradient-enabled, but otherwise <span class="math notranslate nohighlight">\(v_{1}^{\circ{}-1}\)</span> offers noticably better performance. We find limited benefit to residual connections. Below, we train the ResGrad model for all <span class="math notranslate nohighlight">\(l=1,2,4,...,64\)</span> using the inverse approximate <span class="math notranslate nohighlight">\(v_{1}\)</span>.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">graph_results</span> <span class="o">=</span> <span class="p">[]</span>
@@ -1068,7 +1069,7 @@
 <img alt="_images/Normalization_44_0.png" src="_images/Normalization_44_0.png" />
 </div>
 </div>
-<p>We plot a) training loss b) test loss and c) average rank displacement. All models for <span class="math notranslate nohighlight">\(l_{max}\geq{}8\)</span> are improved versus the batch normalization case in 4.1</p>
+<p>We plot a) training loss b) test loss and c) average rank displacement. All models for <span class="math notranslate nohighlight">\(l_{max}\geq{}8\)</span> are improved versus Section 3.2</p>
 </div>
 </div>
 <div class="section" id="pairnorm">
@@ -1198,11 +1199,11 @@
 <img alt="_images/Normalization_52_3.png" src="_images/Normalization_52_3.png" />
 </div>
 </div>
-<p>Outside of the ResSI model, our metrics looks quite similar to the BatchNorm case (see 4.1) with large starting values and a gradual decay. Final values are close to those of OrthNorm when <span class="math notranslate nohighlight">\(\vec{q}=\vec{1}\)</span>, which makes sense due to their similarity.</p>
+<p>There is no discernable overarching pattern visible in our metrics. For every model permutation, they are comparable to OrthNorm with constant <span class="math notranslate nohighlight">\(s_{1}\)</span> when <span class="math notranslate nohighlight">\(\vec{q}=\vec{1},d_{degree}^{\circ{}-1}\)</span>; this makes sense given the previously established relationship between OrthNorm and PairNorm.</p>
 </div>
 <div class="section" id="overview">
 <h2><span class="section-number">4.5. </span>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
-<p>Our new normalization scheme, which we are calling OrthNorm (i.e Orthagonal Normalization, get it?), improves upon the BatchNorm case. It surpasses PairNorm by around an order of magnitude given the same depth and number of epochs. We suspect this is because <span class="math notranslate nohighlight">\(d_{Katz}\)</span> is close enough to <span class="math notranslate nohighlight">\(v_{1}\)</span>, and so PairNorm reduces the feature smoothness <em>too</em> much. Indeed, PairNorm returns larger MAP, AggNorm, and normalized Rayleigh for each layer, whereas those of OrthNorm are generally smaller and more variable. This is due to <span class="math notranslate nohighlight">\(s_{1}\)</span> regulating the degree of orthogonalization; indeed, fixing <span class="math notranslate nohighlight">\(s_{1}\)</span> noticably hampers performance.</p>
+<p>Our new normalization scheme, which we are calling OrthNorm (i.e Orthagonal Normalization, get it?), improves upon the BatchNorm case. It surpasses existing SOTA by around an order of magnitude given the same depth and number of epochs. We suspect this is because <span class="math notranslate nohighlight">\(d_{Katz}\)</span> is close enough to <span class="math notranslate nohighlight">\(v_{1}\)</span>, and so PairNorm reduces the feature smoothness <em>too</em> much. Indeed, PairNorm maintains large MAP, AggNorm, and normalized Rayleigh Coefficient across convolutional layers, whereas OrthNorm converges to a small value as <span class="math notranslate nohighlight">\(l\rightarrow{}l_{max}\)</span>. This is due to <span class="math notranslate nohighlight">\(s_{1}\)</span> regulating the degree of orthogonalization; indeed, fixing <span class="math notranslate nohighlight">\(s_{1}\)</span> noticably hampers performance.</p>
 </div>
 </div>
 
