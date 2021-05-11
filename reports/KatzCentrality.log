@@ -40,6 +40,6 @@ for idx,G in enumerate(d):
     G.y = y
     d[idx] = G
     
-train,test = d[:2000],d[2000::]
+train,test = d[:1500],d[1500::]
 -------------------
 

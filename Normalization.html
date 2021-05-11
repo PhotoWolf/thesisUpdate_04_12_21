@@ -56,7 +56,7 @@
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="5. Higher-Order Matrix Powers" href="HigherMatrixPowers.html" />
+    <link rel="next" title="5. Addendum" href="FutureWorkandBibliography.html" />
     <link rel="prev" title="3. Do Deeper Networks Solve the Problem?" href="DeeperGCNs.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -114,13 +114,8 @@
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="HigherMatrixPowers.html">
-   5. Higher-Order Matrix Powers
-  </a>
- </li>
- <li class="toctree-l1">
   <a class="reference internal" href="FutureWorkandBibliography.html">
-   6. Addendum
+   5. Addendum
   </a>
  </li>
 </ul>
@@ -290,7 +285,7 @@
 </div>
 <div class="section" id="normalization-techniques">
 <h1><span class="section-number">4. </span>Normalization Techniques<a class="headerlink" href="#normalization-techniques" title="Permalink to this headline">¶</a></h1>
-<p>Within the literature, the typical approach to oversmoothing is to apply some type of normalization. To this end, we propose orthogonalizing out vector <span class="math notranslate nohighlight">\(\vec{q}\)</span> from <span class="math notranslate nohighlight">\(X^{l}_{:,i}\)</span> and then renormalizing each column. We incorporate additional scale parameters <span class="math notranslate nohighlight">\(0\leq{}s_{1}\leq{}1\)</span> and <span class="math notranslate nohighlight">\(s_{2}\)</span>, which allow the model to “self-regulate” its own smoothness.</p>
+<p>Within the literature, the typical approach to smoothing is to apply some type of normalization. To this end, we propose orthogonalizing out vector <span class="math notranslate nohighlight">\(\vec{q}\)</span> from <span class="math notranslate nohighlight">\(X^{l}_{:,i}\)</span> and then renormalizing each column. We incorporate additional scale parameters <span class="math notranslate nohighlight">\(0\leq{}s_{1}\leq{}1\)</span> and <span class="math notranslate nohighlight">\(s_{2}\)</span>, which allow the model to “self-regulate” its own convergence to <span class="math notranslate nohighlight">\(v_{1}\)</span>.</p>
 <div class="math notranslate nohighlight">
 \[X^{l}_{:,i} = X^{l}_{:,i} - s_{1}\frac{\vec{q}^{T}X^{l}_{:,i}}{||\vec{q}||_{2}^{2}}\vec{q}\]</div>
 <div class="math notranslate nohighlight">
@@ -300,7 +295,7 @@
 \[X_{:,i}^{l} = X_{:,i}^{l} - \frac{1}{n}\sum_{i=0}^{n}X_{:,i}^{l}\]</div>
 <div class="math notranslate nohighlight">
 \[X_{:,i}^{l} = s \frac{X_{:,i}^{l}}{||X_{:,i}^{l}||_{2}}\]</div>
-<p>PairNorm is the current SOTA for GCN normalization/oversmoothing; however, it 1) implicitly assumes that our aggregation step employs the Graph Laplacian or has a similar steady-state and 2) fully orthogonalizes out <span class="math notranslate nohighlight">\(\vec{q}\)</span> at each layer, which may be undesirable for learning structure.</p>
+<p>PairNorm is the current SOTA for GCN normalization/oversmoothing; however, it 1) implicitly assumes that our aggregation step employs the Graph Laplacian or has a similar steady-state and 2) fully orthogonalizes out <span class="math notranslate nohighlight">\(\vec{q}\)</span> at each layer, which may be undesirable for learning <span class="math notranslate nohighlight">\(d_{Katz}\)</span> or other graph structure.</p>
 <p>In practice, we find that <span class="math notranslate nohighlight">\(\vec{q}\)</span> should approximate the Hadamard inverse of the dominant eigenvector, <span class="math notranslate nohighlight">\(v_{1}^{\circ{}-1}\)</span>, where <span class="math notranslate nohighlight">\(x^{\circ{}-1}\cdot{}x = n\)</span> for <span class="math notranslate nohighlight">\(x\in{}R^{n}\)</span>. We conduct ablation studies for <span class="math notranslate nohighlight">\(\vec{q}=\vec{1}\)</span>,<span class="math notranslate nohighlight">\(\vec{q} = d_{degree}^{\circ{}-1}\)</span>, and <span class="math notranslate nohighlight">\(\vec{q}=v_{1}^{\circ{}-1}\)</span> at <span class="math notranslate nohighlight">\(l_{max}=64\)</span>. Parameters are <span class="math notranslate nohighlight">\(s_{1}\)</span> (grad-enabled vs. constant <span class="math notranslate nohighlight">\(\sigma{}(1)\)</span>) and whether the network possesses 1-hop residual connections, which have been shown to improve the stability and performance of deeper GCNs [15]. The best model is then trained for all <span class="math notranslate nohighlight">\(l_{max}=1,2,4,...,64\)</span>. We also compare against PairNorm under various settings.</p>
 <div class="section" id="dataset">
 <h2><span class="section-number">4.1. </span>Dataset<a class="headerlink" href="#dataset" title="Permalink to this headline">¶</a></h2>
@@ -347,11 +342,11 @@
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
 <span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">2</span><span class="o">-</span><span class="mi">81</span><span class="n">aaef866393</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">     </span><span class="mi">19</span> 
-<span class="g g-Whitespace">     </span><span class="mi">20</span>     <span class="c1"># Compute Katz Centrality</span>
-<span class="ne">---&gt; </span><span class="mi">21</span>     <span class="n">vals</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">adj</span><span class="o">.</span><span class="n">to_dense</span><span class="p">())[</span><span class="mi">0</span><span class="p">],</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">21</span>     <span class="n">vals</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">adj</span><span class="o">.</span><span class="n">to_dense</span><span class="p">())[</span><span class="mi">0</span><span class="p">],</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="g g-Whitespace">     </span><span class="mi">22</span>     <span class="n">v</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mf">1.01</span><span class="o">*</span><span class="n">vals</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
-<span class="g g-Whitespace">     </span><span class="mi">23</span>     <span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">inverse</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">adj</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span> <span class="o">-</span> <span class="n">v</span><span class="o">*</span><span class="n">adj</span><span class="o">.</span><span class="n">to_dense</span><span class="p">()</span><span class="o">.</span><span class="n">T</span><span class="p">)</span> <span class="o">-</span> <span class="n">torch</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">adj</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">)),</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="ne">---&gt; </span><span class="mi">23</span>     <span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">inverse</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">adj</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span> <span class="o">-</span> <span class="n">v</span><span class="o">*</span><span class="n">adj</span><span class="o">.</span><span class="n">to_dense</span><span class="p">()</span><span class="o">.</span><span class="n">T</span><span class="p">)</span> <span class="o">-</span> <span class="n">torch</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">adj</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">)),</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">24</span> 
+<span class="g g-Whitespace">     </span><span class="mi">25</span>     <span class="c1"># Set as target</span>
 
 <span class="ne">KeyboardInterrupt</span>: 
 </pre></div>
@@ -1203,7 +1198,7 @@
 </div>
 <div class="section" id="overview">
 <h2><span class="section-number">4.5. </span>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
-<p>Our new normalization scheme, which we are calling OrthNorm (i.e Orthagonal Normalization, get it?), improves upon the BatchNorm case. It surpasses existing SOTA by around an order of magnitude given the same depth and number of epochs. We suspect this is because <span class="math notranslate nohighlight">\(d_{Katz}\)</span> is close enough to <span class="math notranslate nohighlight">\(v_{1}\)</span>, and so PairNorm reduces the feature smoothness <em>too</em> much. Indeed, PairNorm maintains large MAP, AggNorm, and normalized Rayleigh Coefficient across convolutional layers, whereas OrthNorm converges to a small value as <span class="math notranslate nohighlight">\(l\rightarrow{}l_{max}\)</span>. This is due to <span class="math notranslate nohighlight">\(s_{1}\)</span> regulating the degree of orthogonalization; indeed, fixing <span class="math notranslate nohighlight">\(s_{1}\)</span> noticably hampers performance.</p>
+<p>Our new normalization scheme, which we are calling OrthNorm (i.e Orthagonal Normalization, get it?), improves upon the BatchNorm case. It surpasses PairNorm on the test loss by around an order of magnitude given the same depth and number of epochs. <span class="math notranslate nohighlight">\(d_{Katz}\)</span> is close to <span class="math notranslate nohighlight">\(v_{1}\)</span>, and so PairNorm orthogonalizes out <em>too</em> much of the component along <span class="math notranslate nohighlight">\(\vec{1}\)</span>. Indeed, it maintains large MAP, AggNorm, and normalized Rayleigh Coefficient across all convolutional layers. OrthNorm, by constrast, results in our metrics approaching small values as <span class="math notranslate nohighlight">\(l\rightarrow{}l_{max}\)</span>. This is due to <span class="math notranslate nohighlight">\(s_{1}\)</span> regulating convergence. Fixing <span class="math notranslate nohighlight">\(s_{1}\)</span> noticably hampers the model, as the optimal amount of orthogonalization in the final layers is–apparently–none whatsoever.</p>
 </div>
 </div>
 
@@ -1233,7 +1228,7 @@
         <div class='prev-next-bottom'>
             
     <a class='left-prev' id="prev-link" href="DeeperGCNs.html" title="previous page"><span class="section-number">3. </span>Do Deeper Networks Solve the Problem?</a>
-    <a class='right-next' id="next-link" href="HigherMatrixPowers.html" title="next page"><span class="section-number">5. </span>Higher-Order Matrix Powers</a>
+    <a class='right-next' id="next-link" href="FutureWorkandBibliography.html" title="next page"><span class="section-number">5. </span>Addendum</a>
 
         </div>
         

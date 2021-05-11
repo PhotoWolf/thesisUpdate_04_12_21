@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>5. Higher-Order Matrix Powers &#8212; My Jupyter Book</title>
+    <title>Higher-Order Matrix Powers &#8212; My Jupyter Book</title>
     
   <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -56,8 +56,6 @@
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="6. Addendum" href="FutureWorkandBibliography.html" />
-    <link rel="prev" title="4. Normalization Techniques" href="Normalization.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -92,7 +90,7 @@
   </a>
  </li>
 </ul>
-<ul class="current nav sidenav_l1">
+<ul class="nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="DegreeCentrality.html">
    1. Degree Centrality
@@ -113,14 +111,9 @@
    4. Normalization Techniques
   </a>
  </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
-   5. Higher-Order Matrix Powers
-  </a>
- </li>
  <li class="toctree-l1">
   <a class="reference internal" href="FutureWorkandBibliography.html">
-   6. Addendum
+   5. Addendum
   </a>
  </li>
 </ul>
@@ -213,22 +206,22 @@
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#simplified-graph-convolution-al-networks">
-   5.1. Simplified Graph Convolution(al Networks)
+   Simplified Graph Convolution(al Networks)
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#polynomialsgc">
-   5.2. PolynomialSGC
+   PolynomialSGC
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#mixhop">
-   5.3. MixHop
+   MixHop
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#overview">
-   5.4. Overview
+   Overview
   </a>
  </li>
 </ul>
@@ -306,8 +299,35 @@
 </div>
 </div>
 </div>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compute the Mean Average Distance of inputs</span>
+<span class="k">def</span> <span class="nf">batched_MAD</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">edge_index</span><span class="p">,</span><span class="n">edge_weights</span><span class="p">):</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="o">/</span><span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)[:,</span><span class="kc">None</span><span class="p">]</span>
+    <span class="n">cosine</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">edge_index</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">*</span> <span class="n">X</span><span class="p">[</span><span class="n">edge_index</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span>
+    <span class="k">return</span> <span class="mi">1</span><span class="o">/</span><span class="n">edge_weights</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">*</span> <span class="p">(</span><span class="n">edge_weights</span> <span class="o">*</span> <span class="n">cosine</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+<span class="c1"># Compute the Aggregation Norm</span>
+<span class="k">def</span> <span class="nf">batched_agg</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">edge_index</span><span class="p">,</span><span class="n">edge_weights</span><span class="p">,</span><span class="n">batch</span><span class="p">):</span>
+    <span class="n">nX</span> <span class="o">=</span> <span class="n">torch_scatter</span><span class="o">.</span><span class="n">scatter_sum</span><span class="p">(</span><span class="n">edge_weights</span><span class="p">[:,</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">X</span><span class="p">[</span><span class="n">edge_index</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="n">edge_index</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">X</span><span class="p">,</span><span class="n">nX</span> <span class="o">=</span> <span class="n">X</span><span class="o">/</span><span class="n">torch_scatter</span><span class="o">.</span><span class="n">scatter_sum</span><span class="p">(</span><span class="n">X</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span><span class="n">batch</span><span class="p">,</span><span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">sqrt</span><span class="p">()[</span><span class="n">batch</span><span class="p">],</span>\
+              <span class="n">nX</span><span class="o">/</span><span class="n">torch_scatter</span><span class="o">.</span><span class="n">scatter_sum</span><span class="p">(</span><span class="n">nX</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span><span class="n">batch</span><span class="p">,</span><span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">sqrt</span><span class="p">()[</span><span class="n">batch</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">X</span> <span class="o">-</span> <span class="n">nX</span><span class="p">,</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+<span class="c1"># Compute normalized (absolute) rayleigh quotient</span>
+<span class="k">def</span> <span class="nf">rayleigh_quotient</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">edge_index</span><span class="p">,</span><span class="n">edge_weights</span><span class="p">,</span><span class="n">batch</span><span class="p">,</span><span class="n">eig_max</span><span class="p">,</span><span class="n">eig_min</span><span class="p">):</span>
+    <span class="n">num</span> <span class="o">=</span> <span class="n">torch_scatter</span><span class="o">.</span><span class="n">scatter_sum</span><span class="p">(</span><span class="n">X</span> <span class="o">*</span> <span class="n">torch_scatter</span><span class="o">.</span><span class="n">scatter_sum</span><span class="p">(</span><span class="n">edge_weights</span><span class="p">[:,</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> 
+                                        <span class="n">X</span><span class="p">[</span><span class="n">edge_index</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="n">edge_index</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+                                        <span class="n">batch</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">denom</span> <span class="o">=</span> <span class="n">torch_scatter</span><span class="o">.</span><span class="n">scatter_sum</span><span class="p">(</span><span class="n">X</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span><span class="n">batch</span><span class="p">,</span><span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">R</span> <span class="o">=</span> <span class="n">num</span><span class="o">/</span><span class="p">(</span><span class="n">denom</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">eig_max</span><span class="p">[:,</span><span class="kc">None</span><span class="p">]</span> <span class="o">-</span> <span class="n">R</span><span class="o">.</span><span class="n">abs</span><span class="p">())</span><span class="o">/</span><span class="p">(</span><span class="n">eig_max</span> <span class="o">-</span> <span class="n">eig_min</span><span class="p">)[:,</span><span class="kc">None</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
 <div class="section" id="higher-order-matrix-powers">
-<h1><span class="section-number">5. </span>Higher-Order Matrix Powers<a class="headerlink" href="#higher-order-matrix-powers" title="Permalink to this headline">¶</a></h1>
+<h1>Higher-Order Matrix Powers<a class="headerlink" href="#higher-order-matrix-powers" title="Permalink to this headline">¶</a></h1>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">best_table</span> <span class="o">=</span> <span class="p">[]</span>
@@ -316,11 +336,11 @@
 </div>
 </div>
 <div class="section" id="simplified-graph-convolution-al-networks">
-<h2><span class="section-number">5.1. </span>Simplified Graph Convolution(al Networks)<a class="headerlink" href="#simplified-graph-convolution-al-networks" title="Permalink to this headline">¶</a></h2>
+<h2>Simplified Graph Convolution(al Networks)<a class="headerlink" href="#simplified-graph-convolution-al-networks" title="Permalink to this headline">¶</a></h2>
 <p>Wu et. al. (2019) introduced the Simplified Graph Convolution (SGC) [17]</p>
 <div class="math notranslate nohighlight">
-\[X^{out} = \Theta{}(A^{k}X^{in})\]</div>
-<p>In practice, they found that removing the non-linearities at each GCN layer did not impact classification accuracy whilst greatly reducing the parameter count and training time. Since learning Katz Centrality for low-density networks seemingly requires deeper (and thus more expensive) models, we felt it prudent to do some experiments.</p>
+\[X^{out} = \Theta{}(A^{l}X^{in})\]</div>
+<p>In practice, they found that removing the non-linearities at each GCN layer did not impact classification accuracy whilst greatly reducing the parameter count and training time. Since learning Katz Centrality for low-density networks seemingly requires deeper (and thus more expensive) models, we felt it prudent to do some experiments. We additionally normalize at each aggregation step for the sake of stability.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">SGC</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
@@ -345,12 +365,30 @@
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">graph_results</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">metrics</span> <span class="o">=</span> <span class="p">[]</span>
 
 <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">16</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="mi">64</span><span class="p">]:</span>
     <span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
     <span class="n">model</span> <span class="o">=</span> <span class="n">SGC</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">k</span><span class="p">)</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
 
     <span class="n">graph_results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">train_loop</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="n">train_loader</span><span class="p">,</span><span class="n">test_loader</span><span class="p">,</span><span class="mi">150</span><span class="p">,</span><span class="n">lr</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">))</span>
+    
+    <span class="n">Agg</span><span class="p">,</span><span class="n">Ray</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">k</span><span class="p">),</span><span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">data</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">test_loader</span><span class="p">):</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
+        <span class="n">edge_index</span><span class="p">,</span><span class="n">edge_weight</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">edge_index</span><span class="o">.</span><span class="n">cuda</span><span class="p">(),</span><span class="n">data</span><span class="o">.</span><span class="n">edge_weight</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
+        <span class="n">batch</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">batch</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
+        
+        <span class="k">for</span> <span class="n">jdx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">k</span><span class="p">):</span>
+              <span class="n">X</span> <span class="o">=</span> <span class="n">torch_scatter</span><span class="o">.</span><span class="n">scatter_sum</span><span class="p">(</span><span class="n">edge_weight</span><span class="p">[:,</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">X</span><span class="p">[</span><span class="n">edge_index</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span><span class="n">edge_index</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+              <span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="o">/</span><span class="n">torch_scatter</span><span class="o">.</span><span class="n">scatter_sum</span><span class="p">(</span><span class="n">X</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span><span class="n">batch</span><span class="p">,</span><span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">sqrt</span><span class="p">()[</span><span class="n">batch</span><span class="p">]</span>
+            
+              <span class="n">Agg</span><span class="p">[</span><span class="n">jdx</span><span class="p">]</span> <span class="o">+=</span> <span class="n">batched_agg</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">data</span><span class="o">.</span><span class="n">edge_index</span><span class="o">.</span><span class="n">cuda</span><span class="p">(),</span><span class="n">data</span><span class="o">.</span><span class="n">edge_weight</span><span class="o">.</span><span class="n">cuda</span><span class="p">(),</span><span class="n">batch</span><span class="p">)</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+              <span class="n">Ray</span><span class="p">[</span><span class="n">jdx</span><span class="p">]</span> <span class="o">+=</span> <span class="n">rayleigh_quotient</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">data</span><span class="o">.</span><span class="n">edge_index</span><span class="o">.</span><span class="n">cuda</span><span class="p">(),</span><span class="n">data</span><span class="o">.</span><span class="n">edge_weight</span><span class="o">.</span><span class="n">cuda</span><span class="p">(),</span>
+                                    <span class="n">batch</span><span class="p">,</span><span class="n">data</span><span class="o">.</span><span class="n">eig_max</span><span class="o">.</span><span class="n">cuda</span><span class="p">(),</span><span class="n">data</span><span class="o">.</span><span class="n">eig_min</span><span class="o">.</span><span class="n">cuda</span><span class="p">())</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+        
+    <span class="n">metrics</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">Agg</span><span class="o">/</span><span class="p">(</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span><span class="n">Ray</span><span class="o">/</span><span class="p">(</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">)])</span>
+    
 </pre></div>
 </div>
 </div>
@@ -385,10 +423,42 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/HigherMatrixPowers_9_0.png" src="_images/HigherMatrixPowers_9_0.png" />
+<img alt="_images/HigherMatrixPowers_10_0.png" src="_images/HigherMatrixPowers_10_0.png" />
 </div>
 </div>
 <p>Test loss and rank displacement are similar to GraphConv models of similar depth. Convergence is nigh-instantaneous (owing to the small parameter count); since we do not have to backpropagate through the aggreations, SGC also takes a third of the time to train.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">l</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">16</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="mi">64</span><span class="p">]):</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+
+
+  <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">metrics</span><span class="p">[</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Layer&#39;</span><span class="p">)</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Aggregation Norm&#39;</span><span class="p">)</span>
+
+  <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">metrics</span><span class="p">[</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Layer&#39;</span><span class="p">)</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Normalized Rayleigh Quotient&#39;</span><span class="p">)</span>
+    
+  <span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;l=</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">l</span><span class="p">))</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/HigherMatrixPowers_12_0.png" src="_images/HigherMatrixPowers_12_0.png" />
+<img alt="_images/HigherMatrixPowers_12_1.png" src="_images/HigherMatrixPowers_12_1.png" />
+<img alt="_images/HigherMatrixPowers_12_2.png" src="_images/HigherMatrixPowers_12_2.png" />
+<img alt="_images/HigherMatrixPowers_12_3.png" src="_images/HigherMatrixPowers_12_3.png" />
+<img alt="_images/HigherMatrixPowers_12_4.png" src="_images/HigherMatrixPowers_12_4.png" />
+<img alt="_images/HigherMatrixPowers_12_5.png" src="_images/HigherMatrixPowers_12_5.png" />
+</div>
+</div>
+<p>We plot the AggNorm and normalized Rayleigh Coefficient for each aggregation step. Both metrics decay exponentially towards zero, which is to be expected; SGC is essentially Power Iterations followed by an MLP regression head. MAP is not particaruily meaningful in this case, so we do not include it.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">best_table</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">graph_results</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">7</span><span class="p">)])</span>
@@ -398,7 +468,7 @@
 </div>
 </div>
 <div class="section" id="polynomialsgc">
-<h2><span class="section-number">5.2. </span>PolynomialSGC<a class="headerlink" href="#polynomialsgc" title="Permalink to this headline">¶</a></h2>
+<h2>PolynomialSGC<a class="headerlink" href="#polynomialsgc" title="Permalink to this headline">¶</a></h2>
 <p>If matrix <span class="math notranslate nohighlight">\(A\)</span> has eigenpairs <span class="math notranslate nohighlight">\((\lambda_{i},v_{i})\)</span>, <span class="math notranslate nohighlight">\(p(A)\)</span> (for some polynomial <span class="math notranslate nohighlight">\(p\)</span>) possesses eigenpairs <span class="math notranslate nohighlight">\((p(\lambda_{i}),v_{i})\)</span>. SGC uses <span class="math notranslate nohighlight">\(p(A) = A^{k}\)</span>, as all except the final matrix power are discarded. But it is often possible to choose a more efficient polynomial, in the sense that <span class="math notranslate nohighlight">\(\frac{|p(\lambda_{2})|}{|p(\lambda_{1})|}\leq{}(\frac{|\lambda_{2}|}{|\lambda_{1}|})^{k}\)</span>. To this end, we propose an extension of SGC, PolynomialSGC:</p>
 <div class="math notranslate nohighlight">
 \[X^{out} = \Theta{}(\frac{c_{k}A^{k}X^{in} + c_{k-1}A^{k-1}X^{in} + ... + c_{0}X^{in}}{||c_{k}A^{k}X^{in} + c_{k-1}A^{k-1}X^{in} + ... + c_{0}X^{in}||_{2}})\]</div>
@@ -417,7 +487,7 @@
 
     <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">X</span><span class="p">,</span><span class="n">edge_index</span><span class="p">,</span><span class="n">edge_weight</span><span class="p">,</span><span class="n">batch</span><span class="p">):</span>
         <span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="o">/</span><span class="n">torch_scatter</span><span class="o">.</span><span class="n">scatter_sum</span><span class="p">(</span><span class="n">X</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span><span class="n">batch</span><span class="p">,</span><span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">sqrt</span><span class="p">()[</span><span class="n">batch</span><span class="p">]</span>
-        <span class="n">coeffs</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coefficients</span><span class="p">)</span>
+        <span class="n">coeffs</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Softmax</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)(</span><span class="bp">self</span><span class="o">.</span><span class="n">coefficients</span><span class="p">)</span>
 
         <span class="n">Z</span> <span class="o">=</span> <span class="n">coeffs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">X</span>
         <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">k</span><span class="p">):</span>
@@ -432,14 +502,35 @@
 </div>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">graph_results</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">metrics</span> <span class="o">=</span> <span class="p">[]</span>
 
-<span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">16</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="mi">64</span><span class="p">]:</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
     <span class="n">model</span> <span class="o">=</span> <span class="n">PolynomialSGC</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">k</span><span class="p">)</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
+
+    <span class="n">graph_results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">train_loop</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="n">train_loader</span><span class="p">,</span><span class="n">test_loader</span><span class="p">,</span><span class="mi">150</span><span class="p">,</span><span class="n">lr</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">))</span>
     
-    <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">train_loop</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="n">train_loader</span><span class="p">,</span><span class="n">test_loader</span><span class="p">,</span><span class="mi">150</span><span class="p">,</span><span class="n">lr</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">))</span>
-    <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">empty_cache</span><span class="p">()</span>
+    <span class="n">Agg</span><span class="p">,</span><span class="n">Ray</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">k</span><span class="p">),</span><span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">data</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">test_loader</span><span class="p">):</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
+        <span class="n">edge_index</span><span class="p">,</span><span class="n">edge_weight</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">edge_index</span><span class="o">.</span><span class="n">cuda</span><span class="p">(),</span><span class="n">data</span><span class="o">.</span><span class="n">edge_weight</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
+        <span class="n">batch</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">batch</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
+        
+        <span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="o">/</span><span class="n">torch_scatter</span><span class="o">.</span><span class="n">scatter_sum</span><span class="p">(</span><span class="n">X</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span><span class="n">batch</span><span class="p">,</span><span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">sqrt</span><span class="p">()[</span><span class="n">batch</span><span class="p">]</span>
+        <span class="n">coeffs</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">coefficients</span><span class="p">)</span>
+        
+        <span class="n">Z</span> <span class="o">=</span> <span class="n">coeffs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">X</span>
+        <span class="k">for</span> <span class="n">jdx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">k</span><span class="p">):</span>
+              <span class="n">X</span> <span class="o">=</span> <span class="n">torch_scatter</span><span class="o">.</span><span class="n">scatter_sum</span><span class="p">(</span><span class="n">edge_weight</span><span class="p">[:,</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">X</span><span class="p">[</span><span class="n">edge_index</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span><span class="n">edge_index</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+              <span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="o">/</span><span class="n">torch_scatter</span><span class="o">.</span><span class="n">scatter_sum</span><span class="p">(</span><span class="n">X</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span><span class="n">batch</span><span class="p">,</span><span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">sqrt</span><span class="p">()[</span><span class="n">batch</span><span class="p">]</span>
+              <span class="n">Z</span> <span class="o">=</span> <span class="n">Z</span> <span class="o">+</span> <span class="n">coeffs</span><span class="p">[</span><span class="n">jdx</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">X</span>
+            
+              <span class="n">Agg</span><span class="p">[</span><span class="n">jdx</span><span class="p">]</span> <span class="o">+=</span> <span class="n">batched_agg</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span><span class="n">data</span><span class="o">.</span><span class="n">edge_index</span><span class="o">.</span><span class="n">cuda</span><span class="p">(),</span><span class="n">data</span><span class="o">.</span><span class="n">edge_weight</span><span class="o">.</span><span class="n">cuda</span><span class="p">(),</span><span class="n">batch</span><span class="p">)</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+              <span class="n">Ray</span><span class="p">[</span><span class="n">jdx</span><span class="p">]</span> <span class="o">+=</span> <span class="n">rayleigh_quotient</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span><span class="n">data</span><span class="o">.</span><span class="n">edge_index</span><span class="o">.</span><span class="n">cuda</span><span class="p">(),</span><span class="n">data</span><span class="o">.</span><span class="n">edge_weight</span><span class="o">.</span><span class="n">cuda</span><span class="p">(),</span>
+                                    <span class="n">batch</span><span class="p">,</span><span class="n">data</span><span class="o">.</span><span class="n">eig_max</span><span class="o">.</span><span class="n">cuda</span><span class="p">(),</span><span class="n">data</span><span class="o">.</span><span class="n">eig_min</span><span class="o">.</span><span class="n">cuda</span><span class="p">())</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+        
+    <span class="n">metrics</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">Agg</span><span class="o">/</span><span class="p">(</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span><span class="n">Ray</span><span class="o">/</span><span class="p">(</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">)])</span>
 </pre></div>
 </div>
 </div>
@@ -450,20 +541,20 @@
 
 <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">k</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">16</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="mi">64</span><span class="p">]):</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">graph_results</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Train Error&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;L1 Error&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Iterations&#39;</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">k</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">16</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="mi">64</span><span class="p">]):</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">graph_results</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Test Error&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Iterations&#39;</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">k</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">16</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="mi">64</span><span class="p">]):</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="mi">2</span><span class="p">],</span><span class="n">label</span><span class="o">=</span><span class="n">k</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">graph_results</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="mi">2</span><span class="p">],</span><span class="n">label</span><span class="o">=</span><span class="n">k</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Ranking Error&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Avg. Displacement&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Iterations&#39;</span><span class="p">)</span>
@@ -474,20 +565,51 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/HigherMatrixPowers_16_0.png" src="_images/HigherMatrixPowers_16_0.png" />
+<img alt="_images/HigherMatrixPowers_19_0.png" src="_images/HigherMatrixPowers_19_0.png" />
 </div>
 </div>
 <p>Train and test loss are slightly improved from base SGC, albeit much more erratic. Rank displacement benefits the most, and change is especially notable in the <span class="math notranslate nohighlight">\(l_{max}=64\)</span> case.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">l</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">16</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="mi">64</span><span class="p">]):</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+
+
+  <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">metrics</span><span class="p">[</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Layer&#39;</span><span class="p">)</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Aggregation Norm&#39;</span><span class="p">)</span>
+
+  <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">metrics</span><span class="p">[</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Layer&#39;</span><span class="p">)</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Normalized Rayleigh Quotient&#39;</span><span class="p">)</span>
+    
+  <span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;l=</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">l</span><span class="p">))</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/HigherMatrixPowers_21_0.png" src="_images/HigherMatrixPowers_21_0.png" />
+<img alt="_images/HigherMatrixPowers_21_1.png" src="_images/HigherMatrixPowers_21_1.png" />
+<img alt="_images/HigherMatrixPowers_21_2.png" src="_images/HigherMatrixPowers_21_2.png" />
+<img alt="_images/HigherMatrixPowers_21_3.png" src="_images/HigherMatrixPowers_21_3.png" />
+<img alt="_images/HigherMatrixPowers_21_4.png" src="_images/HigherMatrixPowers_21_4.png" />
+<img alt="_images/HigherMatrixPowers_21_5.png" src="_images/HigherMatrixPowers_21_5.png" />
+</div>
+</div>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">best_table</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">7</span><span class="p">)])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">best_table</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">graph_results</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">7</span><span class="p">)])</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
 <div class="section" id="mixhop">
-<h2><span class="section-number">5.3. </span>MixHop<a class="headerlink" href="#mixhop" title="Permalink to this headline">¶</a></h2>
+<h2>MixHop<a class="headerlink" href="#mixhop" title="Permalink to this headline">¶</a></h2>
 <p>We also examine a single-layer MixHop model as introduced in El-Haija et. al. (2019). Taking similar inspiration from SGC, MixHop concatenates each level of aggreation into a single feature vector [18].
 $<span class="math notranslate nohighlight">\(X^{out} = \Theta{}(A^{k}X^{in} || A^{k-1}X^{in} || ... || X^{in})\)</span>$</p>
 <div class="cell tag_hide-input docutils container">
@@ -526,6 +648,33 @@ $<span class="math notranslate nohighlight">\(X^{out} = \Theta{}(A^{k}X^{in} || 
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">26</span><span class="o">-</span><span class="mi">04</span><span class="n">c1c9519bdb</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span>     <span class="n">model</span> <span class="o">=</span> <span class="n">MixHop</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">k</span><span class="p">)</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> 
+<span class="ne">----&gt; </span><span class="mi">7</span>     <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">train_loop</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="n">train_loader</span><span class="p">,</span><span class="n">test_loader</span><span class="p">,</span><span class="mi">150</span><span class="p">,</span><span class="n">lr</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">))</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span>     <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">empty_cache</span><span class="p">()</span>
+
+<span class="nn">~/thesisUpdate_04_12_21/Introduction.ipynb</span> in <span class="ni">train_loop</span><span class="nt">(model, train_loader, test_loader, epochs, lr)</span>
+<span class="g g-Whitespace">    </span><span class="mi">207</span>      <span class="s2">&quot;hide-input&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">208</span>     <span class="p">]</span>
+<span class="ne">--&gt; </span><span class="mi">209</span>    <span class="p">},</span>
+<span class="g g-Whitespace">    </span><span class="mi">210</span>    <span class="s2">&quot;outputs&quot;</span><span class="p">:</span> <span class="p">[],</span>
+<span class="g g-Whitespace">    </span><span class="mi">211</span>    <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="p">[</span>
+
+<span class="nn">~/thesisUpdate_04_12_21/Introduction.ipynb</span> in <span class="ni">rank_disp</span><span class="nt">(X, Y, batch)</span>
+<span class="g g-Whitespace">    </span><span class="mi">140</span>    <span class="s2">&quot;cell_type&quot;</span><span class="p">:</span> <span class="s2">&quot;markdown&quot;</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">141</span>    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;controlled-brass&quot;</span><span class="p">,</span>
+<span class="ne">--&gt; </span><span class="mi">142</span>    <span class="s2">&quot;metadata&quot;</span><span class="p">:</span> <span class="p">{</span>
+<span class="g g-Whitespace">    </span><span class="mi">143</span>     <span class="s2">&quot;tags&quot;</span><span class="p">:</span> <span class="p">[</span>
+<span class="g g-Whitespace">    </span><span class="mi">144</span>      <span class="s2">&quot;hide-input&quot;</span>
+
+<span class="ne">KeyboardInterrupt</span>: 
+</pre></div>
+</div>
+</div>
 </div>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
@@ -556,9 +705,6 @@ $<span class="math notranslate nohighlight">\(X^{out} = \Theta{}(A^{k}X^{in} || 
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="_images/HigherMatrixPowers_23_0.png" src="_images/HigherMatrixPowers_23_0.png" />
-</div>
 </div>
 <p>Performance is on par with PolynomialSGC (if marginally better); however, the convergence of test error and rank displacement for small <span class="math notranslate nohighlight">\(l_{max}\)</span> is much less stable.</p>
 <div class="cell docutils container">
@@ -570,7 +716,7 @@ $<span class="math notranslate nohighlight">\(X^{out} = \Theta{}(A^{k}X^{in} || 
 </div>
 </div>
 <div class="section" id="overview">
-<h2><span class="section-number">5.4. </span>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -674,8 +820,6 @@ $<span class="math notranslate nohighlight">\(X^{out} = \Theta{}(A^{k}X^{in} || 
         
         <div class='prev-next-bottom'>
             
-    <a class='left-prev' id="prev-link" href="Normalization.html" title="previous page"><span class="section-number">4. </span>Normalization Techniques</a>
-    <a class='right-next' id="next-link" href="FutureWorkandBibliography.html" title="next page"><span class="section-number">6. </span>Addendum</a>
 
         </div>
         
