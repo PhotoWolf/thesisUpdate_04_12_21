@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>5. Addendum &#8212; My Jupyter Book</title>
+    <title>3. Addendum &#8212; My Jupyter Book</title>
     
   <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -56,7 +56,7 @@
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="4. Normalization Techniques" href="Normalization.html" />
+    <link rel="prev" title="2. Katz Centrality" href="KatzCentrality.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -102,19 +102,9 @@
    2. Katz Centrality
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="DeeperGCNs.html">
-   3. Do Deeper Networks Solve the Problem?
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Normalization.html">
-   4. Normalization Techniques
-  </a>
- </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   5. Addendum
+   3. Addendum
   </a>
  </li>
 </ul>
@@ -207,12 +197,12 @@
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#future-directions">
-   5.1. Future Directions
+   3.1. Future Directions
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#bibliography">
-   5.2. Bibliography
+   3.2. Bibliography
   </a>
  </li>
 </ul>
@@ -228,17 +218,17 @@
               <div>
                 
   <div class="section" id="addendum">
-<h1><span class="section-number">5. </span>Addendum<a class="headerlink" href="#addendum" title="Permalink to this headline">¶</a></h1>
+<h1><span class="section-number">3. </span>Addendum<a class="headerlink" href="#addendum" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="future-directions">
-<h2><span class="section-number">5.1. </span>Future Directions<a class="headerlink" href="#future-directions" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">3.1. </span>Future Directions<a class="headerlink" href="#future-directions" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><p>Thus far, we have only assessed centrality measures that can be easily expressed as the weighted sum of matrix powers. Path-based centrality (i.e betweeness, closeness, etc.) may pose additional problems for standard GCN architectures. Moreover, while even Katz Centrality is fairly quick to compute for small to medium sized networks, path centralities do not scale well. The fastest algorithm is that of Brandes [19], which is <span class="math notranslate nohighlight">\(O(|N||E|)\)</span>. It is not as trivial to merely precompute these metrics and append them as node features.</p></li>
-<li><p>Regarding our current work, there are a few avenues we’d like to experiment with further. Overmsoothing and training deeper GCNs is an active area of study in the community, and the theoretical side is not all that well developed. There are also some custom architectures we’d like to try, in so far as they might perform better than GraphConv. The code for these is already finished (I spent Janurary playing around with a few different ideas); it is just a matter of testing them on our synthetic dataset.</p></li>
-<li><p>The MoleculeNet benchmark contains a series of graph datasets for organic and quantum chemistry [20]. Unliked most benchmarks (Cora, Citeseer, etc.), MoleculeNet is predominantly structural, and some of the datasets do not even possess node features aside from relative positions in <span class="math notranslate nohighlight">\(R^{3}\)</span>. It is the ideal “real-world” case to test any techniques/models we may develop.</p></li>
+<li><p>[3] use the first eight Laplacian eigenmodes as positional embeddings; they find that this greatly improves GCN performance on a few clustering datasets. Now, computing multiple eigenmodes is not terribly cheap, and it may not always be beneficial.  We’d really like for our models to be able to approximate these eigenmodes from scratch, only if useful to the task at hand. Unfortunetly, standard GCN architectures are not well-equipped to capture anything besides the dominant eigenvector. To address this, we have begun to experiment with a UNet-style architecture, where, instead of operating at different resolutions, we aggregate over different modes. Each subsequent layer is periodically orthogonalized against the output of the previous; think of it as an Arnoldi-GCN hybrid.</p></li>
+<li><p>We’d like to do some more experimentation with OrthNorm. It could potentially be quite useful for minimizing oversmoothing in node classification tasks, and there is a wealth of GCN normalization literature with which we can compare.</p></li>
+<li><p>Eventually, we need to train our various models, normalization schemes, etc. on some proper benchmarks. MoleculeNet contains a series of graph datasets for organic and quantum chemistry [20]. Unliked most benchmarks (Cora, Citeseer, etc.), MoleculeNet is predominantly topological, and some of the datasets do not even possess node features aside from relative positions in <span class="math notranslate nohighlight">\(R^{3}\)</span>. As far as structure is concerned, it is the ideal “real-world” case to test any techniques we may develop. [3] also introduced some synthetic datasets which may be of interest.</p></li>
 </ul>
 </div>
 <div class="section" id="bibliography">
-<h2><span class="section-number">5.2. </span>Bibliography<a class="headerlink" href="#bibliography" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">3.2. </span>Bibliography<a class="headerlink" href="#bibliography" title="Permalink to this headline">¶</a></h2>
 <ol class="simple">
 <li><p>Gilmer, J., Schoenholz, S., Riley, P.F., Vinyals, O., &amp; Dahl, G.E. (2017). Neural Message Passing for Quantum Chemistry. ArXiv, abs/1704.01212.</p></li>
 <li><p>Hu, Z., Fan, C., Chen, T., Chang, K., &amp; Sun, Y. (2019). Pre-Training Graph Neural Networks for Generic Structural Feature Extraction. ArXiv, abs/1905.13728.</p></li>
@@ -260,6 +250,7 @@
 <li><p>Abu-El-Haija, S., Perozzi, B., Kapoor, A., Harutyunyan, H., Alipourfard, N., Lerman, K., Steeg, G.V., &amp; Galstyan, A. (2019). MixHop: Higher-Order Graph Convolutional Architectures via Sparsified Neighborhood Mixing. ICML.</p></li>
 <li><p>Brandes, U. (2001). A faster algorithm for betweenness centrality. The Journal of Mathematical Sociology, 25, 163 - 177.</p></li>
 <li><p>Wu, Z., Ramsundar, B., Feinberg, E., Gomes, J., Geniesse, C., Pappu, A.S., Leswing, K., &amp; Pande, V. (2018). MoleculeNet: a benchmark for molecular machine learning† †Electronic supplementary information (ESI) available. See DOI: 10.1039/c7sc02664a. Chemical Science, 9, 513 - 530.</p></li>
+<li><p>Cai, T., Luo, S., Xu, K., He, D., Liu, T., &amp; Wang, L. (2020). GraphNorm: A Principled Approach to Accelerating Graph Neural Network Training. ArXiv, abs/2009.03294.</p></li>
 </ol>
 </div>
 </div>
@@ -289,7 +280,7 @@
         
         <div class='prev-next-bottom'>
             
-    <a class='left-prev' id="prev-link" href="Normalization.html" title="previous page"><span class="section-number">4. </span>Normalization Techniques</a>
+    <a class='left-prev' id="prev-link" href="KatzCentrality.html" title="previous page"><span class="section-number">2. </span>Katz Centrality</a>
 
         </div>
         

@@ -32,14 +32,8 @@ nbclient.exceptions.CellTimeoutError: A cell timed out while it was being execut
 The message was: Cell execution timed out.
 Here is a preview of the cell contents:
 -------------------
-for idx,G in enumerate(d):
-    G.edge_weight = torch.ones(G.edge_index[0].shape)
-    adj = torch_sparse.SparseTensor(row=G.edge_index[0],col=G.edge_index[1],value=G.edge_weight)
-    v = 1/(1.01*torch.norm(torch.eig(adj.to_dense())[0],dim=1).max())
-    y = torch.sum(torch.inverse(torch.eye(adj.size(0)) - v*adj.to_dense().T),dim=1)
-    G.y = y
-    d[idx] = G
-    
-train,test = d[:1500],d[1500::]
+['torch.manual_seed(0)', '', 'Graph4 = GraphConv(1,4,1,4).cuda()', 'Edge4 = EdgeConv(1,4,1,4).cuda()', '']
+...
+['', 'graph16_metrics = train_loop(Graph16,train_loader,test_loader,300,lr=1e-3)', 'torch.cuda.empty_cache()', 'edge16_metrics = train_loop(Edge16,train_loader,test_loader,300,lr=1e-3)', 'torch.cuda.empty_cache()']
 -------------------
 

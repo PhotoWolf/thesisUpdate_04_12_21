@@ -32,8 +32,8 @@ nbclient.exceptions.CellTimeoutError: A cell timed out while it was being execut
 The message was: Cell execution timed out.
 Here is a preview of the cell contents:
 -------------------
-['num_graphs = 3000', 'd = []', 'for _ in range(num_graphs):', '    # Set Cluster sizes and edge probabilities', '    n = torch.randint(50,100,(5,))']
+['graph_results = []', 'metrics = []', 'k = 64', 'for n in [True,False]:', '    torch.manual_seed(0)']
 ...
-['    d[idx] = G', '    ', 'train,test = d[:2000],d[2000::]', 'train_loader = torch_geometric.data.DataLoader(train,batch_size=200,shuffle=True)', 'test_loader = torch_geometric.data.DataLoader(test,batch_size=200,shuffle=True)']
+['            GFS[jdx] += batched_GFS(X,data.edge_index.cuda(),data.edge_weight.cuda(),batch).item()', '            Ray[jdx] += rayleigh_quotient(X,data.edge_index.cuda(),data.edge_weight.cuda(),', '                                    batch,data.eig_max.cuda(),data.eig_min.cuda()).item()', '    metrics.append([MAD/(idx+1),GFS/(idx+1),Ray/(idx+1)])', '    torch.cuda.empty_cache()']
 -------------------
 

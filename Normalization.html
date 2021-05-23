@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>4. Normalization Techniques &#8212; My Jupyter Book</title>
+    <title>Normalization Techniques &#8212; My Jupyter Book</title>
     
   <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -56,8 +56,6 @@
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="5. Addendum" href="FutureWorkandBibliography.html" />
-    <link rel="prev" title="3. Do Deeper Networks Solve the Problem?" href="DeeperGCNs.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -92,7 +90,7 @@
   </a>
  </li>
 </ul>
-<ul class="current nav sidenav_l1">
+<ul class="nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="DegreeCentrality.html">
    1. Degree Centrality
@@ -104,18 +102,8 @@
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="DeeperGCNs.html">
-   3. Do Deeper Networks Solve the Problem?
-  </a>
- </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
-   4. Normalization Techniques
-  </a>
- </li>
- <li class="toctree-l1">
   <a class="reference internal" href="FutureWorkandBibliography.html">
-   5. Addendum
+   3. Addendum
   </a>
  </li>
 </ul>
@@ -208,22 +196,21 @@
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#dataset">
-   4.1. Dataset
+   Dataset
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#model">
-   4.2. Model
+   Model
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#orthnorm">
-   4.3. OrthNorm
+   OrthNorm
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#vec-q-vec-1">
-     4.3.1.
      <span class="math notranslate nohighlight">
       \(\vec{q} = \vec{1}\)
      </span>
@@ -231,7 +218,6 @@
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#q-d-degree-circ-1">
-     4.3.2.
      <span class="math notranslate nohighlight">
       \(q = d_{degree}^{\circ{}-1}\)
      </span>
@@ -239,7 +225,6 @@
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#q-v-1-circ-1">
-     4.3.3.
      <span class="math notranslate nohighlight">
       \(q=v_{1}^{\circ{}-1}\)
      </span>
@@ -247,19 +232,19 @@
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#best-model">
-     4.3.4. Best Model
+     Best Model
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#pairnorm">
-   4.4. PairNorm
+   PairNorm
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#overview">
-   4.5. Overview
+   Overview
   </a>
  </li>
 </ul>
@@ -283,26 +268,9 @@
 </div>
 </div>
 </div>
-<div class="section" id="normalization-techniques">
-<h1><span class="section-number">4. </span>Normalization Techniques<a class="headerlink" href="#normalization-techniques" title="Permalink to this headline">¶</a></h1>
-<p>Within the literature, the typical approach to smoothing is to apply some type of normalization. To this end, we propose orthogonalizing out vector <span class="math notranslate nohighlight">\(\vec{q}\)</span> from <span class="math notranslate nohighlight">\(X^{l}_{:,i}\)</span> and then renormalizing each column. We incorporate additional scale parameters <span class="math notranslate nohighlight">\(0\leq{}s_{1}\leq{}1\)</span> and <span class="math notranslate nohighlight">\(s_{2}\)</span>, which allow the model to “self-regulate” its own convergence to <span class="math notranslate nohighlight">\(v_{1}\)</span>.</p>
-<div class="math notranslate nohighlight">
-\[X^{l}_{:,i} = X^{l}_{:,i} - s_{1}\frac{\vec{q}^{T}X^{l}_{:,i}}{||\vec{q}||_{2}^{2}}\vec{q}\]</div>
-<div class="math notranslate nohighlight">
-\[X_{:,i}^{l} = s_{2}\frac{X_{:,i}^{l}}{||X_{:,i}^{l}||_{2}}\]</div>
-<p>If <span class="math notranslate nohighlight">\(s_{1}=1\)</span> and <span class="math notranslate nohighlight">\(\vec{q}=\vec{1}\)</span>, this is equivalent to PairNorm with individual scaling [16].</p>
-<div class="math notranslate nohighlight">
-\[X_{:,i}^{l} = X_{:,i}^{l} - \frac{1}{n}\sum_{i=0}^{n}X_{:,i}^{l}\]</div>
-<div class="math notranslate nohighlight">
-\[X_{:,i}^{l} = s \frac{X_{:,i}^{l}}{||X_{:,i}^{l}||_{2}}\]</div>
-<p>PairNorm is the current SOTA for GCN normalization/oversmoothing; however, it 1) implicitly assumes that our aggregation step employs the Graph Laplacian or has a similar steady-state and 2) fully orthogonalizes out <span class="math notranslate nohighlight">\(\vec{q}\)</span> at each layer, which may be undesirable for learning <span class="math notranslate nohighlight">\(d_{Katz}\)</span> or other graph structure.</p>
-<p>In practice, we find that <span class="math notranslate nohighlight">\(\vec{q}\)</span> should approximate the Hadamard inverse of the dominant eigenvector, <span class="math notranslate nohighlight">\(v_{1}^{\circ{}-1}\)</span>, where <span class="math notranslate nohighlight">\(x^{\circ{}-1}\cdot{}x = n\)</span> for <span class="math notranslate nohighlight">\(x\in{}R^{n}\)</span>. We conduct ablation studies for <span class="math notranslate nohighlight">\(\vec{q}=\vec{1}\)</span>,<span class="math notranslate nohighlight">\(\vec{q} = d_{degree}^{\circ{}-1}\)</span>, and <span class="math notranslate nohighlight">\(\vec{q}=v_{1}^{\circ{}-1}\)</span> at <span class="math notranslate nohighlight">\(l_{max}=64\)</span>. Parameters are <span class="math notranslate nohighlight">\(s_{1}\)</span> (grad-enabled vs. constant <span class="math notranslate nohighlight">\(\sigma{}(1)\)</span>) and whether the network possesses 1-hop residual connections, which have been shown to improve the stability and performance of deeper GCNs [15]. The best model is then trained for all <span class="math notranslate nohighlight">\(l_{max}=1,2,4,...,64\)</span>. We also compare against PairNorm under various settings.</p>
-<div class="section" id="dataset">
-<h2><span class="section-number">4.1. </span>Dataset<a class="headerlink" href="#dataset" title="Permalink to this headline">¶</a></h2>
-<p>See Section 2.7.2 for description/parameters.</p>
-<div class="cell tag_hide-input docutils container">
+<div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">num_graphs</span> <span class="o">=</span> <span class="mi">3000</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">num_graphs</span> <span class="o">=</span> <span class="mi">250</span>
 <span class="n">d</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_graphs</span><span class="p">):</span>
     <span class="c1"># Set Cluster sizes and edge probabilities</span>
@@ -324,7 +292,7 @@
     <span class="c1"># Compute Katz Centrality</span>
     <span class="n">vals</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">adj</span><span class="o">.</span><span class="n">to_dense</span><span class="p">())[</span><span class="mi">0</span><span class="p">],</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">v</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mf">1.01</span><span class="o">*</span><span class="n">vals</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
-    <span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">inverse</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">adj</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span> <span class="o">-</span> <span class="n">v</span><span class="o">*</span><span class="n">adj</span><span class="o">.</span><span class="n">to_dense</span><span class="p">()</span><span class="o">.</span><span class="n">T</span><span class="p">)</span> <span class="o">-</span> <span class="n">torch</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">adj</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">)),</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">inverse</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">adj</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span> <span class="o">-</span> <span class="n">v</span><span class="o">*</span><span class="n">adj</span><span class="o">.</span><span class="n">to_dense</span><span class="p">()</span><span class="o">.</span><span class="n">T</span><span class="p">),</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     
     <span class="c1"># Set as target</span>
     <span class="n">G</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
@@ -332,38 +300,14 @@
     <span class="n">G</span><span class="o">.</span><span class="n">eig_min</span> <span class="o">=</span> <span class="n">vals</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
     <span class="n">d</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">G</span>
     
-<span class="n">train</span><span class="p">,</span><span class="n">test</span> <span class="o">=</span> <span class="n">d</span><span class="p">[:</span><span class="mi">2000</span><span class="p">],</span><span class="n">d</span><span class="p">[</span><span class="mi">2000</span><span class="p">::]</span>
-<span class="n">train_loader</span> <span class="o">=</span> <span class="n">torch_geometric</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">DataLoader</span><span class="p">(</span><span class="n">train</span><span class="p">,</span><span class="n">batch_size</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span><span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">test_loader</span> <span class="o">=</span> <span class="n">torch_geometric</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">DataLoader</span><span class="p">(</span><span class="n">test</span><span class="p">,</span><span class="n">batch_size</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span><span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">2</span><span class="o">-</span><span class="mi">81</span><span class="n">aaef866393</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">     </span><span class="mi">21</span>     <span class="n">vals</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">adj</span><span class="o">.</span><span class="n">to_dense</span><span class="p">())[</span><span class="mi">0</span><span class="p">],</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">22</span>     <span class="n">v</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mf">1.01</span><span class="o">*</span><span class="n">vals</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
-<span class="ne">---&gt; </span><span class="mi">23</span>     <span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">inverse</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">adj</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span> <span class="o">-</span> <span class="n">v</span><span class="o">*</span><span class="n">adj</span><span class="o">.</span><span class="n">to_dense</span><span class="p">()</span><span class="o">.</span><span class="n">T</span><span class="p">)</span> <span class="o">-</span> <span class="n">torch</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">adj</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">)),</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">24</span> 
-<span class="g g-Whitespace">     </span><span class="mi">25</span>     <span class="c1"># Set as target</span>
-
-<span class="ne">KeyboardInterrupt</span>: 
+<span class="n">train</span><span class="p">,</span><span class="n">test</span> <span class="o">=</span> <span class="n">d</span><span class="p">[:</span><span class="mi">200</span><span class="p">],</span><span class="n">d</span><span class="p">[</span><span class="mi">200</span><span class="p">::]</span>
+<span class="n">train_loader</span> <span class="o">=</span> <span class="n">torch_geometric</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">DataLoader</span><span class="p">(</span><span class="n">train</span><span class="p">,</span><span class="n">batch_size</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span><span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">test_loader</span> <span class="o">=</span> <span class="n">torch_geometric</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">DataLoader</span><span class="p">(</span><span class="n">test</span><span class="p">,</span><span class="n">batch_size</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span><span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="model">
-<h2><span class="section-number">4.2. </span>Model<a class="headerlink" href="#model" title="Permalink to this headline">¶</a></h2>
-<div class="cell tag_hide-input docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">best_table</span> <span class="o">=</span> <span class="p">[]</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell tag_hide-input docutils container">
+<div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compute the Mean Average Distance of inputs</span>
 <span class="k">def</span> <span class="nf">batched_MAD</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">edge_index</span><span class="p">,</span><span class="n">edge_weights</span><span class="p">):</span>
@@ -371,13 +315,16 @@
     <span class="n">cosine</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">edge_index</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">*</span> <span class="n">X</span><span class="p">[</span><span class="n">edge_index</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span>
     <span class="k">return</span> <span class="mi">1</span><span class="o">/</span><span class="n">edge_weights</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">*</span> <span class="p">(</span><span class="n">edge_weights</span> <span class="o">*</span> <span class="n">cosine</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
 
-<span class="c1"># Compute the Aggregation Norm</span>
-<span class="k">def</span> <span class="nf">batched_agg</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">edge_index</span><span class="p">,</span><span class="n">edge_weights</span><span class="p">,</span><span class="n">batch</span><span class="p">):</span>
-    <span class="n">nX</span> <span class="o">=</span> <span class="n">torch_scatter</span><span class="o">.</span><span class="n">scatter_sum</span><span class="p">(</span><span class="n">edge_weights</span><span class="p">[:,</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">X</span><span class="p">[</span><span class="n">edge_index</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="n">edge_index</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">X</span><span class="p">,</span><span class="n">nX</span> <span class="o">=</span> <span class="n">X</span><span class="o">/</span><span class="n">torch_scatter</span><span class="o">.</span><span class="n">scatter_sum</span><span class="p">(</span><span class="n">X</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span><span class="n">batch</span><span class="p">,</span><span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">sqrt</span><span class="p">()[</span><span class="n">batch</span><span class="p">],</span>\
-              <span class="n">nX</span><span class="o">/</span><span class="n">torch_scatter</span><span class="o">.</span><span class="n">scatter_sum</span><span class="p">(</span><span class="n">nX</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span><span class="n">batch</span><span class="p">,</span><span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">sqrt</span><span class="p">()[</span><span class="n">batch</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">X</span> <span class="o">-</span> <span class="n">nX</span><span class="p">,</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
-
+<span class="c1"># Compute the Global Feature Similarity</span>
+<span class="k">def</span> <span class="nf">batched_GFS</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">edge_index</span><span class="p">,</span><span class="n">edge_weights</span><span class="p">,</span><span class="n">batch</span><span class="p">):</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="o">/</span><span class="n">torch_scatter</span><span class="o">.</span><span class="n">scatter_sum</span><span class="p">(</span><span class="n">X</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span><span class="n">batch</span><span class="p">,</span><span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">sqrt</span><span class="p">()[</span><span class="n">batch</span><span class="p">]</span>
+    
+    <span class="n">GFS</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">batch_idx</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">batch</span><span class="o">.</span><span class="n">unique</span><span class="p">()):</span>
+        <span class="n">cosine</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">torch</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">batch</span><span class="o">==</span><span class="n">batch_idx</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span><span class="n">X</span><span class="p">[</span><span class="n">batch</span><span class="o">==</span><span class="n">batch_idx</span><span class="p">])</span><span class="o">.</span><span class="n">abs</span><span class="p">(),</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">GFS</span> <span class="o">+=</span> <span class="n">cosine</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">/</span><span class="p">(</span><span class="n">cosine</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="n">cosine</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+    
+    <span class="k">return</span> <span class="n">GFS</span><span class="o">/</span><span class="p">(</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
 <span class="c1"># Compute normalized (absolute) rayleigh quotient</span>
 <span class="k">def</span> <span class="nf">rayleigh_quotient</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">edge_index</span><span class="p">,</span><span class="n">edge_weights</span><span class="p">,</span><span class="n">batch</span><span class="p">,</span><span class="n">eig_max</span><span class="p">,</span><span class="n">eig_min</span><span class="p">):</span>
     <span class="n">num</span> <span class="o">=</span> <span class="n">torch_scatter</span><span class="o">.</span><span class="n">scatter_sum</span><span class="p">(</span><span class="n">X</span> <span class="o">*</span> <span class="n">torch_scatter</span><span class="o">.</span><span class="n">scatter_sum</span><span class="p">(</span><span class="n">edge_weights</span><span class="p">[:,</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> 
@@ -386,6 +333,104 @@
     <span class="n">denom</span> <span class="o">=</span> <span class="n">torch_scatter</span><span class="o">.</span><span class="n">scatter_sum</span><span class="p">(</span><span class="n">X</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span><span class="n">batch</span><span class="p">,</span><span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
     <span class="n">R</span> <span class="o">=</span> <span class="n">num</span><span class="o">/</span><span class="p">(</span><span class="n">denom</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">eig_max</span><span class="p">[:,</span><span class="kc">None</span><span class="p">]</span> <span class="o">-</span> <span class="n">R</span><span class="o">.</span><span class="n">abs</span><span class="p">())</span><span class="o">/</span><span class="p">(</span><span class="n">eig_max</span> <span class="o">-</span> <span class="n">eig_min</span><span class="p">)[:,</span><span class="kc">None</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">graph_results</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">metrics</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">k</span> <span class="o">=</span> <span class="mi">64</span>
+<span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span><span class="kc">False</span><span class="p">]:</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">graph</span> <span class="o">=</span> <span class="n">GraphConv</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="n">norm</span><span class="o">=</span><span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
+    
+    <span class="n">graph_results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">train_loop</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span><span class="n">train_loader</span><span class="p">,</span><span class="n">test_loader</span><span class="p">,</span><span class="mi">150</span><span class="p">,</span><span class="n">lr</span><span class="o">=</span><span class="mf">1e-2</span><span class="p">))</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">graph</span><span class="o">.</span><span class="n">state_dict</span><span class="p">(),</span><span class="s1">&#39;base_</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">k</span><span class="p">))</span>
+
+    <span class="c1"># Iterate through network layers and compute the MAD/Agg at each</span>
+    <span class="n">MAD</span><span class="p">,</span><span class="n">GFS</span><span class="p">,</span><span class="n">Ray</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">k</span><span class="p">),</span><span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">k</span><span class="p">),</span><span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+    
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">data</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">test_loader</span><span class="p">):</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
+        <span class="n">row</span><span class="p">,</span><span class="n">col</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">edge_index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">cuda</span><span class="p">(),</span><span class="n">data</span><span class="o">.</span><span class="n">edge_index</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
+        <span class="n">batch</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">batch</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
+
+        <span class="n">graph</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        
+        <span class="k">for</span> <span class="n">jdx</span><span class="p">,</span><span class="n">m</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">graph</span><span class="o">.</span><span class="n">intermediate</span><span class="p">):</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">](</span><span class="n">X</span><span class="p">)</span> <span class="o">+</span> <span class="n">torch_scatter</span><span class="o">.</span><span class="n">scatter_sum</span><span class="p">(</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">](</span><span class="n">X</span><span class="p">)[</span><span class="n">col</span><span class="p">],</span> <span class="n">row</span><span class="o">.</span><span class="n">cuda</span><span class="p">(),</span><span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">n</span><span class="p">[</span><span class="n">jdx</span><span class="p">](</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">LeakyReLU</span><span class="p">()(</span><span class="n">X</span><span class="p">),</span><span class="n">batch</span><span class="p">)</span>
+            <span class="n">MAD</span><span class="p">[</span><span class="n">jdx</span><span class="p">]</span> <span class="o">+=</span> <span class="n">batched_MAD</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">data</span><span class="o">.</span><span class="n">edge_index</span><span class="o">.</span><span class="n">cuda</span><span class="p">(),</span><span class="n">data</span><span class="o">.</span><span class="n">edge_weight</span><span class="o">.</span><span class="n">cuda</span><span class="p">())</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+            <span class="n">GFS</span><span class="p">[</span><span class="n">jdx</span><span class="p">]</span> <span class="o">+=</span> <span class="n">batched_GFS</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">data</span><span class="o">.</span><span class="n">edge_index</span><span class="o">.</span><span class="n">cuda</span><span class="p">(),</span><span class="n">data</span><span class="o">.</span><span class="n">edge_weight</span><span class="o">.</span><span class="n">cuda</span><span class="p">(),</span><span class="n">batch</span><span class="p">)</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+            <span class="n">Ray</span><span class="p">[</span><span class="n">jdx</span><span class="p">]</span> <span class="o">+=</span> <span class="n">rayleigh_quotient</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">data</span><span class="o">.</span><span class="n">edge_index</span><span class="o">.</span><span class="n">cuda</span><span class="p">(),</span><span class="n">data</span><span class="o">.</span><span class="n">edge_weight</span><span class="o">.</span><span class="n">cuda</span><span class="p">(),</span>
+                                    <span class="n">batch</span><span class="p">,</span><span class="n">data</span><span class="o">.</span><span class="n">eig_max</span><span class="o">.</span><span class="n">cuda</span><span class="p">(),</span><span class="n">data</span><span class="o">.</span><span class="n">eig_min</span><span class="o">.</span><span class="n">cuda</span><span class="p">())</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+    <span class="n">metrics</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">MAD</span><span class="o">/</span><span class="p">(</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span><span class="n">GFS</span><span class="o">/</span><span class="p">(</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span><span class="n">Ray</span><span class="o">/</span><span class="p">(</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">)])</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">empty_cache</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">graph_results</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Train Error&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;L1 Error&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Iterations&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">graph_results</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Test Error&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Iterations&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">alpha</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="s1">&#39;BatchNorm&#39;</span><span class="p">,</span><span class="s1">&#39;FeatureNorm&#39;</span><span class="p">]):</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">graph_results</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="mi">2</span><span class="p">],</span><span class="n">label</span><span class="o">=</span><span class="n">alpha</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Ranking Error&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Avg. Displacement&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Iterations&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/Normalization_4_0.png" src="_images/Normalization_4_0.png" />
+</div>
+</div>
+<div class="section" id="normalization-techniques">
+<h1>Normalization Techniques<a class="headerlink" href="#normalization-techniques" title="Permalink to this headline">¶</a></h1>
+<p>Within the literature, the typical approach to smoothing is to apply some type of normalization. To this end, we propose orthogonalizing out vector <span class="math notranslate nohighlight">\(\vec{q}\)</span> from <span class="math notranslate nohighlight">\(X^{l}_{:,i}\)</span> and then renormalizing each column. We incorporate additional scale parameters <span class="math notranslate nohighlight">\(0\leq{}s_{1}\leq{}1\)</span> and <span class="math notranslate nohighlight">\(s_{2}\)</span>, which allow the model to “self-regulate” its own convergence to <span class="math notranslate nohighlight">\(v_{1}\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[X^{l}_{:,i} = X^{l}_{:,i} - s_{1}\frac{\vec{q}^{T}X^{l}_{:,i}}{||\vec{q}||_{2}^{2}}\vec{q}\]</div>
+<div class="math notranslate nohighlight">
+\[X_{:,i}^{l} = s_{2}\frac{X_{:,i}^{l}}{||X_{:,i}^{l}||_{2}}\]</div>
+<p>If <span class="math notranslate nohighlight">\(s_{1}=1\)</span> and <span class="math notranslate nohighlight">\(\vec{q}=\vec{1}\)</span>, this is equivalent to PairNorm with individual scaling [16].</p>
+<div class="math notranslate nohighlight">
+\[X_{:,i}^{l} = X_{:,i}^{l} - \frac{1}{n}\sum_{i=0}^{n}X_{:,i}^{l}\]</div>
+<div class="math notranslate nohighlight">
+\[X_{:,i}^{l} = s \frac{X_{:,i}^{l}}{||X_{:,i}^{l}||_{2}}\]</div>
+<p>PairNorm is the current SOTA for GCN normalization/oversmoothing; however, it 1) implicitly assumes that our aggregation step employs the Graph Laplacian or has a similar steady-state and 2) fully orthogonalizes out <span class="math notranslate nohighlight">\(\vec{q}\)</span> at each layer, which may be undesirable for learning <span class="math notranslate nohighlight">\(d_{Katz}\)</span> or other graph structure.</p>
+<p>In practice, we find that <span class="math notranslate nohighlight">\(\vec{q}\)</span> should approximate the Hadamard inverse of the dominant eigenvector, <span class="math notranslate nohighlight">\(v_{1}^{\circ{}-1}\)</span>, where <span class="math notranslate nohighlight">\(x^{\circ{}-1}\cdot{}x = n\)</span> for <span class="math notranslate nohighlight">\(x\in{}R^{n}\)</span>. We conduct ablation studies for <span class="math notranslate nohighlight">\(\vec{q}=\vec{1}\)</span>,<span class="math notranslate nohighlight">\(\vec{q} = d_{degree}^{\circ{}-1}\)</span>, and <span class="math notranslate nohighlight">\(\vec{q}=v_{1}^{\circ{}-1}\)</span> at <span class="math notranslate nohighlight">\(l_{max}=64\)</span>. Parameters are <span class="math notranslate nohighlight">\(s_{1}\)</span> (grad-enabled vs. constant <span class="math notranslate nohighlight">\(\sigma{}(1)\)</span>) and whether the network possesses 1-hop residual connection The best model is then trained for all <span class="math notranslate nohighlight">\(l_{max}=1,2,4,...,64\)</span>. We also compare against PairNorm under various settings.</p>
+<div class="section" id="dataset">
+<h2>Dataset<a class="headerlink" href="#dataset" title="Permalink to this headline">¶</a></h2>
+<p>See Section 2.7.2 for description/parameters.</p>
+</div>
+<div class="section" id="model">
+<h2>Model<a class="headerlink" href="#model" title="Permalink to this headline">¶</a></h2>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">best_table</span> <span class="o">=</span> <span class="p">[]</span>
 </pre></div>
 </div>
 </div>
@@ -462,7 +507,7 @@
   <span class="n">model_mad</span> <span class="o">=</span> <span class="p">[]</span>
     
   <span class="c1"># Layerwise AggNorm</span>
-  <span class="n">model_agg</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="n">model_gfs</span> <span class="o">=</span> <span class="p">[]</span>
     
   <span class="c1"># Normalized Rayleigh</span>
   <span class="n">model_ray</span> <span class="o">=</span> <span class="p">[]</span>
@@ -470,7 +515,7 @@
   <span class="c1"># S1 parameter</span>
   <span class="n">model_s</span> <span class="o">=</span> <span class="p">[]</span>
 
-  <span class="n">MAD</span><span class="p">,</span><span class="n">Agg</span><span class="p">,</span><span class="n">Ray</span><span class="p">,</span><span class="n">S</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">k</span><span class="p">),</span><span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">k</span><span class="p">),</span><span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">k</span><span class="p">),</span><span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+  <span class="n">MAD</span><span class="p">,</span><span class="n">GFS</span><span class="p">,</span><span class="n">Ray</span><span class="p">,</span><span class="n">S</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">k</span><span class="p">),</span><span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">k</span><span class="p">),</span><span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">k</span><span class="p">),</span><span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
     
   <span class="c1"># Iterate over dataset and average metrics</span>
   <span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">data</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">test_loader</span><span class="p">):</span>
@@ -487,7 +532,7 @@
 
             <span class="k">if</span> <span class="n">model</span><span class="o">.</span><span class="n">res</span><span class="p">:</span> <span class="n">X</span> <span class="o">=</span> <span class="n">X</span> <span class="o">+</span> <span class="n">Update</span>
             <span class="k">else</span><span class="p">:</span> <span class="n">X</span> <span class="o">=</span> <span class="n">Update</span>
-            <span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">LeakyReLU</span><span class="p">()(</span><span class="n">model</span><span class="o">.</span><span class="n">norm</span><span class="p">[</span><span class="n">jdx</span><span class="p">](</span><span class="n">X</span><span class="p">,</span><span class="n">edge_index</span><span class="p">,</span><span class="n">edge_weight</span><span class="p">,</span><span class="n">batch</span><span class="p">))</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">norm</span><span class="p">[</span><span class="n">jdx</span><span class="p">](</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">LeakyReLU</span><span class="p">()(</span><span class="n">X</span><span class="p">),</span><span class="n">edge_index</span><span class="p">,</span><span class="n">edge_weight</span><span class="p">,</span><span class="n">batch</span><span class="p">)</span>
 
             <span class="c1"># Fetch S1</span>
             <span class="n">S</span><span class="p">[</span><span class="n">jdx</span><span class="p">]</span> <span class="o">+=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">norm</span><span class="p">[</span><span class="n">jdx</span><span class="p">]</span><span class="o">.</span><span class="n">s1</span><span class="p">)</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
@@ -496,27 +541,27 @@
             <span class="n">MAD</span><span class="p">[</span><span class="n">jdx</span><span class="p">]</span> <span class="o">+=</span> <span class="n">batched_MAD</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">data</span><span class="o">.</span><span class="n">edge_index</span><span class="o">.</span><span class="n">cuda</span><span class="p">(),</span><span class="n">data</span><span class="o">.</span><span class="n">edge_weight</span><span class="o">.</span><span class="n">cuda</span><span class="p">())</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
             
             <span class="c1"># Compute AggNorm</span>
-            <span class="n">Agg</span><span class="p">[</span><span class="n">jdx</span><span class="p">]</span> <span class="o">+=</span> <span class="n">batched_agg</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">data</span><span class="o">.</span><span class="n">edge_index</span><span class="o">.</span><span class="n">cuda</span><span class="p">(),</span><span class="n">data</span><span class="o">.</span><span class="n">edge_weight</span><span class="o">.</span><span class="n">cuda</span><span class="p">(),</span><span class="n">batch</span><span class="p">)</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+            <span class="n">GFS</span><span class="p">[</span><span class="n">jdx</span><span class="p">]</span> <span class="o">+=</span> <span class="n">batched_GFS</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">data</span><span class="o">.</span><span class="n">edge_index</span><span class="o">.</span><span class="n">cuda</span><span class="p">(),</span><span class="n">data</span><span class="o">.</span><span class="n">edge_weight</span><span class="o">.</span><span class="n">cuda</span><span class="p">(),</span><span class="n">batch</span><span class="p">)</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
             
             <span class="c1">#Compute Normalized Rayleigh</span>
             <span class="n">Ray</span><span class="p">[</span><span class="n">jdx</span><span class="p">]</span> <span class="o">+=</span> <span class="n">rayleigh_quotient</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">edge_index</span><span class="p">,</span><span class="n">edge_weight</span><span class="p">,</span><span class="n">batch</span><span class="p">,</span><span class="n">data</span><span class="o">.</span><span class="n">eig_max</span><span class="o">.</span><span class="n">cuda</span><span class="p">(),</span><span class="n">data</span><span class="o">.</span><span class="n">eig_min</span><span class="o">.</span><span class="n">cuda</span><span class="p">())</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
         
   <span class="n">model_mad</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">MAD</span><span class="o">/</span><span class="p">(</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
-  <span class="n">model_agg</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Agg</span><span class="o">/</span><span class="p">(</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+  <span class="n">model_gfs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">GFS</span><span class="o">/</span><span class="p">(</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
   <span class="n">model_ray</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Ray</span><span class="o">/</span><span class="p">(</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
   <span class="n">model_s</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">S</span><span class="o">/</span><span class="p">(</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
 
   <span class="c1"># Return metrics</span>
-  <span class="k">return</span> <span class="p">(</span><span class="n">model_mad</span><span class="p">,</span><span class="n">model_agg</span><span class="p">,</span><span class="n">model_ray</span><span class="p">,</span><span class="n">model_s</span><span class="p">)</span>
+  <span class="k">return</span> <span class="p">(</span><span class="n">model_mad</span><span class="p">,</span><span class="n">model_gfs</span><span class="p">,</span><span class="n">model_ray</span><span class="p">,</span><span class="n">model_s</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
 <div class="section" id="orthnorm">
-<h2><span class="section-number">4.3. </span>OrthNorm<a class="headerlink" href="#orthnorm" title="Permalink to this headline">¶</a></h2>
+<h2>OrthNorm<a class="headerlink" href="#orthnorm" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="vec-q-vec-1">
-<h3><span class="section-number">4.3.1. </span><span class="math notranslate nohighlight">\(\vec{q} = \vec{1}\)</span><a class="headerlink" href="#vec-q-vec-1" title="Permalink to this headline">¶</a></h3>
+<h3><span class="math notranslate nohighlight">\(\vec{q} = \vec{1}\)</span><a class="headerlink" href="#vec-q-vec-1" title="Permalink to this headline">¶</a></h3>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compute ones vector</span>
@@ -528,38 +573,38 @@
 </div>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">graph_results</span> <span class="o">=</span> <span class="p">[]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">metrics</span> <span class="o">=</span> <span class="p">[]</span>
 
 <span class="c1">### Non-residual, grad-enabled</span>
 <span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">DummyModel</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="n">OrthNorm</span><span class="p">,</span><span class="n">identity</span><span class="p">)</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">DummyModel</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">16</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="n">OrthNorm</span><span class="p">,</span><span class="n">identity</span><span class="p">)</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
 
-<span class="n">graph_results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">train_loop</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="n">train_loader</span><span class="p">,</span><span class="n">test_loader</span><span class="p">,</span><span class="mi">150</span><span class="p">,</span><span class="n">lr</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">))</span>
+<span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">train_loop</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="n">train_loader</span><span class="p">,</span><span class="n">test_loader</span><span class="p">,</span><span class="mi">150</span><span class="p">,</span><span class="n">lr</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">))</span>
 <span class="n">metrics</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">get_metrics</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="n">test_loader</span><span class="p">))</span>
 <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">empty_cache</span><span class="p">()</span>
 
 <span class="c1">### Residual, grad-enabled</span>
 <span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">DummyModel</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="n">OrthNorm</span><span class="p">,</span><span class="n">identity</span><span class="p">,</span><span class="n">res</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">DummyModel</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">16</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="n">OrthNorm</span><span class="p">,</span><span class="n">identity</span><span class="p">,</span><span class="n">res</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
 
-<span class="n">graph_results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">train_loop</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="n">train_loader</span><span class="p">,</span><span class="n">test_loader</span><span class="p">,</span><span class="mi">150</span><span class="p">,</span><span class="n">lr</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">))</span>
+<span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">train_loop</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="n">train_loader</span><span class="p">,</span><span class="n">test_loader</span><span class="p">,</span><span class="mi">150</span><span class="p">,</span><span class="n">lr</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">))</span>
 <span class="n">metrics</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">get_metrics</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="n">test_loader</span><span class="p">))</span>
 <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">empty_cache</span><span class="p">()</span>
 
 <span class="c1"># Non-residual, no grad</span>
 <span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">DummyModel</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="n">OrthNorm</span><span class="p">,</span><span class="n">identity</span><span class="p">,</span><span class="n">grad</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">DummyModel</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">16</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="n">OrthNorm</span><span class="p">,</span><span class="n">identity</span><span class="p">,</span><span class="n">grad</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
 
-<span class="n">graph_results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">train_loop</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="n">train_loader</span><span class="p">,</span><span class="n">test_loader</span><span class="p">,</span><span class="mi">150</span><span class="p">,</span><span class="n">lr</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">))</span>
+<span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">train_loop</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="n">train_loader</span><span class="p">,</span><span class="n">test_loader</span><span class="p">,</span><span class="mi">150</span><span class="p">,</span><span class="n">lr</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">))</span>
 <span class="n">metrics</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">get_metrics</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="n">test_loader</span><span class="p">))</span>
 <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">empty_cache</span><span class="p">()</span>
 
 <span class="c1"># Residual, no grad</span>
 <span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">DummyModel</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="n">OrthNorm</span><span class="p">,</span><span class="n">identity</span><span class="p">,</span><span class="n">res</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">grad</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">DummyModel</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">16</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="n">OrthNorm</span><span class="p">,</span><span class="n">identity</span><span class="p">,</span><span class="n">res</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">grad</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
 
-<span class="n">graph_results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">train_loop</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="n">train_loader</span><span class="p">,</span><span class="n">test_loader</span><span class="p">,</span><span class="mi">150</span><span class="p">,</span><span class="n">lr</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">))</span>
+<span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">train_loop</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="n">train_loader</span><span class="p">,</span><span class="n">test_loader</span><span class="p">,</span><span class="mi">150</span><span class="p">,</span><span class="n">lr</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">))</span>
 <span class="n">metrics</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">get_metrics</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="n">test_loader</span><span class="p">))</span>
 <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">empty_cache</span><span class="p">()</span>
 </pre></div>
@@ -572,23 +617,24 @@
 
 <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
-  <span class="n">plt</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">graph_results</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
-
+  <span class="n">plt</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hlines</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">150</span><span class="p">,</span><span class="n">graph_results</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Train Error&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;L1 Error&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Iterations&#39;</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
-  <span class="n">plt</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">graph_results</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
-
+  <span class="n">plt</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hlines</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">150</span><span class="p">,</span><span class="n">graph_results</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Test Error&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Iterations&#39;</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">alpha</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="s1">&#39;NonRes,Grad&#39;</span><span class="p">,</span><span class="s1">&#39;ResGrad&#39;</span><span class="p">,</span><span class="s1">&#39;NonRes,NoGrad&#39;</span><span class="p">,</span><span class="s1">&#39;Res,NoGrad&#39;</span><span class="p">]):</span>
-  <span class="n">plt</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">graph_results</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="mi">2</span><span class="p">],</span><span class="n">label</span><span class="o">=</span><span class="n">alpha</span><span class="p">)</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="mi">2</span><span class="p">],</span><span class="n">label</span><span class="o">=</span><span class="n">alpha</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Ranking Error&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hlines</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">150</span><span class="p">,</span><span class="n">graph_results</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Avg. Displacement&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Iterations&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
@@ -598,7 +644,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/Normalization_16_0.png" src="_images/Normalization_16_0.png" />
+<img alt="_images/Normalization_20_0.png" src="_images/Normalization_20_0.png" />
 </div>
 </div>
 <p>We plot a) training loss b) test loss and c) average rank displacement. The defining factor appears to be whether <span class="math notranslate nohighlight">\(s_{1}\)</span> is a trainable parameter; fixing it increases the L1 error by around an order of magnitude. Adding residual connections results in marginal improvement for the gradient-enabled case. Overall, we see significant improvement from the earlier <span class="math notranslate nohighlight">\(l=64\)</span> GCN with batch normalization (see 3.2).</p>
@@ -628,10 +674,10 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/Normalization_18_0.png" src="_images/Normalization_18_0.png" />
-<img alt="_images/Normalization_18_1.png" src="_images/Normalization_18_1.png" />
-<img alt="_images/Normalization_18_2.png" src="_images/Normalization_18_2.png" />
-<img alt="_images/Normalization_18_3.png" src="_images/Normalization_18_3.png" />
+<img alt="_images/Normalization_22_0.png" src="_images/Normalization_22_0.png" />
+<img alt="_images/Normalization_22_1.png" src="_images/Normalization_22_1.png" />
+<img alt="_images/Normalization_22_2.png" src="_images/Normalization_22_2.png" />
+<img alt="_images/Normalization_22_3.png" src="_images/Normalization_22_3.png" />
 </div>
 </div>
 <p>For the gradient-enabled GCNs, we observe two regimes: our metrics are relatively large when <span class="math notranslate nohighlight">\(l&lt;32\)</span>, but, once <span class="math notranslate nohighlight">\(l\geq{}32\)</span>, the mean values drop sharply. Below we plot the trained values of <span class="math notranslate nohighlight">\(s_{1}\)</span> vs. <span class="math notranslate nohighlight">\(l\)</span> and see a similar pattern. <span class="math notranslate nohighlight">\(s_{1}\)</span> mostly oscillates between <span class="math notranslate nohighlight">\(.6\)</span> and <span class="math notranslate nohighlight">\(.8\)</span> for the first half of the model and then decays to <span class="math notranslate nohighlight">\(0.0\)</span> in the final few layers.</p>
@@ -647,7 +693,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/Normalization_20_0.png" src="_images/Normalization_20_0.png" />
+<img alt="_images/Normalization_24_0.png" src="_images/Normalization_24_0.png" />
 </div>
 </div>
 <div class="cell tag_hide-input docutils container">
@@ -659,7 +705,7 @@
 </div>
 </div>
 <div class="section" id="q-d-degree-circ-1">
-<h3><span class="section-number">4.3.2. </span><span class="math notranslate nohighlight">\(q = d_{degree}^{\circ{}-1}\)</span><a class="headerlink" href="#q-d-degree-circ-1" title="Permalink to this headline">¶</a></h3>
+<h3><span class="math notranslate nohighlight">\(q = d_{degree}^{\circ{}-1}\)</span><a class="headerlink" href="#q-d-degree-circ-1" title="Permalink to this headline">¶</a></h3>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compute Hadamard Inverse of degree</span>
@@ -743,7 +789,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/Normalization_25_0.png" src="_images/Normalization_25_0.png" />
+<img alt="_images/Normalization_29_0.png" src="_images/Normalization_29_0.png" />
 </div>
 </div>
 <p>We plot a) training loss b) test loss and c) average rank displacement. Like with <span class="math notranslate nohighlight">\(\vec{q}=\vec{1}\)</span>, most of our performance gains come from <span class="math notranslate nohighlight">\(s_{1}\)</span>. We observe slightly better losses than before when the gradient is disabled. Adding residual connections now actively hampers the model in the gradient-enabled case.</p>
@@ -773,10 +819,10 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/Normalization_27_0.png" src="_images/Normalization_27_0.png" />
-<img alt="_images/Normalization_27_1.png" src="_images/Normalization_27_1.png" />
-<img alt="_images/Normalization_27_2.png" src="_images/Normalization_27_2.png" />
-<img alt="_images/Normalization_27_3.png" src="_images/Normalization_27_3.png" />
+<img alt="_images/Normalization_31_0.png" src="_images/Normalization_31_0.png" />
+<img alt="_images/Normalization_31_1.png" src="_images/Normalization_31_1.png" />
+<img alt="_images/Normalization_31_2.png" src="_images/Normalization_31_2.png" />
+<img alt="_images/Normalization_31_3.png" src="_images/Normalization_31_3.png" />
 </div>
 </div>
 <p>There is still a defined jump in our metrics around <span class="math notranslate nohighlight">\(l=32\)</span> for the ResGrad model, whereas NonResGrad is more variable than before. Indeed, in the below figure, we see the <span class="math notranslate nohighlight">\(s_{1}\)</span> values of the latter randomly spike during the <span class="math notranslate nohighlight">\(l\geq{}32\)</span> regime.</p>
@@ -791,7 +837,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/Normalization_29_0.png" src="_images/Normalization_29_0.png" />
+<img alt="_images/Normalization_33_0.png" src="_images/Normalization_33_0.png" />
 </div>
 </div>
 <div class="cell tag_hide-input docutils container">
@@ -803,7 +849,7 @@
 </div>
 </div>
 <div class="section" id="q-v-1-circ-1">
-<h3><span class="section-number">4.3.3. </span><span class="math notranslate nohighlight">\(q=v_{1}^{\circ{}-1}\)</span><a class="headerlink" href="#q-v-1-circ-1" title="Permalink to this headline">¶</a></h3>
+<h3><span class="math notranslate nohighlight">\(q=v_{1}^{\circ{}-1}\)</span><a class="headerlink" href="#q-v-1-circ-1" title="Permalink to this headline">¶</a></h3>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compute the Hadamard inverse of the approximate dominant eigenvector</span>
@@ -890,7 +936,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/Normalization_34_0.png" src="_images/Normalization_34_0.png" />
+<img alt="_images/Normalization_38_0.png" src="_images/Normalization_38_0.png" />
 </div>
 </div>
 <p>We plot a) training loss b) test loss and c) average rank displacement. Performance is further improved for gradient-disabled models, particularily when residual connections are also incorporated. ResGrad converges to the lowest test loss.</p>
@@ -920,10 +966,10 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/Normalization_36_0.png" src="_images/Normalization_36_0.png" />
-<img alt="_images/Normalization_36_1.png" src="_images/Normalization_36_1.png" />
-<img alt="_images/Normalization_36_2.png" src="_images/Normalization_36_2.png" />
-<img alt="_images/Normalization_36_3.png" src="_images/Normalization_36_3.png" />
+<img alt="_images/Normalization_40_0.png" src="_images/Normalization_40_0.png" />
+<img alt="_images/Normalization_40_1.png" src="_images/Normalization_40_1.png" />
+<img alt="_images/Normalization_40_2.png" src="_images/Normalization_40_2.png" />
+<img alt="_images/Normalization_40_3.png" src="_images/Normalization_40_3.png" />
 </div>
 </div>
 <p>Two distinct regimes are visible in our metrics (excluding MAP) for all model permuations, even those where the <span class="math notranslate nohighlight">\(s_{1}\)</span> gradient is disabled. In the gradient-disabled case, all converge to much smaller values than for other choices of <span class="math notranslate nohighlight">\(\vec{q}\)</span>; this reflects the aforementioned improvements in the loss.  We still observe a clear partition in the <span class="math notranslate nohighlight">\(s_{1}\)</span> (see below).</p>
@@ -938,7 +984,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/Normalization_38_0.png" src="_images/Normalization_38_0.png" />
+<img alt="_images/Normalization_42_0.png" src="_images/Normalization_42_0.png" />
 </div>
 </div>
 <div class="cell tag_hide-input docutils container">
@@ -950,7 +996,7 @@
 </div>
 </div>
 <div class="section" id="best-model">
-<h3><span class="section-number">4.3.4. </span>Best Model<a class="headerlink" href="#best-model" title="Permalink to this headline">¶</a></h3>
+<h3>Best Model<a class="headerlink" href="#best-model" title="Permalink to this headline">¶</a></h3>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -1061,14 +1107,14 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/Normalization_44_0.png" src="_images/Normalization_44_0.png" />
+<img alt="_images/Normalization_48_0.png" src="_images/Normalization_48_0.png" />
 </div>
 </div>
 <p>We plot a) training loss b) test loss and c) average rank displacement. All models for <span class="math notranslate nohighlight">\(l_{max}\geq{}8\)</span> are improved versus Section 3.2</p>
 </div>
 </div>
 <div class="section" id="pairnorm">
-<h2><span class="section-number">4.4. </span>PairNorm<a class="headerlink" href="#pairnorm" title="Permalink to this headline">¶</a></h2>
+<h2>PairNorm<a class="headerlink" href="#pairnorm" title="Permalink to this headline">¶</a></h2>
 <p>We assess PairNorm (see 5.1) with both individual and global scaling, as well as residual connections. [15] find that GCNConv and GATConv perform better with individual scaling, but this was on datasets (the “holy trinity” of graph learning: Cora, Citeseer, and PubMed) with limited structural class dependence. Global scaling is given by:</p>
 <div class="math notranslate nohighlight">
 \[X_{:,i}^{l} = s \frac{X_{:,i}^{l}}{\sqrt{\frac{1}{n}\sum_{j=0}^{n}||X_{:,j}^{l}||_{2}^{2}}}\]</div>
@@ -1158,7 +1204,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/Normalization_50_0.png" src="_images/Normalization_50_0.png" />
+<img alt="_images/Normalization_54_0.png" src="_images/Normalization_54_0.png" />
 </div>
 </div>
 <p>We plot a) training loss b) test loss and c) average rank displacement. Individual scaling (or PairNorm-SI, as it is refered to in [15]) performs worse than global scaling, which is itself only comparable to OrthNorm with constant <span class="math notranslate nohighlight">\(s_{1}\)</span>. Residual connections offer no pronounced improvement.</p>
@@ -1188,16 +1234,16 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/Normalization_52_0.png" src="_images/Normalization_52_0.png" />
-<img alt="_images/Normalization_52_1.png" src="_images/Normalization_52_1.png" />
-<img alt="_images/Normalization_52_2.png" src="_images/Normalization_52_2.png" />
-<img alt="_images/Normalization_52_3.png" src="_images/Normalization_52_3.png" />
+<img alt="_images/Normalization_56_0.png" src="_images/Normalization_56_0.png" />
+<img alt="_images/Normalization_56_1.png" src="_images/Normalization_56_1.png" />
+<img alt="_images/Normalization_56_2.png" src="_images/Normalization_56_2.png" />
+<img alt="_images/Normalization_56_3.png" src="_images/Normalization_56_3.png" />
 </div>
 </div>
 <p>There is no discernable overarching pattern visible in our metrics. For every model permutation, they are comparable to OrthNorm with constant <span class="math notranslate nohighlight">\(s_{1}\)</span> when <span class="math notranslate nohighlight">\(\vec{q}=\vec{1},d_{degree}^{\circ{}-1}\)</span>; this makes sense given the previously established relationship between OrthNorm and PairNorm.</p>
 </div>
 <div class="section" id="overview">
-<h2><span class="section-number">4.5. </span>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <p>Our new normalization scheme, which we are calling OrthNorm (i.e Orthagonal Normalization, get it?), improves upon the BatchNorm case. It surpasses PairNorm on the test loss by around an order of magnitude given the same depth and number of epochs. <span class="math notranslate nohighlight">\(d_{Katz}\)</span> is close to <span class="math notranslate nohighlight">\(v_{1}\)</span>, and so PairNorm orthogonalizes out <em>too</em> much of the component along <span class="math notranslate nohighlight">\(\vec{1}\)</span>. Indeed, it maintains large MAP, AggNorm, and normalized Rayleigh Coefficient across all convolutional layers. OrthNorm, by constrast, results in our metrics approaching small values as <span class="math notranslate nohighlight">\(l\rightarrow{}l_{max}\)</span>. This is due to <span class="math notranslate nohighlight">\(s_{1}\)</span> regulating convergence. Fixing <span class="math notranslate nohighlight">\(s_{1}\)</span> noticably hampers the model, as the optimal amount of orthogonalization in the final layers is–apparently–none whatsoever.</p>
 </div>
 </div>
@@ -1227,8 +1273,6 @@
         
         <div class='prev-next-bottom'>
             
-    <a class='left-prev' id="prev-link" href="DeeperGCNs.html" title="previous page"><span class="section-number">3. </span>Do Deeper Networks Solve the Problem?</a>
-    <a class='right-next' id="next-link" href="FutureWorkandBibliography.html" title="next page"><span class="section-number">5. </span>Addendum</a>
 
         </div>
         

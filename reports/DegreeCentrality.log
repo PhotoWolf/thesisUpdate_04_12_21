@@ -34,10 +34,10 @@ Here is a preview of the cell contents:
 -------------------
 torch.manual_seed(0)
 
-Graph = GraphConv(1,32,1,1).cuda()
-Edge = EdgeConv(1,32,1,1).cuda()
+Graph = GraphConv(1,4,1,4).cuda()
+Edge = EdgeConv(1,4,1,4).cuda()
 
-graph_metrics = train_loop(Graph,train_loader,test_loader,100,lr=1e-3)
+graph_metrics = train_loop(Graph,train_loader,test_loader,100,lr=1e-1)
 torch.cuda.empty_cache()
 edge_metrics = train_loop(Edge,train_loader,test_loader,100,lr=1e-3)
 torch.cuda.empty_cache()

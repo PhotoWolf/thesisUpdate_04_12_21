@@ -32,8 +32,8 @@ nbclient.exceptions.CellTimeoutError: A cell timed out while it was being execut
 The message was: Cell execution timed out.
 Here is a preview of the cell contents:
 -------------------
-['if __name__=="__main__":', '    num_graphs = 5000', '    d = []', '', '    for _ in range(num_graphs):']
+['if __name__=="__main__":', '    num_samples = 100', '    p_range = torch.linspace(.001,1,100)', '    density = []', '    eig_ratio = []']
 ...
-['        x,edges = torch.randn((n.sum(),1)),torch_geometric.utils.remove_isolated_nodes(torch_geometric.utils.stochastic_blockmodel_graph(n,p))[0]', '        adj = torch_sparse.SparseTensor(row=edges[0],col=edges[1])', '', '        # Create TorchGeometric Data object', '        d.append(torch_geometric.data.Data(x=x[:adj.size(0)],edge_index = edges))']
+['            # Compute density and ratio of leading eigenvalues', '            density.append(torch_sparse.sum(adj)/(adj.size(0)*adj.size(1)))', '', '            vals = torch.sort(torch.norm(torch.eig(adj.to_dense())[0],dim=1))', '            eig_ratio.append(vals[0][-2]/vals[0][-1])']
 -------------------
 

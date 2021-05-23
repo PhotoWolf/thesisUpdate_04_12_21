@@ -32,8 +32,11 @@ nbclient.exceptions.CellTimeoutError: A cell timed out while it was being execut
 The message was: Cell execution timed out.
 Here is a preview of the cell contents:
 -------------------
-['torch.manual_seed(0)', '', 'num_graphs = 3000', 'd = []', 'for _ in range(num_graphs):']
-...
-['    d[idx] = G', '    ', 'train,test = d[:2000],d[2000::]', 'train_loader = torch_geometric.data.DataLoader(train,batch_size=200,shuffle=True)', 'test_loader = torch_geometric.data.DataLoader(test,batch_size=200,shuffle=True)']
+graph_results = []
+for k in [4,8,16,32,64,128,256]:
+    torch.manual_seed(0)
+    graph = GraphConv(1,k,1,4).cuda()
+    
+    graph_results.append(train_loop(graph,train_loader,test_loader,100,lr=1e-3))
 -------------------
 
