@@ -372,6 +372,62 @@
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">4</span><span class="o">-</span><span class="mi">47471</span><span class="n">ec87967</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span>     <span class="n">graph</span> <span class="o">=</span> <span class="n">GraphConv</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="n">norm</span><span class="o">=</span><span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span> 
+<span class="ne">----&gt; </span><span class="mi">8</span>     <span class="n">graph_results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">train_loop</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span><span class="n">train_loader</span><span class="p">,</span><span class="n">test_loader</span><span class="p">,</span><span class="mi">150</span><span class="p">,</span><span class="n">lr</span><span class="o">=</span><span class="mf">1e-2</span><span class="p">))</span>
+<span class="g g-Whitespace">      </span><span class="mi">9</span>     <span class="n">torch</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">graph</span><span class="o">.</span><span class="n">state_dict</span><span class="p">(),</span><span class="s1">&#39;base_</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">k</span><span class="p">))</span>
+<span class="g g-Whitespace">     </span><span class="mi">10</span> 
+
+<span class="nn">~/thesisUpdate_04_12_21/Introduction.ipynb</span> in <span class="ni">train_loop</span><span class="nt">(model, train_loader, test_loader, epochs, lr, metric_func, loss_func)</span>
+<span class="g g-Whitespace">    </span><span class="mi">211</span>    <span class="s2">&quot;cell_type&quot;</span><span class="p">:</span> <span class="s2">&quot;code&quot;</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">212</span>    <span class="s2">&quot;execution_count&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+<span class="ne">--&gt; </span><span class="mi">213</span>    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;paperback-digest&quot;</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">214</span>    <span class="s2">&quot;metadata&quot;</span><span class="p">:</span> <span class="p">{</span>
+<span class="g g-Whitespace">    </span><span class="mi">215</span>     <span class="s2">&quot;tags&quot;</span><span class="p">:</span> <span class="p">[</span>
+
+<span class="nn">/opt/conda/lib/python3.7/site-packages/torch/nn/modules/module.py</span> in <span class="ni">_call_impl</span><span class="nt">(self, *input, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">887</span>             <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_slow_forward</span><span class="p">(</span><span class="o">*</span><span class="nb">input</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">888</span>         <span class="k">else</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">889</span>             <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="o">*</span><span class="nb">input</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">890</span>         <span class="k">for</span> <span class="n">hook</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">891</span>                 <span class="n">_global_forward_hooks</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span>
+
+<span class="nn">~/thesisUpdate_04_12_21/Introduction.ipynb</span> in <span class="ni">forward</span><span class="nt">(self, X, edge_index, edge_weight, batch)</span>
+<span class="g g-Whitespace">     </span><span class="mi">71</span>     <span class="s2">&quot;import torch_geometric</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">72</span>     <span class="s2">&quot;import torch_sparse</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+<span class="ne">---&gt; </span><span class="mi">73</span>     <span class="s2">&quot;import torch_scatter</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">74</span>     <span class="s2">&quot;import torch</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">75</span>     <span class="s2">&quot;import numpy as np</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+
+<span class="nn">/opt/conda/lib/python3.7/site-packages/torch/nn/modules/module.py</span> in <span class="ni">_call_impl</span><span class="nt">(self, *input, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">887</span>             <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_slow_forward</span><span class="p">(</span><span class="o">*</span><span class="nb">input</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">888</span>         <span class="k">else</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">889</span>             <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="o">*</span><span class="nb">input</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">890</span>         <span class="k">for</span> <span class="n">hook</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">891</span>                 <span class="n">_global_forward_hooks</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span>
+
+<span class="nn">/opt/conda/lib/python3.7/site-packages/torch/nn/modules/linear.py</span> in <span class="ni">forward</span><span class="nt">(self, input)</span>
+<span class="g g-Whitespace">     </span><span class="mi">92</span> 
+<span class="g g-Whitespace">     </span><span class="mi">93</span>     <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<span class="ne">---&gt; </span><span class="mi">94</span>         <span class="k">return</span> <span class="n">F</span><span class="o">.</span><span class="n">linear</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">weight</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">bias</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">95</span> 
+<span class="g g-Whitespace">     </span><span class="mi">96</span>     <span class="k">def</span> <span class="nf">extra_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+
+<span class="nn">/opt/conda/lib/python3.7/site-packages/torch/nn/functional.py</span> in <span class="ni">linear</span><span class="nt">(input, weight, bias)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1751</span>     <span class="k">if</span> <span class="n">has_torch_function_variadic</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">weight</span><span class="p">):</span>
+<span class="g g-Whitespace">   </span><span class="mi">1752</span>         <span class="k">return</span> <span class="n">handle_torch_function</span><span class="p">(</span><span class="n">linear</span><span class="p">,</span> <span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">weight</span><span class="p">),</span> <span class="nb">input</span><span class="p">,</span> <span class="n">weight</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="n">bias</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">1753</span>     <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">_C</span><span class="o">.</span><span class="n">_nn</span><span class="o">.</span><span class="n">linear</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">weight</span><span class="p">,</span> <span class="n">bias</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1754</span> 
+<span class="g g-Whitespace">   </span><span class="mi">1755</span> 
+
+<span class="ne">KeyboardInterrupt</span>: 
+</pre></div>
+</div>
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">

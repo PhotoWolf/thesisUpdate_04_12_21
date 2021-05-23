@@ -351,39 +351,6 @@
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">5</span><span class="o">-</span><span class="n">c0e62c4eea04</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span>     <span class="n">graph</span> <span class="o">=</span> <span class="n">GraphConv</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span> 
-<span class="ne">----&gt; </span><span class="mi">6</span>     <span class="n">graph_results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">train_loop</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span><span class="n">train_loader</span><span class="p">,</span><span class="n">test_loader</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="n">lr</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">))</span>
-
-<span class="nn">~/thesisUpdate_04_12_21/Introduction.ipynb</span> in <span class="ni">train_loop</span><span class="nt">(model, train_loader, test_loader, epochs, lr, metric_func, loss_func)</span>
-<span class="g g-Whitespace">    </span><span class="mi">192</span>     <span class="s2">&quot;    Max = torch_scatter.scatter_max(X,batch,dim=0)[0][batch]</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">193</span>     <span class="s2">&quot;    return (X-Min)/(1e-12 + Max - Min)</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
-<span class="ne">--&gt; </span><span class="mi">194</span>     <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">195</span>     <span class="s2">&quot;# Gets rank (descending) of each element in X</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">196</span>     <span class="s2">&quot;def get_rank(X):</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
-
-<span class="nn">/opt/conda/lib/python3.7/site-packages/torch/nn/modules/module.py</span> in <span class="ni">_call_impl</span><span class="nt">(self, *input, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">887</span>             <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_slow_forward</span><span class="p">(</span><span class="o">*</span><span class="nb">input</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">888</span>         <span class="k">else</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">889</span>             <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="o">*</span><span class="nb">input</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">890</span>         <span class="k">for</span> <span class="n">hook</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">891</span>                 <span class="n">_global_forward_hooks</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span>
-
-<span class="nn">~/thesisUpdate_04_12_21/Introduction.ipynb</span> in <span class="ni">forward</span><span class="nt">(self, X, edge_index, edge_weight, batch)</span>
-<span class="g g-Whitespace">     </span><span class="mi">71</span>     <span class="s2">&quot;import torch_geometric</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">72</span>     <span class="s2">&quot;import torch_sparse</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
-<span class="ne">---&gt; </span><span class="mi">73</span>     <span class="s2">&quot;import torch_scatter</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">74</span>     <span class="s2">&quot;import torch</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">75</span>     <span class="s2">&quot;import numpy as np</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
-
-<span class="ne">KeyboardInterrupt</span>: 
-</pre></div>
-</div>
-</div>
 </div>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
