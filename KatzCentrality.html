@@ -197,60 +197,65 @@
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#introduction-experiments">
+   2.1. Introduction &amp; Experiments
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#but-what-about-low-density-networks">
-   2.1. But What About Low-Density Networks?
+   2.2. But What About Low-Density Networks?
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#deeper-and-wider-gcns">
-   2.2. Deeper (and Wider) GCNs
+   2.3. Deeper (and Wider) GCNs
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#varying-width">
-     2.2.1. Varying Width
+     2.3.1. Varying Width
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#varying-depth">
-     2.2.2. Varying Depth
+     2.3.2. Varying Depth
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#adding-residual-connections">
-     2.2.3. Adding Residual Connections
+     2.3.3. Adding Residual Connections
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#gcn-smoothing-and-normalization">
-     2.2.4. GCN Smoothing and Normalization
+     2.3.4. GCN Smoothing and Normalization
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#cora-example">
-       2.2.4.1. Cora Example
+       2.3.4.1. Cora Example
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#orthnorm">
-       2.2.4.2. OrthNorm
+       2.3.4.2. OrthNorm
       </a>
      </li>
     </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#learning-matrix-polynomials">
-     2.2.5. Learning Matrix Polynomials
+     2.3.5. Learning Matrix Polynomials
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#accelerated-power-iterations">
-       2.2.5.1. Accelerated Power Iterations
+       2.3.5.1. Accelerated Power Iterations
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#accelerated-gcns">
-       2.2.5.2. Accelerated GCNs
+       2.3.5.2. Accelerated GCNs
       </a>
      </li>
     </ul>
@@ -321,6 +326,8 @@
 </div>
 <div class="section" id="katz-centrality">
 <h1><span class="section-number">2. </span>Katz Centrality<a class="headerlink" href="#katz-centrality" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction-experiments">
+<h2><span class="section-number">2.1. </span>Introduction &amp; Experiments<a class="headerlink" href="#introduction-experiments" title="Permalink to this headline">¶</a></h2>
 <p>Moving on from <span class="math notranslate nohighlight">\(d_{degree}\)</span>, we now analyze the ability of GCNs to learn Katz Centrality. The Katz Centrality of matrix <span class="math notranslate nohighlight">\(A\in{}R^{n\times{}n}\)</span> is defined as</p>
 <div class="math notranslate nohighlight">
 \[\vec{d}_{Katz} = \sum_{k=1}^{\infty}\alpha^{k}(A^{T})^{k}\vec{1} + \vec{\beta{}}\]</div>
@@ -443,7 +450,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/KatzCentrality_9_0.png" src="_images/KatzCentrality_9_0.png" />
+<img alt="_images/KatzCentrality_10_0.png" src="_images/KatzCentrality_10_0.png" />
 </div>
 </div>
 <p>We see that it takes <span class="math notranslate nohighlight">\(q\approx{}4\)</span> to obtain an <span class="math notranslate nohighlight">\(L\)</span> of <span class="math notranslate nohighlight">\(1e^{-3}\)</span> and an <span class="math notranslate nohighlight">\(r_{disp}\)</span> of <span class="math notranslate nohighlight">\(3e^{-1}\)</span>. The main loop requires a total of <span class="math notranslate nohighlight">\(q|E| + (2q - 1)|V| \)</span> operations. <span class="math notranslate nohighlight">\(\alpha{}\)</span> can be suitably determined by <span class="math notranslate nohighlight">\(d\)</span> successive Lanczos Iterations at a cost of <span class="math notranslate nohighlight">\(d(|E| + 3|V|-1) + 4(d-1)|V|\)</span>.</p>
@@ -482,18 +489,25 @@
 <span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="n">edge4_metrics</span> <span class="o">=</span> <span class="n">train_loop</span><span class="p">(</span><span class="n">Edge4</span><span class="p">,</span><span class="n">train_loader</span><span class="p">,</span><span class="n">test_loader</span><span class="p">,</span><span class="mi">300</span><span class="p">,</span><span class="n">lr</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">)</span>
 
 <span class="nn">~/thesisUpdate_04_12_21/Introduction.ipynb</span> in <span class="ni">train_loop</span><span class="nt">(model, train_loader, test_loader, epochs, lr, metric_func, loss_func)</span>
-<span class="g g-Whitespace">    </span><span class="mi">216</span>      <span class="s2">&quot;hide-input&quot;</span>
-<span class="g g-Whitespace">    </span><span class="mi">217</span>     <span class="p">]</span>
-<span class="ne">--&gt; </span><span class="mi">218</span>    <span class="p">},</span>
-<span class="g g-Whitespace">    </span><span class="mi">219</span>    <span class="s2">&quot;outputs&quot;</span><span class="p">:</span> <span class="p">[],</span>
-<span class="g g-Whitespace">    </span><span class="mi">220</span>    <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="p">[</span>
+<span class="g g-Whitespace">    </span><span class="mi">192</span>     <span class="s2">&quot;    Max = torch_scatter.scatter_max(X,batch,dim=0)[0][batch]</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">193</span>     <span class="s2">&quot;    return (X-Min)/(1e-12 + Max - Min)</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+<span class="ne">--&gt; </span><span class="mi">194</span>     <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">195</span>     <span class="s2">&quot;# Gets rank (descending) of each element in X</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">196</span>     <span class="s2">&quot;def get_rank(X):</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
 
-<span class="nn">~/thesisUpdate_04_12_21/Introduction.ipynb</span> in <span class="ni">rank_disp</span><span class="nt">(X, Y, batch)</span>
-<span class="g g-Whitespace">    </span><span class="mi">148</span>      <span class="s2">&quot;hide-input&quot;</span>
-<span class="g g-Whitespace">    </span><span class="mi">149</span>     <span class="p">]</span>
-<span class="ne">--&gt; </span><span class="mi">150</span>    <span class="p">},</span>
-<span class="g g-Whitespace">    </span><span class="mi">151</span>    <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="p">[</span>
-<span class="g g-Whitespace">    </span><span class="mi">152</span>     <span class="s2">&quot;Graph centrality measures are used to quantify the structural properties of a network. By training GCNs to predict more and more complex centralities, we hope to gain insight into how well they incorporate topology and what limitations they posses, if any. Depending on our algorithm&#39;s performance, there may also be various practical applications. For example, path-based centralities (betweenness, closeness, etc) are broadly $</span><span class="se">\\</span><span class="s2">textit</span><span class="si">{O}</span><span class="s2">(|V|^</span><span class="si">{3}</span><span class="s2">)$ and, at best, $</span><span class="se">\\</span><span class="s2">textit</span><span class="si">{O}</span><span class="s2">(|V||E|)$ [19], so an accurate GCN approximation may be of interest in analyzing larger networks. </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+<span class="nn">/opt/conda/lib/python3.7/site-packages/torch/nn/modules/module.py</span> in <span class="ni">_call_impl</span><span class="nt">(self, *input, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">887</span>             <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_slow_forward</span><span class="p">(</span><span class="o">*</span><span class="nb">input</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">888</span>         <span class="k">else</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">889</span>             <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="o">*</span><span class="nb">input</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">890</span>         <span class="k">for</span> <span class="n">hook</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">891</span>                 <span class="n">_global_forward_hooks</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span>
+
+<span class="nn">~/thesisUpdate_04_12_21/Introduction.ipynb</span> in <span class="ni">forward</span><span class="nt">(self, X, edge_index, edge_weight, batch)</span>
+<span class="g g-Whitespace">     </span><span class="mi">72</span>     <span class="s2">&quot;import torch_sparse</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">73</span>     <span class="s2">&quot;import torch_scatter</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+<span class="ne">---&gt; </span><span class="mi">74</span>     <span class="s2">&quot;import torch</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">75</span>     <span class="s2">&quot;import numpy as np</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">76</span>     <span class="s2">&quot;import networkx as nx</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
 
 <span class="ne">KeyboardInterrupt</span>: 
 </pre></div>
@@ -558,14 +572,15 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/KatzCentrality_12_0.png" src="_images/KatzCentrality_12_0.png" />
-<img alt="_images/KatzCentrality_12_1.png" src="_images/KatzCentrality_12_1.png" />
+<img alt="_images/KatzCentrality_13_0.png" src="_images/KatzCentrality_13_0.png" />
+<img alt="_images/KatzCentrality_13_1.png" src="_images/KatzCentrality_13_1.png" />
 </div>
 </div>
 <p>We plot a) training loss b) test loss and c) average rank displacement. GraphConv converges to around <span class="math notranslate nohighlight">\(7e^{-4}\)</span> for <span class="math notranslate nohighlight">\(m=4\)</span> and <span class="math notranslate nohighlight">\(3e^{-5}\)</span> for <span class="math notranslate nohighlight">\(m=16\)</span>; looking purely at the number of aggregations (i.e <span class="math notranslate nohighlight">\(l_{max}\)</span> versues <span class="math notranslate nohighlight">\(q\)</span>), they each either meet or surpass the corresponding truncated sum approximation. Oddly enough, the <span class="math notranslate nohighlight">\(r_{disp}\)</span> is much improved in the latter case, hovering at nearly <span class="math notranslate nohighlight">\(1e^{-2}\)</span>. Operation counts are in line with <span class="math notranslate nohighlight">\(q\approx{}20\)</span> and <span class="math notranslate nohighlight">\(q\approx{}100\)</span>, so how useful these models are really will depend on the number of Lanczos iterations used to approximate <span class="math notranslate nohighlight">\(\alpha{}\)</span> (and, even then, they’d need to be pretty high). Still, this all indicates to us that, if beneficial, GraphConv could implicitly learn a decent approximation to <span class="math notranslate nohighlight">\(\vec{d}_{Katz}\)</span> as part of a downstream task.</p>
 <p>We find the performance of EdgeConv to be mostly independent of <span class="math notranslate nohighlight">\(m\)</span>. If <span class="math notranslate nohighlight">\(m\)</span> is small, then it already does pretty well (and noticably better than GraphConv), and the loss only marginally improves for large <span class="math notranslate nohighlight">\(m\)</span>. In general, EdgeConv requires nearly twice the runtime, so it may often be more practical to simply train a wider GraphConv model.</p>
+</div>
 <div class="section" id="but-what-about-low-density-networks">
-<h2><span class="section-number">2.1. </span>But What About Low-Density Networks?<a class="headerlink" href="#but-what-about-low-density-networks" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">2.2. </span>But What About Low-Density Networks?<a class="headerlink" href="#but-what-about-low-density-networks" title="Permalink to this headline">¶</a></h2>
 <p>Our models have thus far only seen high-density SBMs wherein the ratio of leading eigenvalues is relatively small. As established, this ratio controls how close <span class="math notranslate nohighlight">\(A^{k}\vec{x}\)</span> is to <span class="math notranslate nohighlight">\(\vec{v_{1}}\)</span>. At its most basic, graph convolution is simply succesive powers of the adjancency matrix seperated by a differentiable <span class="math notranslate nohighlight">\(\Theta\)</span>:</p>
 <div class="math notranslate nohighlight">
 \[X^{l+1} = \Theta^{l}(A\Theta^{l-1}(A\Theta^{l-2}(...(\Theta^{1}(AX^{0})))\]</div>
@@ -662,7 +677,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/KatzCentrality_19_0.png" src="_images/KatzCentrality_19_0.png" />
+<img alt="_images/KatzCentrality_20_0.png" src="_images/KatzCentrality_20_0.png" />
 </div>
 </div>
 <p>Whereas the high-density dataset only required <span class="math notranslate nohighlight">\(q\approx{}4\)</span> to obtain an <span class="math notranslate nohighlight">\(L=1e^{-3}\)</span>, now we seemingly need <span class="math notranslate nohighlight">\(q&gt;64\)</span> to even hit that mark. <span class="math notranslate nohighlight">\(r_{disp}\)</span> is similarily slow to converge</p>
@@ -748,20 +763,20 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/KatzCentrality_22_0.png" src="_images/KatzCentrality_22_0.png" />
-<img alt="_images/KatzCentrality_22_1.png" src="_images/KatzCentrality_22_1.png" />
+<img alt="_images/KatzCentrality_23_0.png" src="_images/KatzCentrality_23_0.png" />
+<img alt="_images/KatzCentrality_23_1.png" src="_images/KatzCentrality_23_1.png" />
 </div>
 </div>
 <p>We plot a) training loss b) test loss and c) average rank displacement. With this larger eigenvalue ratio, there is a clear degredation in GCN performance. Indeed, the test loss now hovers around <span class="math notranslate nohighlight">\(8e^{-3}\)</span> (<span class="math notranslate nohighlight">\(m=4\)</span>) and <span class="math notranslate nohighlight">\(4e^{-3}\)</span> (<span class="math notranslate nohighlight">\(m=16\)</span>) for GraphConv and between from <span class="math notranslate nohighlight">\(5e^{-3}\)</span> to <span class="math notranslate nohighlight">\(4e^{-3}\)</span> for EdgeConv. While all our GCNs surpass the associated <span class="math notranslate nohighlight">\(q=4\)</span> truncated sum, their losses are still each nearly two orders of magnitude worse than for the best model on the high-density dataset.</p>
 </div>
 <div class="section" id="deeper-and-wider-gcns">
-<h2><span class="section-number">2.2. </span>Deeper (and Wider) GCNs<a class="headerlink" href="#deeper-and-wider-gcns" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">2.3. </span>Deeper (and Wider) GCNs<a class="headerlink" href="#deeper-and-wider-gcns" title="Permalink to this headline">¶</a></h2>
 <p>So our results in the prior section obviously beget the question: can we do better? We don’t want a model that is actively worse at learning structure for a large (and arguably quite common) class of networks; at the very least, we would like to minimize the difference in centrality prediction between high and low-density networks, which we term the <em>topological performance gap</em>. Going back to one of our definitions for <span class="math notranslate nohighlight">\(d_{Katz}\)</span>,</p>
 <div class="math notranslate nohighlight">
 \[d_{Katz} = \sum_{k=1}^{n} (\alpha{}A)^{k}\vec{1} + \vec{v_{1}}\sum_{k=n+1}^{\infty}\alpha{}^{k}\]</div>
 <p>it seems fairly obvious that a larger <span class="math notranslate nohighlight">\(l_{max}\)</span> should lead to a closer approximation of the first term. To verify this, we train an <span class="math notranslate nohighlight">\(m=16\)</span> GraphConv model for all <span class="math notranslate nohighlight">\(l_{max}=1,2,4,..,64\)</span> and report convergence. We also train a set of <span class="math notranslate nohighlight">\(l_{max}=4\)</span> models while varying <span class="math notranslate nohighlight">\(m\)</span> from <span class="math notranslate nohighlight">\(4\)</span> to <span class="math notranslate nohighlight">\(256\)</span>, which allows us to assess the impact of an increased parameter count without any associated change in the number of convolutions. Since EdgeConv did not seem to offer any unanimous benefit before, we exclude it from these experiments.</p>
 <div class="section" id="varying-width">
-<h3><span class="section-number">2.2.1. </span>Varying Width<a class="headerlink" href="#varying-width" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">2.3.1. </span>Varying Width<a class="headerlink" href="#varying-width" title="Permalink to this headline">¶</a></h3>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">width_results</span> <span class="o">=</span> <span class="p">[]</span>
@@ -806,7 +821,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/KatzCentrality_28_0.png" src="_images/KatzCentrality_28_0.png" />
+<img alt="_images/KatzCentrality_29_0.png" src="_images/KatzCentrality_29_0.png" />
 </div>
 </div>
 <p>Above, we plot a) training loss b) test loss and c) average rank displacement for the <span class="math notranslate nohighlight">\(l_{max}=4\)</span> model as width <span class="math notranslate nohighlight">\(m\)</span> goes from <span class="math notranslate nohighlight">\(4\)</span> to <span class="math notranslate nohighlight">\(128\)</span>. The figure below shows the average values on the train and test loss over the last 10 epochs versus <span class="math notranslate nohighlight">\(m\)</span>.</p>
@@ -824,13 +839,13 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/KatzCentrality_30_0.png" src="_images/KatzCentrality_30_0.png" />
+<img alt="_images/KatzCentrality_31_0.png" src="_images/KatzCentrality_31_0.png" />
 </div>
 </div>
 <p>Our model’s performance has minimal dependence on width, and, despite some initial benefit, increasing <span class="math notranslate nohighlight">\(m\)</span> past <span class="math notranslate nohighlight">\(m=8\)</span> is subject to rapidly diminishing returns. Indeed, the loss essentially stagnates for all <span class="math notranslate nohighlight">\(m\geq{}32\)</span>. This is not an issue of overfitting, as both the train and test losses flatten out. All in all, we take this as confirmation that we cannot sufficiently address the topological performance gap simply by adding more parameters.</p>
 </div>
 <div class="section" id="varying-depth">
-<h3><span class="section-number">2.2.2. </span>Varying Depth<a class="headerlink" href="#varying-depth" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">2.3.2. </span>Varying Depth<a class="headerlink" href="#varying-depth" title="Permalink to this headline">¶</a></h3>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">depth_results</span> <span class="o">=</span> <span class="p">[]</span>
@@ -904,7 +919,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/KatzCentrality_34_0.png" src="_images/KatzCentrality_34_0.png" />
+<img alt="_images/KatzCentrality_35_0.png" src="_images/KatzCentrality_35_0.png" />
 </div>
 </div>
 <p>We plot a) training loss b) test loss and c) average rank displacement for the <span class="math notranslate nohighlight">\(m=16\)</span> model with <span class="math notranslate nohighlight">\(l_{max}=1,2,4,...,64\)</span>. The figure below shows the average values on the train and test loss over the last 10 epochs versus <span class="math notranslate nohighlight">\(l_{max}\)</span>.</p>
@@ -922,13 +937,13 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/KatzCentrality_36_0.png" src="_images/KatzCentrality_36_0.png" />
+<img alt="_images/KatzCentrality_37_0.png" src="_images/KatzCentrality_37_0.png" />
 </div>
 </div>
 <p>As expected, increasing GCN depth boosts performance (much more so than a greater width), and our deepest models handily outperform their corresponding truncated sum approximations. However, the losses do begin to stagnate with respect to depth for <span class="math notranslate nohighlight">\(l_{max}\geq{}16\)</span>. One would think we’d see continual improvement versues <span class="math notranslate nohighlight">\(l_{max}\)</span>, but instead it looks like <span class="math notranslate nohighlight">\(4e^{-4}\)</span> is a soft minimum of sorts. We suspect GraphConv is either a) having difficulty backpropagating due to the greater model depth or b) running into oversmoothing with the increased number of convolutions.</p>
 </div>
 <div class="section" id="adding-residual-connections">
-<h3><span class="section-number">2.2.3. </span>Adding Residual Connections<a class="headerlink" href="#adding-residual-connections" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">2.3.3. </span>Adding Residual Connections<a class="headerlink" href="#adding-residual-connections" title="Permalink to this headline">¶</a></h3>
 <p>To assess whether network depth is having adverse effects on backpropagation, we train an <span class="math notranslate nohighlight">\(l_{max}=64\)</span> GraphConv model with 1-hop residual connections following each non-linearity, which have been shown to improve the stability and performance of deeper GCNs [15]. If there is truly an issue, then we should expect to see improvement over the non-residual model.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
@@ -1005,13 +1020,13 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/KatzCentrality_42_0.png" src="_images/KatzCentrality_42_0.png" />
+<img alt="_images/KatzCentrality_43_0.png" src="_images/KatzCentrality_43_0.png" />
 </div>
 </div>
 <p>We plot a) training loss b) test loss and c) average rank displacement. Adding residual connections actually appears to hampen the model. We suspect this occurs because we are now implicitly aggregating with <span class="math notranslate nohighlight">\((2I + A)\)</span>, which may very well increase the ratio of leading eigenvalues for most of the dataset. Regardless, these result contradicts the notion that our deeper models are underperforming due to backpropgation issues.</p>
 </div>
 <div class="section" id="gcn-smoothing-and-normalization">
-<h3><span class="section-number">2.2.4. </span>GCN Smoothing and Normalization<a class="headerlink" href="#gcn-smoothing-and-normalization" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">2.3.4. </span>GCN Smoothing and Normalization<a class="headerlink" href="#gcn-smoothing-and-normalization" title="Permalink to this headline">¶</a></h3>
 <p>And this leads us nicely into a pet topic of mine. GCNs suffer from a peculiar phenomena known as <em>oversmoothing</em>. In essence, as you add more layers, the features of each node converge to fixed values and accuracy tends to deteriorate. Current theoretical analysis of oversmoothing has been focused on the GCNConv operator of Kipf and Welling [15].</p>
 <div class="math notranslate nohighlight">
 \[X^{l+1} = (\hat{D}^{\frac{-1}{2}}\hat{A}\hat{D}^{\frac{-1}{2}})X^{l}W\]</div>
@@ -1028,7 +1043,7 @@
 \[R(X^{l},A,V) = \frac{1}{|V|}\sum_{i\in{}V}(\frac{1}{\lambda_{max}-\lambda_{min}}(\lambda_{max} - |\frac{\vec{x}^{l}_{i}A\vec{x}^{l}_{i}}{\vec{x}^{l}_{i}\cdot{}\vec{x}^{l}_{i}}|))\]</div>
 <p>with MinMax normalization. <span class="math notranslate nohighlight">\(\lambda_{max}\)</span> and <span class="math notranslate nohighlight">\(\lambda_{min}\)</span> are the eigenvalues of <span class="math notranslate nohighlight">\(A\)</span> with, respectively, the largest and smallest absolute values. MAD quantifies the similarity of adjacent nodes, whereas GFS measures how close the columns <span class="math notranslate nohighlight">\(X_{:,i}^{l}\)</span> are to one another. Both employ the cosine distance for scale invariance. The normalized Rayleigh Quotient reflects how close each column is to the dominant eigenvector <span class="math notranslate nohighlight">\(v_{1}\)</span>, with <span class="math notranslate nohighlight">\(R(X^{l})=0\)</span> indicating they are equivalent.</p>
 <div class="section" id="cora-example">
-<h4><span class="section-number">2.2.4.1. </span>Cora Example<a class="headerlink" href="#cora-example" title="Permalink to this headline">¶</a></h4>
+<h4><span class="section-number">2.3.4.1. </span>Cora Example<a class="headerlink" href="#cora-example" title="Permalink to this headline">¶</a></h4>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">citeseer_train_loop</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="n">data</span><span class="p">,</span><span class="n">epochs</span><span class="p">,</span><span class="n">lr</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">):</span>
@@ -1246,7 +1261,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/KatzCentrality_51_0.png" src="_images/KatzCentrality_51_0.png" />
+<img alt="_images/KatzCentrality_52_0.png" src="_images/KatzCentrality_52_0.png" />
 </div>
 </div>
 <p>As <span class="math notranslate nohighlight">\(l_{max}\)</span> increases, we observe the following:</p>
@@ -1323,13 +1338,13 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/KatzCentrality_53_0.png" src="_images/KatzCentrality_53_0.png" />
+<img alt="_images/KatzCentrality_54_0.png" src="_images/KatzCentrality_54_0.png" />
 </div>
 </div>
 <p>The above figure shows the aggregated a) MAD b) GFS and c) <span class="math notranslate nohighlight">\(R\)</span> for our GraphConv models trained on the low-density dataset. MAD does not change a whole lot as we increase <span class="math notranslate nohighlight">\(l_{max}\)</span>; the minimum spikes early, but otherwise oscillates around <span class="math notranslate nohighlight">\(.03\)</span>, and the mean always remains close to <span class="math notranslate nohighlight">\(.12\)</span>. Our minimum GFS uniformly decays towards <span class="math notranslate nohighlight">\(0.0\)</span>, although the mean remains quite high at <span class="math notranslate nohighlight">\(.25\)</span>. Minimum <span class="math notranslate nohighlight">\(R\)</span> looks to be converging to <span class="math notranslate nohighlight">\(.1\)</span>. However, the standard deviation is quite small, and so layer-by-layer <span class="math notranslate nohighlight">\(R\)</span> is much more clustered around the mean, which flattens out at around <span class="math notranslate nohighlight">\(.23\)</span>. This suggests that the minimum is the result of a profound, unexpected oscillation, as opposed to a measured decline across layers.</p>
 </div>
 <div class="section" id="orthnorm">
-<h4><span class="section-number">2.2.4.2. </span>OrthNorm<a class="headerlink" href="#orthnorm" title="Permalink to this headline">¶</a></h4>
+<h4><span class="section-number">2.3.4.2. </span>OrthNorm<a class="headerlink" href="#orthnorm" title="Permalink to this headline">¶</a></h4>
 <p>Now, as far as learning <span class="math notranslate nohighlight">\(d_{Katz}\)</span> is concerned, this all presents a big issue. Oversmoothing is actually somewhat necesary for learning this type of graph structure, as we ideally want to converge to something close (but no too close) to <span class="math notranslate nohighlight">\(v_{1}\)</span>. Normalization would appear to inhibit this, but, by the same measure, <span class="math notranslate nohighlight">\(l_{max}&gt;16\)</span> models can otherwise be quite unstable. Moreover, we cannot know <em>a prior</em> whether encoding <span class="math notranslate nohighlight">\(v_{1}\)</span> would even be beneficial to a given graph learning task, so simply dropping all normalization is not a good idea.</p>
 <p>To this end, we propose the following normalization scheme, which we tentatively call OrthNorm:</p>
 <div class="math notranslate nohighlight">
@@ -1757,8 +1772,8 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/KatzCentrality_65_0.png" src="_images/KatzCentrality_65_0.png" />
-<img alt="_images/KatzCentrality_65_1.png" src="_images/KatzCentrality_65_1.png" />
+<img alt="_images/KatzCentrality_66_0.png" src="_images/KatzCentrality_66_0.png" />
+<img alt="_images/KatzCentrality_66_1.png" src="_images/KatzCentrality_66_1.png" />
 </div>
 </div>
 <p>The above figures show the mean <span class="math notranslate nohighlight">\(\gamma\)</span> and <span class="math notranslate nohighlight">\(\beta\)</span> for all model layers when gradients are enabled, along with the corresponding lines of best fit. If we remove residual connections, then model keeps most earlier layers at or near initialization. This is not much of an issue for <span class="math notranslate nohighlight">\(\beta\)</span>, which seems to stay around <span class="math notranslate nohighlight">\(.5\)</span> anyway, but <span class="math notranslate nohighlight">\(\gamma\)</span> either always wants to be small or wants to decrease as soon as possible. Values for the residual model tend to be more tightly clustered around the line of best fit.</p>
@@ -1893,7 +1908,7 @@
 </div>
 </div>
 <div class="section" id="learning-matrix-polynomials">
-<h3><span class="section-number">2.2.5. </span>Learning Matrix Polynomials<a class="headerlink" href="#learning-matrix-polynomials" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">2.3.5. </span>Learning Matrix Polynomials<a class="headerlink" href="#learning-matrix-polynomials" title="Permalink to this headline">¶</a></h3>
 <p>Of course, OrthNorm is swell and all, but we still need to use a fairly deep model for these low-density networks. This means more parameters, more training time, etc.; it’s just not the most practical. What we really could use is a method to boost the performance of shallow GCNs up to or near that of deeper ones. Let us start by defining the matrix polynomial <span class="math notranslate nohighlight">\(p(A)\)</span> as</p>
 <div class="math notranslate nohighlight">
 \[ p(A) = \sum_{k=0}^{n} c_{i}A^{k} \]</div>
@@ -1902,7 +1917,7 @@
 \[ p(A)v_{i} = \sum_{k=0}^{n} c_{i}A^{k}v_{i} = \sum_{k=0}^{n} c_{i}\lambda_{i}^{k}v_{i} = \tilde{p}(\lambda_{i})v_{i}\]</div>
 <p>Most GCNs implicitly use something along the lines of <span class="math notranslate nohighlight">\(p(A) \propto{} A^{k}\)</span>, as only the output of the final convolution is passed to a classification or regression head. But, if we want to approximate the dominant eigenvector or something close to it, it is often possible to choose a more efficient polynomial, in the sense that <span class="math notranslate nohighlight">\(\frac{|p(\lambda_{2})|}{|p(\lambda_{1})|}\leq{}(\frac{|\lambda_{2}|}{|\lambda_{1}|})^{k}\)</span>. This idea forms the basis of spectral shift methods, among others.</p>
 <div class="section" id="accelerated-power-iterations">
-<h4><span class="section-number">2.2.5.1. </span>Accelerated Power Iterations<a class="headerlink" href="#accelerated-power-iterations" title="Permalink to this headline">¶</a></h4>
+<h4><span class="section-number">2.3.5.1. </span>Accelerated Power Iterations<a class="headerlink" href="#accelerated-power-iterations" title="Permalink to this headline">¶</a></h4>
 <p>Now, we rarely know the optimal <span class="math notranslate nohighlight">\(p\)</span> beforehand; that would require knowledge of the entire spectra of <span class="math notranslate nohighlight">\(A\)</span>. So it seems like a pretty logical next step to try and learn <span class="math notranslate nohighlight">\(p\)</span> dynamically. As a starting point, we first attempt to accelerate the convergence of the Power Iteration method on our low-density dataset.</p>
 <div class="math notranslate nohighlight">
 \[ x^{out} = \frac{\sum_{l=0}^{l_{max}}c_{l}\vec{x}^{l}}{||\sum_{l=0}^{l_{max}}c_{l}\vec{x}^{l}||_{2}} \; \; \; \;  \vec{x}^{l} = \frac{A^{l}\vec{x}^{0}}{||A^{l}\vec{x}^{0}||_{2}^{2}}\]</div>
@@ -2098,13 +2113,13 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/KatzCentrality_76_0.png" src="_images/KatzCentrality_76_0.png" />
+<img alt="_images/KatzCentrality_77_0.png" src="_images/KatzCentrality_77_0.png" />
 </div>
 </div>
 <p>The figure shows a) convergence to <span class="math notranslate nohighlight">\(v_{1}\)</span> and b) convergence to the second-dominant eigenvector, <span class="math notranslate nohighlight">\(v_{2}\)</span>, by orthogonalizing out <span class="math notranslate nohighlight">\(v_{1}\)</span> at each iteration. “Base” is the standard Power Iteration algorithm. When convergence is already (relatively) quick, our accelerated scheme offers only about <span class="math notranslate nohighlight">\(5-10\)</span> iterations worth of speedup. This could potentially be improved with some hyperparameter tuning; <span class="math notranslate nohighlight">\(\eta{}\)</span> is probably too large. However, if convergence is <em>very</em> slow (as is most often the case for <span class="math notranslate nohighlight">\(v_{2}\)</span> or lower eigenvectors), then we can substantially decrease the number of iterations required to reach a particular approximation accuracy.</p>
 </div>
 <div class="section" id="accelerated-gcns">
-<h4><span class="section-number">2.2.5.2. </span>Accelerated GCNs<a class="headerlink" href="#accelerated-gcns" title="Permalink to this headline">¶</a></h4>
+<h4><span class="section-number">2.3.5.2. </span>Accelerated GCNs<a class="headerlink" href="#accelerated-gcns" title="Permalink to this headline">¶</a></h4>
 <p>Let’s now try something similar with GraphConv. The bulk of the model is identical to before; however, instead of simply passing the output of the final layer to a regression head, <span class="math notranslate nohighlight">\(\Theta{}^{out}\)</span>, we sum over each <span class="math notranslate nohighlight">\(x^{l}\)</span> with coefficients <span class="math notranslate nohighlight">\(c_{l}\)</span>.</p>
 <div class="math notranslate nohighlight">
 \[ x^{out}_{i} = \Theta{}^{out}(\frac{\sum_{l=0}^{l_{max}}c_{l}\vec{x}_{i}^{l}}{||\sum_{l=0}^{l_{max}}c_{l}\vec{x}_{i}^{l}||_{2}})\]</div>
@@ -2227,7 +2242,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/KatzCentrality_83_0.png" src="_images/KatzCentrality_83_0.png" />
+<img alt="_images/KatzCentrality_84_0.png" src="_images/KatzCentrality_84_0.png" />
 </div>
 </div>
 <p>We plot a) training loss b) test loss and c) average rank displacement for <span class="math notranslate nohighlight">\(l_{max}=1,2,4,...,64\)</span>. The figure below shows the average values on the train and test loss over the last 10 epochs versus <span class="math notranslate nohighlight">\(l_{max}\)</span>.</p>
@@ -2245,7 +2260,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/KatzCentrality_85_0.png" src="_images/KatzCentrality_85_0.png" />
+<img alt="_images/KatzCentrality_86_0.png" src="_images/KatzCentrality_86_0.png" />
 </div>
 </div>
 <p>Compared to the base model, our accelerated GraphConv shows no improvement in learning <span class="math notranslate nohighlight">\(d_{Katz}\)</span>, which, again, was mostly expected. The convergence is certainly less smooth, which manifests in the more prominent decay from <span class="math notranslate nohighlight">\(l_{max}=32\)</span> to <span class="math notranslate nohighlight">\(l_{max}=64\)</span>. We likely need to retrain with either a smaller <span class="math notranslate nohighlight">\(\eta{}\)</span> or a scheduler of some sort. Still, the fact that the model is not truly any worse bodes well for future experiments.</p>
