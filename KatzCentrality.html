@@ -331,9 +331,9 @@
 <p>Moving on from <span class="math notranslate nohighlight">\(d_{degree}\)</span>, we now analyze the ability of GCNs to learn Katz Centrality. The Katz Centrality of matrix <span class="math notranslate nohighlight">\(A\in{}R^{n\times{}n}\)</span> is defined as</p>
 <div class="math notranslate nohighlight">
 \[\vec{d}_{Katz} = \sum_{k=1}^{\infty}\alpha^{k}(A^{T})^{k}\vec{1} + \vec{\beta{}}\]</div>
-<p>where necesarily <span class="math notranslate nohighlight">\(0\leq{}\alpha{}&lt;\frac{1}{\lambda_{1}}\)</span> [13]. Let <span class="math notranslate nohighlight">\(\lambda_{i}\)</span> be the eigenvalues of <span class="math notranslate nohighlight">\(A\)</span> such that <span class="math notranslate nohighlight">\(\lambda_{1}\geq{}\lambda_{2}\geq{}...\geq{}\lambda_{n}\)</span>. If <span class="math notranslate nohighlight">\(\alpha\neq{}\frac{1}{\lambda_{i}}\)</span>, the above expression is equivalent to <span class="math notranslate nohighlight">\((I - \alpha{}A^{T})^{-1}\vec{1} - I(\vec{1} - \vec{\beta{}})\)</span>, which we show below.</p>
+<p>where necesarily <span class="math notranslate nohighlight">\(0\leq{}\alpha{}&lt;\frac{1}{\lambda_{1}}\)</span> [13]. Let <span class="math notranslate nohighlight">\(\lambda_{i}\)</span> be the eigenvalues of <span class="math notranslate nohighlight">\(A\)</span> such that <span class="math notranslate nohighlight">\(\lambda_{1}\geq{}\lambda_{2}\geq{}...\geq{}\lambda_{n}\)</span>. If <span class="math notranslate nohighlight">\(\alpha\neq{}\frac{1}{\lambda_{i}}\)</span>, the above expression is equivalent to <span class="math notranslate nohighlight">\((I - \alpha{}A^{T})^{-1}\vec{1} - (\vec{1} - \vec{\beta{}})\)</span>, which we show below.</p>
 <div class="math notranslate nohighlight">
-\[\sum_{k=1}^{\infty}\alpha^{k}(A^{T})^{k}\vec{1} + \vec{\beta{}} = (I - \alpha{}A^{T})^{-1}\vec{1} - I(\vec{1} - \vec{\beta{}})\]</div>
+\[\sum_{k=1}^{\infty}\alpha^{k}(A^{T})^{k}\vec{1} + \vec{\beta{}} = (I - \alpha{}A^{T})^{-1}\vec{1} - (\vec{1} - \vec{\beta{}})\]</div>
 <div class="math notranslate nohighlight">
 \[\sum_{k=1}^{\infty}\alpha^{k}(A^{T})^{k}\vec{1} + \vec{1} = (I - \alpha{}A^{T})^{-1}\vec{1}\]</div>
 <div class="math notranslate nohighlight">
@@ -479,37 +479,105 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">8</span><span class="o">-</span><span class="mi">88</span><span class="n">fdfef99058</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">Edge4</span> <span class="o">=</span> <span class="n">EdgeConv</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span> 
-<span class="ne">----&gt; </span><span class="mi">6</span> <span class="n">graph4_metrics</span> <span class="o">=</span> <span class="n">train_loop</span><span class="p">(</span><span class="n">Graph4</span><span class="p">,</span><span class="n">train_loader</span><span class="p">,</span><span class="n">test_loader</span><span class="p">,</span><span class="mi">300</span><span class="p">,</span><span class="n">lr</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">empty_cache</span><span class="p">()</span>
-<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="n">edge4_metrics</span> <span class="o">=</span> <span class="n">train_loop</span><span class="p">(</span><span class="n">Edge4</span><span class="p">,</span><span class="n">train_loader</span><span class="p">,</span><span class="n">test_loader</span><span class="p">,</span><span class="mi">300</span><span class="p">,</span><span class="n">lr</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">)</span>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span>---------------------------------------------------------------------------
+KeyboardInterrupt                         Traceback (most recent call last)
+&lt;ipython-input-8-88fdfef99058&gt; in &lt;module&gt;
+      4 Edge4 = EdgeConv(1,4,1,4).cuda()
+      5 
+----&gt; 6 graph4_metrics = train_loop(Graph4,train_loader,test_loader,300,lr=1e-3)
+      7 torch.cuda.empty_cache()
+      8 edge4_metrics = train_loop(Edge4,train_loader,test_loader,300,lr=1e-3)
 
-<span class="nn">~/thesisUpdate_04_12_21/Introduction.ipynb</span> in <span class="ni">train_loop</span><span class="nt">(model, train_loader, test_loader, epochs, lr, metric_func, loss_func)</span>
-<span class="g g-Whitespace">    </span><span class="mi">192</span>     <span class="s2">&quot;    Max = torch_scatter.scatter_max(X,batch,dim=0)[0][batch]</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">193</span>     <span class="s2">&quot;    return (X-Min)/(1e-12 + Max - Min)</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
-<span class="ne">--&gt; </span><span class="mi">194</span>     <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">195</span>     <span class="s2">&quot;# Gets rank (descending) of each element in X</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">196</span>     <span class="s2">&quot;def get_rank(X):</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+~/thesisUpdate_04_12_21/Introduction.ipynb in train_loop(model, train_loader, test_loader, epochs, lr, metric_func, loss_func)
+    188     &quot;\n&quot;,
+    189     &quot;# Computes Min-Max norm\n&quot;,
+--&gt; 190     &quot;def normalize(X,batch):\n&quot;,
+    191     &quot;    Min = -torch_scatter.scatter_max(-X,batch,dim=0)[0][batch]\n&quot;,
+    192     &quot;    Max = torch_scatter.scatter_max(X,batch,dim=0)[0][batch]\n&quot;,
 
-<span class="nn">/opt/conda/lib/python3.7/site-packages/torch/nn/modules/module.py</span> in <span class="ni">_call_impl</span><span class="nt">(self, *input, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">887</span>             <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_slow_forward</span><span class="p">(</span><span class="o">*</span><span class="nb">input</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">888</span>         <span class="k">else</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">889</span>             <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="o">*</span><span class="nb">input</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">890</span>         <span class="k">for</span> <span class="n">hook</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">891</span>                 <span class="n">_global_forward_hooks</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span>
+/opt/conda/lib/python3.7/site-packages/torch/utils/data/dataloader.py in __next__(self)
+    515             if self._sampler_iter is None:
+    516                 self._reset()
+--&gt; 517             data = self._next_data()
+    518             self._num_yielded += 1
+    519             if self._dataset_kind == _DatasetKind.Iterable and \
 
-<span class="nn">~/thesisUpdate_04_12_21/Introduction.ipynb</span> in <span class="ni">forward</span><span class="nt">(self, X, edge_index, edge_weight, batch)</span>
-<span class="g g-Whitespace">     </span><span class="mi">72</span>     <span class="s2">&quot;import torch_sparse</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">73</span>     <span class="s2">&quot;import torch_scatter</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
-<span class="ne">---&gt; </span><span class="mi">74</span>     <span class="s2">&quot;import torch</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">75</span>     <span class="s2">&quot;import numpy as np</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">76</span>     <span class="s2">&quot;import networkx as nx</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+/opt/conda/lib/python3.7/site-packages/torch/utils/data/dataloader.py in _next_data(self)
+    555     def _next_data(self):
+    556         index = self._next_index()  # may raise StopIteration
+--&gt; 557         data = self._dataset_fetcher.fetch(index)  # may raise StopIteration
+    558         if self._pin_memory:
+    559             data = _utils.pin_memory.pin_memory(data)
 
-<span class="ne">KeyboardInterrupt</span>: 
+/opt/conda/lib/python3.7/site-packages/torch/utils/data/_utils/fetch.py in fetch(self, possibly_batched_index)
+     45         else:
+     46             data = self.dataset[possibly_batched_index]
+---&gt; 47         return self.collate_fn(data)
+
+/opt/conda/lib/python3.7/site-packages/torch_geometric/data/dataloader.py in __call__(self, batch)
+     34 
+     35     def __call__(self, batch):
+---&gt; 36         return self.collate(batch)
+     37 
+     38 
+
+/opt/conda/lib/python3.7/site-packages/torch_geometric/data/dataloader.py in collate(self, batch)
+     15         if isinstance(elem, Data):
+     16             return Batch.from_data_list(batch, self.follow_batch,
+---&gt; 17                                         self.exclude_keys)
+     18         elif isinstance(elem, torch.Tensor):
+     19             return default_collate(batch)
+
+/opt/conda/lib/python3.7/site-packages/torch_geometric/data/batch.py in from_data_list(cls, data_list, follow_batch, exclude_keys)
+    103 
+    104                 slices[key].append(size + slices[key][-1])
+--&gt; 105                 inc = data.__inc__(key, item)
+    106                 if isinstance(inc, (tuple, list)):
+    107                     inc = torch.tensor(inc)
+
+/opt/conda/lib/python3.7/site-packages/torch_geometric/data/data.py in __inc__(self, key, value)
+    188         # Only `*index*` and `*face*` attributes should be cumulatively summed
+    189         # up when creating batches.
+--&gt; 190         return self.num_nodes if bool(re.search(&#39;(index|face)&#39;, key)) else 0
+    191 
+    192     @property
+
+/opt/conda/lib/python3.7/site-packages/torch_geometric/data/data.py in num_nodes(self)
+    209         if hasattr(self, &#39;__num_nodes__&#39;):
+    210             return self.__num_nodes__
+--&gt; 211         for key, item in self(&#39;x&#39;, &#39;pos&#39;, &#39;normal&#39;, &#39;batch&#39;):
+    212             if isinstance(item, SparseTensor):
+    213                 return item.size(0)
+
+/opt/conda/lib/python3.7/site-packages/torch_geometric/data/data.py in __call__(self, *keys)
+    155         present attributes.&quot;&quot;&quot;
+    156         for key in sorted(self.keys) if not keys else keys:
+--&gt; 157             if key in self:
+    158                 yield key, self[key]
+    159 
+
+/opt/conda/lib/python3.7/site-packages/torch_geometric/data/data.py in __contains__(self, key)
+    141         r&quot;&quot;&quot;Returns :obj:`True`, if the attribute :obj:`key` is present in the
+    142         data.&quot;&quot;&quot;
+--&gt; 143         return key in self.keys
+    144 
+    145     def __iter__(self):
+
+/opt/conda/lib/python3.7/site-packages/torch_geometric/data/data.py in keys(self)
+    131         r&quot;&quot;&quot;Returns all names of graph attributes.&quot;&quot;&quot;
+    132         keys = [key for key in self.__dict__.keys() if self[key] is not None]
+--&gt; 133         keys = [key for key in keys if key[:2] != &#39;__&#39; and key[-2:] != &#39;__&#39;]
+    134         return keys
+    135 
+
+/opt/conda/lib/python3.7/site-packages/torch_geometric/data/data.py in &lt;listcomp&gt;(.0)
+    131         r&quot;&quot;&quot;Returns all names of graph attributes.&quot;&quot;&quot;
+    132         keys = [key for key in self.__dict__.keys() if self[key] is not None]
+--&gt; 133         keys = [key for key in keys if key[:2] != &#39;__&#39; and key[-2:] != &#39;__&#39;]
+    134         return keys
+    135 
+
+KeyboardInterrupt: 
 </pre></div>
 </div>
 </div>
@@ -596,7 +664,7 @@
 <p>However, if <span class="math notranslate nohighlight">\(\frac{|\lambda_{2}|}{|\lambda_{1}|}\approx{}1\)</span>, then convergence to <span class="math notranslate nohighlight">\(V\)</span> will be quite slow and require a large number of aggregations.</p>
 <p>Although this is a highly simplified model, it serves as a good motivating example. We are interested as to the extent which the spectral properties of a network impact our ability to learn its structure; after all, when the eigenvalue ratio is near maximum, the summand in <span class="math notranslate nohighlight">\(\vec{d}_{Katz}\)</span>, <span class="math notranslate nohighlight">\((\alpha{}A)^{k}\vec{1}\)</span>,  requires <span class="math notranslate nohighlight">\(n&gt;&gt;0\)</span> before converging to <span class="math notranslate nohighlight">\(\vec{v_{1}}\)</span>,</p>
 <div class="math notranslate nohighlight">
-\[\vec{d}_{Katz} = \sum_{k=1}^{n} (\alpha{}A)^{k}\vec{1} + \vec{v_{1}}\sum_{k=n+1}^{\infty}\alpha{}^{k}\]</div>
+\[\vec{d}_{Katz} = \vec{\beta} + \sum_{k=1}^{n} (\alpha{}A)^{k}\vec{1} + \vec{v_{1}}\sum_{k=n+1}^{\infty}\alpha{}^{k}\]</div>
 <p>at which point the second term can be computed without further powers of <span class="math notranslate nohighlight">\(A\)</span>. We can view the above equation as a series of linear graph convolutions followed by an MLP regression head. In this sense, it is likely that shallow GCNs are insufficient for learning the Katz Centrality of low-density, high eigenvalue-ratio SBMs. To test this, we generate a new dataset by decreasing the intra and inter-cluster probabilities, which leads to a lower graph density and greater <span class="math notranslate nohighlight">\(\frac{|\lambda_{2}|}{|\lambda_{1}|}\)</span>, and then train our <span class="math notranslate nohighlight">\(l_{max}=4,m=4,16\)</span> models from scratch on the new data. These networks are increasingly likely to be disconnected, hence the need for Katz Centrality (as <span class="math notranslate nohighlight">\(\vec{d}_{eig}\)</span> is not well-defined in that case).</p>
 <p>We sample intra and inter-cluster probabilities from <span class="math notranslate nohighlight">\(p\in{}[\frac{1}{50n},\frac{1}{n}]\)</span>, which gives an average density of <span class="math notranslate nohighlight">\(.008\)</span> with <span class="math notranslate nohighlight">\(E[\frac{|\lambda_{2}|}{|\lambda_{1}|}]\approx{}.925\)</span> (so more than doubling the eigenvalue ratio). Like before, we also manually compute <span class="math notranslate nohighlight">\(\vec{d}_{Katz}\)</span> for <span class="math notranslate nohighlight">\(q=1,2,3,...,64\)</span> and plot the approximation error.</p>
 <div class="cell tag_hide-input docutils container">
@@ -773,7 +841,7 @@
 <h2><span class="section-number">2.3. </span>Deeper (and Wider) GCNs<a class="headerlink" href="#deeper-and-wider-gcns" title="Permalink to this headline">¶</a></h2>
 <p>So our results in the prior section obviously beget the question: can we do better? We don’t want a model that is actively worse at learning structure for a large (and arguably quite common) class of networks; at the very least, we would like to minimize the difference in centrality prediction between high and low-density networks, which we term the <em>topological performance gap</em>. Going back to one of our definitions for <span class="math notranslate nohighlight">\(d_{Katz}\)</span>,</p>
 <div class="math notranslate nohighlight">
-\[d_{Katz} = \sum_{k=1}^{n} (\alpha{}A)^{k}\vec{1} + \vec{v_{1}}\sum_{k=n+1}^{\infty}\alpha{}^{k}\]</div>
+\[d_{Katz} = \vec{\beta} + \sum_{k=1}^{n} (\alpha{}A)^{k}\vec{1} + \vec{v_{1}}\sum_{k=n+1}^{\infty}\alpha{}^{k}\]</div>
 <p>it seems fairly obvious that a larger <span class="math notranslate nohighlight">\(l_{max}\)</span> should lead to a closer approximation of the first term. To verify this, we train an <span class="math notranslate nohighlight">\(m=16\)</span> GraphConv model for all <span class="math notranslate nohighlight">\(l_{max}=1,2,4,..,64\)</span> and report convergence. We also train a set of <span class="math notranslate nohighlight">\(l_{max}=4\)</span> models while varying <span class="math notranslate nohighlight">\(m\)</span> from <span class="math notranslate nohighlight">\(4\)</span> to <span class="math notranslate nohighlight">\(256\)</span>, which allows us to assess the impact of an increased parameter count without any associated change in the number of convolutions. Since EdgeConv did not seem to offer any unanimous benefit before, we exclude it from these experiments.</p>
 <div class="section" id="varying-width">
 <h3><span class="section-number">2.3.1. </span>Varying Width<a class="headerlink" href="#varying-width" title="Permalink to this headline">¶</a></h3>
@@ -1023,7 +1091,7 @@
 <img alt="_images/KatzCentrality_43_0.png" src="_images/KatzCentrality_43_0.png" />
 </div>
 </div>
-<p>We plot a) training loss b) test loss and c) average rank displacement. Adding residual connections actually appears to hampen the model. We suspect this occurs because we are now implicitly aggregating with <span class="math notranslate nohighlight">\((2I + A)\)</span>, which may very well increase the ratio of leading eigenvalues for most of the dataset. Regardless, these result contradicts the notion that our deeper models are underperforming due to backpropgation issues.</p>
+<p>We plot a) training loss b) test loss and c) average rank displacement. Adding residual connections actually appears to hampen the model. We suspect this occurs because we are now implicitly aggregating with <span class="math notranslate nohighlight">\((2I + A)\)</span>, which may very well increase the ratio of leading eigenvalues for most of the dataset. Regardless, these result contradict the notion that our deeper models are underperforming due to backpropgation issues.</p>
 </div>
 <div class="section" id="gcn-smoothing-and-normalization">
 <h3><span class="section-number">2.3.4. </span>GCN Smoothing and Normalization<a class="headerlink" href="#gcn-smoothing-and-normalization" title="Permalink to this headline">¶</a></h3>
