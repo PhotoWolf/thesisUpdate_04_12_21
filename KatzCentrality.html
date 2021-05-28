@@ -478,109 +478,6 @@
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span>---------------------------------------------------------------------------
-KeyboardInterrupt                         Traceback (most recent call last)
-&lt;ipython-input-8-88fdfef99058&gt; in &lt;module&gt;
-      4 Edge4 = EdgeConv(1,4,1,4).cuda()
-      5 
-----&gt; 6 graph4_metrics = train_loop(Graph4,train_loader,test_loader,300,lr=1e-3)
-      7 torch.cuda.empty_cache()
-      8 edge4_metrics = train_loop(Edge4,train_loader,test_loader,300,lr=1e-3)
-
-~/thesisUpdate_04_12_21/Introduction.ipynb in train_loop(model, train_loader, test_loader, epochs, lr, metric_func, loss_func)
-    188     &quot;\n&quot;,
-    189     &quot;# Computes Min-Max norm\n&quot;,
---&gt; 190     &quot;def normalize(X,batch):\n&quot;,
-    191     &quot;    Min = -torch_scatter.scatter_max(-X,batch,dim=0)[0][batch]\n&quot;,
-    192     &quot;    Max = torch_scatter.scatter_max(X,batch,dim=0)[0][batch]\n&quot;,
-
-/opt/conda/lib/python3.7/site-packages/torch/utils/data/dataloader.py in __next__(self)
-    515             if self._sampler_iter is None:
-    516                 self._reset()
---&gt; 517             data = self._next_data()
-    518             self._num_yielded += 1
-    519             if self._dataset_kind == _DatasetKind.Iterable and \
-
-/opt/conda/lib/python3.7/site-packages/torch/utils/data/dataloader.py in _next_data(self)
-    555     def _next_data(self):
-    556         index = self._next_index()  # may raise StopIteration
---&gt; 557         data = self._dataset_fetcher.fetch(index)  # may raise StopIteration
-    558         if self._pin_memory:
-    559             data = _utils.pin_memory.pin_memory(data)
-
-/opt/conda/lib/python3.7/site-packages/torch/utils/data/_utils/fetch.py in fetch(self, possibly_batched_index)
-     45         else:
-     46             data = self.dataset[possibly_batched_index]
----&gt; 47         return self.collate_fn(data)
-
-/opt/conda/lib/python3.7/site-packages/torch_geometric/data/dataloader.py in __call__(self, batch)
-     34 
-     35     def __call__(self, batch):
----&gt; 36         return self.collate(batch)
-     37 
-     38 
-
-/opt/conda/lib/python3.7/site-packages/torch_geometric/data/dataloader.py in collate(self, batch)
-     15         if isinstance(elem, Data):
-     16             return Batch.from_data_list(batch, self.follow_batch,
----&gt; 17                                         self.exclude_keys)
-     18         elif isinstance(elem, torch.Tensor):
-     19             return default_collate(batch)
-
-/opt/conda/lib/python3.7/site-packages/torch_geometric/data/batch.py in from_data_list(cls, data_list, follow_batch, exclude_keys)
-    103 
-    104                 slices[key].append(size + slices[key][-1])
---&gt; 105                 inc = data.__inc__(key, item)
-    106                 if isinstance(inc, (tuple, list)):
-    107                     inc = torch.tensor(inc)
-
-/opt/conda/lib/python3.7/site-packages/torch_geometric/data/data.py in __inc__(self, key, value)
-    188         # Only `*index*` and `*face*` attributes should be cumulatively summed
-    189         # up when creating batches.
---&gt; 190         return self.num_nodes if bool(re.search(&#39;(index|face)&#39;, key)) else 0
-    191 
-    192     @property
-
-/opt/conda/lib/python3.7/site-packages/torch_geometric/data/data.py in num_nodes(self)
-    209         if hasattr(self, &#39;__num_nodes__&#39;):
-    210             return self.__num_nodes__
---&gt; 211         for key, item in self(&#39;x&#39;, &#39;pos&#39;, &#39;normal&#39;, &#39;batch&#39;):
-    212             if isinstance(item, SparseTensor):
-    213                 return item.size(0)
-
-/opt/conda/lib/python3.7/site-packages/torch_geometric/data/data.py in __call__(self, *keys)
-    155         present attributes.&quot;&quot;&quot;
-    156         for key in sorted(self.keys) if not keys else keys:
---&gt; 157             if key in self:
-    158                 yield key, self[key]
-    159 
-
-/opt/conda/lib/python3.7/site-packages/torch_geometric/data/data.py in __contains__(self, key)
-    141         r&quot;&quot;&quot;Returns :obj:`True`, if the attribute :obj:`key` is present in the
-    142         data.&quot;&quot;&quot;
---&gt; 143         return key in self.keys
-    144 
-    145     def __iter__(self):
-
-/opt/conda/lib/python3.7/site-packages/torch_geometric/data/data.py in keys(self)
-    131         r&quot;&quot;&quot;Returns all names of graph attributes.&quot;&quot;&quot;
-    132         keys = [key for key in self.__dict__.keys() if self[key] is not None]
---&gt; 133         keys = [key for key in keys if key[:2] != &#39;__&#39; and key[-2:] != &#39;__&#39;]
-    134         return keys
-    135 
-
-/opt/conda/lib/python3.7/site-packages/torch_geometric/data/data.py in &lt;listcomp&gt;(.0)
-    131         r&quot;&quot;&quot;Returns all names of graph attributes.&quot;&quot;&quot;
-    132         keys = [key for key in self.__dict__.keys() if self[key] is not None]
---&gt; 133         keys = [key for key in keys if key[:2] != &#39;__&#39; and key[-2:] != &#39;__&#39;]
-    134         return keys
-    135 
-
-KeyboardInterrupt: 
-</pre></div>
-</div>
-</div>
 </div>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
@@ -665,7 +562,7 @@ KeyboardInterrupt:
 <p>Although this is a highly simplified model, it serves as a good motivating example. We are interested as to the extent which the spectral properties of a network impact our ability to learn its structure; after all, when the eigenvalue ratio is near maximum, the summand in <span class="math notranslate nohighlight">\(\vec{d}_{Katz}\)</span>, <span class="math notranslate nohighlight">\((\alpha{}A)^{k}\vec{1}\)</span>,  requires <span class="math notranslate nohighlight">\(n&gt;&gt;0\)</span> before converging to <span class="math notranslate nohighlight">\(\vec{v_{1}}\)</span>,</p>
 <div class="math notranslate nohighlight">
 \[\vec{d}_{Katz} = \vec{\beta} + \sum_{k=1}^{n} (\alpha{}A)^{k}\vec{1} + \vec{v_{1}}\sum_{k=n+1}^{\infty}\alpha{}^{k}\]</div>
-<p>at which point the second term can be computed without further powers of <span class="math notranslate nohighlight">\(A\)</span>. We can view the above equation as a series of linear graph convolutions followed by an MLP regression head. In this sense, it is likely that shallow GCNs are insufficient for learning the Katz Centrality of low-density, high eigenvalue-ratio SBMs. To test this, we generate a new dataset by decreasing the intra and inter-cluster probabilities, which leads to a lower graph density and greater <span class="math notranslate nohighlight">\(\frac{|\lambda_{2}|}{|\lambda_{1}|}\)</span>, and then train our <span class="math notranslate nohighlight">\(l_{max}=4,m=4,16\)</span> models from scratch on the new data. These networks are increasingly likely to be disconnected, hence the need for Katz Centrality (as <span class="math notranslate nohighlight">\(\vec{d}_{eig}\)</span> is not well-defined in that case).</p>
+<p>at which point the second term can be computed without further powers of <span class="math notranslate nohighlight">\(A\)</span>. We can view the above equation as a series of linear graph convolutions followed by an MLP regression head. In this sense, it is likely that shallow GCNs are insufficient for learning the Katz Centrality of low-density, high eigenvalue-ratio SBMs. To test this, we generate a new dataset by decreasing the intra and inter-cluster probabilities, which leads to a lower graph density and greater <span class="math notranslate nohighlight">\(\frac{|\lambda_{2}|}{|\lambda_{1}|}\)</span>, and then train our <span class="math notranslate nohighlight">\(l_{max}=4,m=4,16\)</span> models from scratch on the new data.</p>
 <p>We sample intra and inter-cluster probabilities from <span class="math notranslate nohighlight">\(p\in{}[\frac{1}{50n},\frac{1}{n}]\)</span>, which gives an average density of <span class="math notranslate nohighlight">\(.008\)</span> with <span class="math notranslate nohighlight">\(E[\frac{|\lambda_{2}|}{|\lambda_{1}|}]\approx{}.925\)</span> (so more than doubling the eigenvalue ratio). Like before, we also manually compute <span class="math notranslate nohighlight">\(\vec{d}_{Katz}\)</span> for <span class="math notranslate nohighlight">\(q=1,2,3,...,64\)</span> and plot the approximation error.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
